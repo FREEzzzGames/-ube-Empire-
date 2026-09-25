@@ -55,7 +55,8 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .game-ui-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; width: 100%; flex-shrink: 0; font-size: 9.5px; }
 .header-left { display: flex; gap: 2px; align-items: center; }
 .back-btn { background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff; padding: 2px 4px; border-radius: 4px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 7px; }
-.shop-link-btn, .gallery-link-btn, .rank-link-btn, .lang-btn { background: var(--glass-bg); border: 1px solid var(--accent-col); color: var(--text-main); padding: 2px 4px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+.shop-link-btn, .gallery-link-btn, .rank-link-btn, .lang-btn { background: var(--glass-bg); border: 1px solid var(--accent-col); color: var(--text-main); padding: 2px 4px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; position: relative; }
+.mlbb-dot-shop { position: absolute; top: 1px; right: 2px; width: 6px; height: 6px; background: #ff3b30; border-radius: 50%; box-shadow: 0 0 5px #ff3b30; display: none; }
 .clicker-body { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 2px 0; width: 100%; gap: 4px; overflow: hidden; }
 .resources-container { display: flex; gap: 4px; width: 100%; }
 .res-box { flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 4px; text-align: center; }
@@ -89,7 +90,10 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
   <div class="game-ui-header">
     <div class="header-left">
       <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-      <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">🛒 Магазин</a>
+      <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">
+        🛒 Магазин
+        <span class="mlbb-dot-shop" id="shopDot"></span>
+      </a>
       <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🏆 Награды</a>
       <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">📊 Топ</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇷🇺 RU</button>
@@ -110,7 +114,6 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
       </div>
     </div>
 
-    <!-- Виджет трендов YouTube алгоритмов -->
     <div class="trend-widget" id="trendWidget">
       <span id="trendTitle" style="color:var(--title-col); font-weight:bold;">🔥 Тренд: Загрузка...</span>
       <span id="trendTimer" style="color:var(--text-sub);">03:00</span>
@@ -292,7 +295,6 @@ function calculateStats() {
     }
   });
 
-  // Добавляем пассивный доход от корпоративных бизнесов холдинга
   let corpIncome = Core.getTotalCorporationIncome();
   totalEurSec += corpIncome;
 
@@ -349,6 +351,17 @@ function updateUI() {
   });
   let listEl = document.getElementById('upgradesList');
   if(listEl) listEl.innerHTML = listHtml;
+
+  // MLBB Красная точка на кнопке магазина
+  const luxuryCosts = [1500, 7500, 25000, 85000, 250000, 750000, 2000000, 5500000, 14000000, 35000000, 85000000, 200000000, 450000000, 1000000000, 2200000000, 4800000000, 10000000000, 22000000000, 50000000000, 120000000000];
+  let canBuyLuxury = luxuryCosts.some((cost, i) => localStorage.getItem(`lux_${i+1}`) !== "true" && money >= cost);
+  let canBuyCorp = Core.getCorporationAssets().some(asset => !Core.isAssetOwned(asset.id) && money >= asset.cost);
+  let canBuyUpgrade = upgrades.some(up => money >= up.cost);
+
+  let shopDot = document.getElementById('shopDot');
+  if(shopDot) {
+    shopDot.style.display = (canBuyLuxury || canBuyCorp || canBuyUpgrade) ? 'block' : 'none';
+  }
 }
 
 setInterval(() => {
