@@ -146,14 +146,20 @@ const dict = {
 
 function toggleLang() { Core.toggleLang(); updateUI(); }
 function toggleSound() { Core.toggleSound(); updateUI(); }
-function toggleTheme() { Core.toggleTheme(); updateUI(); }
+function toggleTheme() { 
+  let nextTheme = Core.toggleTheme(); 
+  document.body.setAttribute('data-theme', nextTheme);
+  updateUI(); 
+}
 
 function renderMiniChat() {
   let r = Chat.recent(3), html = "";
   if(r.length===0) html=`<div class="c-msg">Нет сообщений...</div>`;
   else r.forEach(m => html+=`<div class="c-msg">${m.a||''} <span>${m.s}:</span> ${m.t}</div>`);
-  document.getElementById('miniChat').innerHTML = html;
+  let mChat = document.getElementById('miniChat');
+  if(mChat) mChat.innerHTML = html;
 }
+
 function openChat() { renderFullChat(); document.getElementById('modalChat').classList.add('active'); }
 function closeChat() { document.getElementById('modalChat').classList.remove('active'); }
 
@@ -162,13 +168,15 @@ function renderFullChat() {
   msgs.slice(-20).reverse().forEach(m => {
     html+=`<div class="msg-item"><div class="msg-s">${m.a||''} ${m.s}</div><div class="msg-t">${m.t}</div></div>`;
   });
-  document.getElementById('fullMsgs').innerHTML = html;
+  let fMsgs = document.getElementById('fullMsgs');
+  if(fMsgs) fMsgs.innerHTML = html;
   let cd = Chat.cd(), lang = Core.getLang(), t = dict[lang], cdEl = document.getElementById('mCd');
-  cdEl.textContent = cd > 0 ? `${t.wc}${Math.floor(cd/60)}м ${cd%60}с` : t.cinfo;
+  if(cdEl) cdEl.textContent = cd > 0 ? `${t.wc}${Math.floor(cd/60)}м ${cd%60}с` : t.cinfo;
 }
 
 function sendMsg() {
   let lang = Core.getLang(), t = dict[lang], inp = document.getElementById('chatInput');
+  if(!inp) return;
   let res = Chat.send(t.me, Core.getAvatarString(), inp.value);
   if(res.ok !== false && inp.value.trim()) { inp.value=""; renderFullChat(); renderMiniChat(); }
   else { alert(t.cinfo); }
@@ -177,35 +185,44 @@ function sendMsg() {
 function updateUI() {
   let lang = Core.getLang(), theme = Core.getTheme(), sound = Core.getSound();
   let t = dict[lang];
-  document.getElementById('lblBal').textContent = t.b;
-  document.getElementById('lblViews').textContent = t.v;
-  document.getElementById('bPlay').textContent = t.pl;
-  document.getElementById('bLot').textContent = t.lot;
-  document.getElementById('bShop').textContent = t.sh;
-  document.getElementById('langBtn').textContent = lang==="ru"?"🇷🇺 RU":(lang==="de"?"🇩🇪 DE":"🇬🇧 EN");
-  document.getElementById('soundBtn').textContent = sound ? t.son : t.soff;
-  document.getElementById('chatTitle').textContent = t.ct;
-  document.getElementById('mTitle').textContent = t.mct;
-  document.getElementById('mSend').textContent = t.snd;
-  document.getElementById('mClose').textContent = t.cls;
-  document.getElementById('chatInput').placeholder = t.ph;
-  document.getElementById('subTxt').textContent = t.sub;
-  document.getElementById('avatarDisplay').textContent = Core.getAvatarString();
-  document.getElementById('nameTxt').textContent = Core.getUserName();
+  
+  const setTxt = (id, val) => { let el = document.getElementById(id); if(el) el.textContent = val; };
+  
+  setTxt('lblBal', t.b);
+  setTxt('lblViews', t.v);
+  setTxt('bPlay', t.pl);
+  setTxt('bLot', t.lot);
+  setTxt('bShop', t.sh);
+  setTxt('langBtn', lang==="ru"?"🇷🇺 RU":(lang==="de"?"🇩🇪 DE":"🇬🇧 EN"));
+  setTxt('soundBtn', sound ? t.son : t.soff);
+  setTxt('chatTitle', t.ct);
+  setTxt('mTitle', t.mct);
+  setTxt('mSend', t.snd);
+  setTxt('mClose', t.cls);
+  
+  let inp = document.getElementById('chatInput');
+  if(inp) inp.placeholder = t.ph;
+  
+  setTxt('subTxt', t.sub);
+  setTxt('avatarDisplay', Core.getAvatarString());
+  setTxt('nameTxt', Core.getUserName());
   
   let tdMap = { dark: t.td, rose: t.tr, light: t.tl };
-  document.getElementById('themeBtn').textContent = tdMap[theme] || t.td;
+  setTxt('themeBtn', tdMap[theme] || t.td);
 
   let money = Core.getMoney();
   let views = Core.getEnergy();
   let vUnit = lang==='ru'?" млн":(lang==='de'?" Mio":"M");
 
-  document.getElementById('valBal').textContent = money.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
-  document.getElementById('valViews').textContent = views.toFixed(1) + vUnit;
+  setTxt('valBal', money.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €");
+  setTxt('valViews', views.toFixed(1) + vUnit);
 }
 
-updateUI();
-renderMiniChat();
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.setAttribute('data-theme', Core.getTheme());
+  updateUI();
+  renderMiniChat();
+});
 </script>
 </body>
 </html>
