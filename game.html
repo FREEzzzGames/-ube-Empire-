@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+>
 
 <title>Tube Empire</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     margin:0;
     padding:0;
     min-height:100%;
@@ -31,6 +39,7 @@ body{
     max-width:520px;
     min-height:100vh;
     padding:16px;
+
     background:
         radial-gradient(
             circle at 50% 10%,
@@ -102,4 +111,384 @@ body{
 }
 
 .stat-value{
-   
+    margin-top:5px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.card{
+    margin-top:14px;
+    padding:20px;
+    text-align:center;
+    border:1px solid #35415f;
+    border-radius:22px;
+    background:#101522;
+}
+
+.title{
+    font-size:22px;
+    font-weight:900;
+}
+
+.subtitle{
+    margin-top:6px;
+    color:#8994ad;
+    font-size:13px;
+}
+
+.tap{
+    width:210px;
+    height:210px;
+    margin:25px auto 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:5px solid #6178c0;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #344579,
+            #182341 55%,
+            #0c1120
+        );
+
+    box-shadow:0 0 35px #526fc088;
+
+    cursor:pointer;
+    user-select:none;
+    touch-action:manipulation;
+}
+
+.tap:active{
+    transform:scale(.94);
+}
+
+.play{
+    font-size:65px;
+}
+
+.tap-text{
+    margin-top:8px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.message{
+    min-height:22px;
+    color:#77eaff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.energy{
+    margin-top:15px;
+}
+
+.energy-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:6px;
+    color:#8b96ae;
+    font-size:12px;
+}
+
+.energy-bar{
+    height:10px;
+    overflow:hidden;
+    border-radius:10px;
+    background:#080b12;
+}
+
+.energy-fill{
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #58d9ff,
+        #8d7cff
+    );
+}
+
+/* =========================
+   UPGRADE
+========================= */
+
+.upgrade{
+    margin-top:18px;
+    padding:18px;
+
+    border:2px solid #596fff;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #192342,
+            #11182c
+        );
+
+    box-shadow:0 0 20px #596fff33;
+}
+
+.upgrade-title{
+    font-size:18px;
+    font-weight:900;
+}
+
+.upgrade-info{
+    margin-top:8px;
+    color:#aab4cc;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.upgrade-button{
+    width:100%;
+    margin-top:14px;
+    padding:16px;
+
+    border:0;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #6b7cff,
+        #854dff
+    );
+
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.upgrade-button:disabled{
+    background:#3a4052;
+    color:#858da0;
+    opacity:1;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+button{
+    padding:14px 8px;
+    border:0;
+    border-radius:13px;
+
+    color:#fff;
+    background:#252e48;
+
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.bonus{
+    background:#5d55d9;
+}
+
+.reset{
+    background:#4a2735;
+}
+
+.footer{
+    margin-top:15px;
+    text-align:center;
+    color:#566078;
+    font-size:11px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="game">
+
+
+    <div class="header">
+
+        <div class="logo">
+            🎬 TUBE EMPIRE
+        </div>
+
+        <div class="online">
+            ONLINE
+        </div>
+
+    </div>
+
+
+    <div class="balance">
+
+        <div class="label">
+            Баланс
+        </div>
+
+        <div
+            class="money"
+            id="money"
+        >
+            0.00 €
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-title">
+                ПРОСМОТРЫ
+            </div>
+
+            <div
+                class="stat-value"
+                id="views"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                ДОХОД / КЛИК
+            </div>
+
+            <div
+                class="stat-value"
+                id="income"
+            >
+                1.00 €
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="title">
+            СТУДИЯ
+        </div>
+
+
+        <div class="subtitle">
+            Нажимай и зарабатывай
+        </div>
+
+
+        <div
+            class="tap"
+            id="tap"
+        >
+
+            <div>
+
+                <div class="play">
+                    ▶️
+                </div>
+
+                <div class="tap-text">
+                    НАЖМИ
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="message"
+            id="message"
+        >
+            ИГРА ГОТОВА — НАЖМИ ▶
+        </div>
+
+
+        <div class="energy">
+
+
+            <div class="energy-head">
+
+                <span>
+                    Энергия
+                </span>
+
+                <span id="energyText">
+                    100 / 100
+                </span>
+
+            </div>
+
+
+            <div class="energy-bar">
+
+                <div
+                    class="energy-fill"
+                    id="energy"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- UPGRADE -->
+
+        <div class="upgrade">
+
+
+            <div class="upgrade-title">
+                🚀 УЛУЧШЕНИЕ СТУДИИ
+            </div>
+
+
+            <div
+                class="upgrade-info"
+                id="upgradeInfo"
+            >
+                Уровень 1
+            </div>
+
+
+            <button
+                class="upgrade-button"
+                id="upgradeButton"
+            >
+                🚀 УЛУЧШИТЬ ЗА 100.00 €
+            </button>
+
+
+        </div>
+
+
+        <div class="buttons">
+
+
+            <button
+                class="bonus"
+                id="bonus"
+            >
+                🎁
