@@ -1,494 +1,236 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Tube Empire</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,
-body{
-    margin:0;
-    padding:0;
-    min-height:100%;
-    background:#080b12;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-    display:flex;
-    justify-content:center;
-}
-
-.game{
-    width:100%;
-    max-width:520px;
-    min-height:100vh;
-    padding:16px;
-
-    background:
-        radial-gradient(
-            circle at 50% 10%,
-            #303b70 0%,
-            #141a2d 40%,
-            #080b12 85%
-        );
-}
-
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:14px;
-}
-
-.logo{
-    font-size:21px;
-    font-weight:900;
-}
-
-.online{
-    padding:7px 10px;
-    border-radius:10px;
-    background:#17251d;
-    color:#72f7a0;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.balance{
-    padding:18px;
-    text-align:center;
-    border:1px solid #3b486c;
-    border-radius:18px;
-    background:#111726;
-}
-
-.label{
-    color:#8c97b0;
-    font-size:12px;
-    text-transform:uppercase;
-}
-
-.money{
-    margin-top:5px;
-    color:#72f7a0;
-    font-size:38px;
-    font-weight:900;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:12px;
-}
-
-.stat{
-    padding:14px;
-    border:1px solid #303b57;
-    border-radius:14px;
-    background:#111624;
-}
-
-.stat-title{
-    color:#78839d;
-    font-size:11px;
-}
-
-.stat-value{
-    margin-top:5px;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.card{
-    margin-top:14px;
-    padding:20px;
-    text-align:center;
-    border:1px solid #35415f;
-    border-radius:22px;
-    background:#101522;
-}
-
-.title{
-    font-size:22px;
-    font-weight:900;
-}
-
-.subtitle{
-    margin-top:6px;
-    color:#8994ad;
-    font-size:13px;
-}
-
-.tap{
-    width:210px;
-    height:210px;
-    margin:25px auto 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:5px solid #6178c0;
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            #344579,
-            #182341 55%,
-            #0c1120
-        );
-
-    box-shadow:0 0 35px #526fc088;
-
-    cursor:pointer;
-    user-select:none;
-    touch-action:manipulation;
-}
-
-.tap:active{
-    transform:scale(.94);
-}
-
-.play{
-    font-size:65px;
-}
-
-.tap-text{
-    margin-top:8px;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.message{
-    min-height:22px;
-    color:#77eaff;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.energy{
-    margin-top:15px;
-}
-
-.energy-head{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:6px;
-    color:#8b96ae;
-    font-size:12px;
-}
-
-.energy-bar{
-    height:10px;
-    overflow:hidden;
-    border-radius:10px;
-    background:#080b12;
-}
-
-.energy-fill{
-    width:100%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        #58d9ff,
-        #8d7cff
-    );
-}
-
-/* =========================
-   UPGRADE
-========================= */
-
-.upgrade{
-    margin-top:18px;
-    padding:18px;
-
-    border:2px solid #596fff;
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #192342,
-            #11182c
-        );
-
-    box-shadow:0 0 20px #596fff33;
-}
-
-.upgrade-title{
-    font-size:18px;
-    font-weight:900;
-}
-
-.upgrade-info{
-    margin-top:8px;
-    color:#aab4cc;
-    font-size:13px;
-    line-height:1.6;
-}
-
-.upgrade-button{
-    width:100%;
-    margin-top:14px;
-    padding:16px;
-
-    border:0;
-    border-radius:14px;
-
-    background:linear-gradient(
-        135deg,
-        #6b7cff,
-        #854dff
-    );
-
-    color:#fff;
-    font-size:16px;
-    font-weight:900;
-
-    cursor:pointer;
-}
-
-.upgrade-button:disabled{
-    background:#3a4052;
-    color:#858da0;
-    opacity:1;
-}
-
-.buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:15px;
-}
-
-button{
-    padding:14px 8px;
-    border:0;
-    border-radius:13px;
-
-    color:#fff;
-    background:#252e48;
-
-    font-size:14px;
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-.bonus{
-    background:#5d55d9;
-}
-
-.reset{
-    background:#4a2735;
-}
-
-.footer{
-    margin-top:15px;
-    text-align:center;
-    color:#566078;
-    font-size:11px;
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080b12;color:white;font-family:Arial}
+body{display:flex;justify-content:center}
+.game{width:100%;max-width:520px;min-height:100vh;padding:16px;background:radial-gradient(circle at 50% 0,#303b70,#141a2d 45%,#080b12 85%)}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.logo{font-size:21px;font-weight:900}
+.online{padding:7px 10px;border-radius:10px;background:#17251d;color:#72f7a0;font-size:12px;font-weight:bold}
+.balance,.stat,.card{border:1px solid #35415f;background:#111726;border-radius:18px}
+.balance{text-align:center;padding:18px}
+.label,.stat-title{color:#8c97b0;font-size:12px}
+.money{margin-top:5px;color:#72f7a0;font-size:38px;font-weight:900}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{padding:14px;border-radius:14px}
+.stat-value{margin-top:5px;font-size:20px;font-weight:bold}
+.card{margin-top:14px;padding:20px;text-align:center}
+.title{font-size:22px;font-weight:900}
+.subtitle{margin-top:6px;color:#8994ad;font-size:13px}
+.tap{width:210px;height:210px;margin:25px auto 18px;border:5px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#344579,#182341 55%,#0c1120);box-shadow:0 0 35px #526fc088;user-select:none}
+.tap:active{transform:scale(.94)}
+.play{font-size:65px}
+.tap-text{font-size:13px;font-weight:bold}
+.message{min-height:22px;color:#77eaff;font-size:13px;font-weight:bold}
+.energy{margin-top:15px}
+.energy-head{display:flex;justify-content:space-between;color:#8b96ae;font-size:12px;margin-bottom:6px}
+.energy-bar{height:10px;border-radius:10px;background:#080b12;overflow:hidden}
+.energy-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
+.upgrade{margin-top:18px;padding:18px;border:2px solid #596fff;border-radius:18px;background:#192342}
+.upgrade-title{font-size:18px;font-weight:900}
+.upgrade-info{margin-top:8px;color:#aab4cc;font-size:13px;line-height:1.6}
+button{width:100%;margin-top:12px;padding:14px;border:0;border-radius:13px;color:white;background:#252e48;font-weight:bold;font-size:14px}
+.upgrade-button{background:linear-gradient(135deg,#6b7cff,#854dff);font-size:16px}
+.upgrade-button:disabled{background:#3a4052;color:#858da0}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bonus{background:#5d55d9}
+.footer{margin-top:15px;text-align:center;color:#566078;font-size:11px}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="game">
 
+<div class="header">
+<div class="logo">🎬 TUBE EMPIRE</div>
+<div class="online">ONLINE</div>
+</div>
 
-    <div class="header">
+<div class="balance">
+<div class="label">БАЛАНС</div>
+<div class="money" id="money">0.00 €</div>
+</div>
+
+<div class="stats">
+<div class="stat">
+<div class="stat-title">ПРОСМОТРЫ</div>
+<div class="stat-value" id="views">0</div>
+</div>
+<div class="stat">
+<div class="stat-title">ДОХОД / КЛИК</div>
+<div class="stat-value" id="income">1.00 €</div>
+</div>
+</div>
 
-        <div class="logo">
-            🎬 TUBE EMPIRE
-        </div>
+<div class="card">
 
-        <div class="online">
-            ONLINE
-        </div>
+<div class="title">СТУДИЯ</div>
+<div class="subtitle">Нажимай и развивай канал</div>
 
-    </div>
+<div class="tap" id="tap">
+<div>
+<div class="play">▶️</div>
+<div class="tap-text">НАЖМИ</div>
+</div>
+</div>
 
+<div class="message" id="message">ИГРА ГОТОВА — НАЖМИ ▶</div>
 
-    <div class="balance">
+<div class="energy">
+<div class="energy-head">
+<span>Энергия</span>
+<span id="energyText">100 / 100</span>
+</div>
+<div class="energy-bar">
+<div class="energy-fill" id="energy"></div>
+</div>
+</div>
 
-        <div class="label">
-            Баланс
-        </div>
+<div class="upgrade">
+<div class="upgrade-title">🚀 УЛУЧШЕНИЕ СТУДИИ</div>
+<div class="upgrade-info" id="upgradeInfo"></div>
+<button class="upgrade-button" id="upgradeButton"></button>
+</div>
 
-        <div
-            class="money"
-            id="money"
-        >
-            0.00 €
-        </div>
+<div class="buttons">
+<button class="bonus" id="bonus">🎁 БОНУС +100 €</button>
+<button id="save">💾 СОХРАНИТЬ</button>
+</div>
 
-    </div>
+</div>
 
+<div class="footer">Tube Empire • Studio v4</div>
 
-    <div class="stats">
+</div>
 
-        <div class="stat">
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/economy.js"></script>
 
-            <div class="stat-title">
-                ПРОСМОТРЫ
-            </div>
+<script>
+"use strict";
 
-            <div
-                class="stat-value"
-                id="views"
-            >
-                0
-            </div>
+const $=id=>document.getElementById(id);
 
-        </div>
+const saved=GameStorage.load();
+if(saved) GameState.replaceState(saved);
 
+function state(){return GameState.getState()}
 
-        <div class="stat">
+function save(){GameStorage.save(state())}
 
-            <div class="stat-title">
-                ДОХОД / КЛИК
-            </div>
+function level(){
+let n=Number(GameState.get("upgrades.studio",1));
+return Number.isFinite(n)&&n>0?Math.floor(n):1;
+}
 
-            <div
-                class="stat-value"
-                id="income"
-            >
-                1.00 €
-            </div>
+function cost(){return 100*Math.pow(2,level()-1)}
 
-        </div>
+function income(){return level()}
 
-    </div>
+function money(n){
+return Number(n).toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+}
 
+function render(){
 
-    <div class="card">
+const s=state();
+const l=level();
+const c=cost();
+const e=Math.max(0,Math.min(100,Number(s.player.energy)||0));
 
+$("money").textContent=money(s.player.money);
+$("views").textContent=Math.floor(s.player.totalEarned||0).toLocaleString("de-DE");
+$("income").textContent=money(income());
 
-        <div class="title">
-            СТУДИЯ
-        </div>
+$("energy").style.width=e+"%";
+$("energyText").textContent=Math.floor(e)+" / 100";
 
+$("upgradeInfo").innerHTML=
+"Текущий уровень: <b>"+l+"</b><br>"+
+"Доход за клик: <b>"+money(income())+"</b><br>"+
+"Следующий уровень: <b>"+money(c)+"</b>";
 
-        <div class="subtitle">
-            Нажимай и зарабатывай
-        </div>
+$("upgradeButton").textContent="🚀 УЛУЧШИТЬ ЗА "+money(c);
+$("upgradeButton").disabled=s.player.money<c;
+}
 
+$("tap").onclick=function(){
 
-        <div
-            class="tap"
-            id="tap"
-        >
+const s=state();
 
-            <div>
+if(s.player.energy<1){
+$("message").textContent="⚡ Нет энергии";
+return;
+}
 
-                <div class="play">
-                    ▶️
-                </div>
+const n=income();
 
-                <div class="tap-text">
-                    НАЖМИ
-                </div>
+GameEconomy.addMoney(n);
+s.player.energy--;
 
-            </div>
+$("message").textContent="Заработано +"+money(n);
 
-        </div>
+render();
+save();
+};
 
+$("upgradeButton").onclick=function(){
 
-        <div
-            class="message"
-            id="message"
-        >
-            ИГРА ГОТОВА — НАЖМИ ▶
-        </div>
+const c=cost();
 
+if(!GameEconomy.spendMoney(c)){
+$("message").textContent="💰 Недостаточно денег";
+return;
+}
 
-        <div class="energy">
+GameState.set("upgrades.studio",level()+1);
 
+$("message").textContent="🚀 Студия улучшена!";
 
-            <div class="energy-head">
+render();
+save();
+};
 
-                <span>
-                    Энергия
-                </span>
+$("bonus").onclick=function(){
 
-                <span id="energyText">
-                    100 / 100
-                </span>
+GameEconomy.addMoney(100);
 
-            </div>
+$("message").textContent="🎁 Получен бонус +100 €";
 
+render();
+save();
+};
 
-            <div class="energy-bar">
+$("save").onclick=function(){
 
-                <div
-                    class="energy-fill"
-                    id="energy"
-                ></div>
+save();
 
-            </div>
+$("message").textContent="💾 Игра сохранена";
+};
 
+setInterval(function(){
 
-        </div>
+const s=state();
 
+if(s.player.energy<100){
+s.player.energy++;
+render();
+save();
+}
 
-        <!-- UPGRADE -->
+},3000);
 
-        <div class="upgrade">
+render();
 
+</script>
 
-            <div class="upgrade-title">
-                🚀 УЛУЧШЕНИЕ СТУДИИ
-            </div>
-
-
-            <div
-                class="upgrade-info"
-                id="upgradeInfo"
-            >
-                Уровень 1
-            </div>
-
-
-            <button
-                class="upgrade-button"
-                id="upgradeButton"
-            >
-                🚀 УЛУЧШИТЬ ЗА 100.00 €
-            </button>
-
-
-        </div>
-
-
-        <div class="buttons">
-
-
-            <button
-                class="bonus"
-                id="bonus"
-            >
-                🎁
+</body>
+</html>
