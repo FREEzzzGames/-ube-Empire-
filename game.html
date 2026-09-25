@@ -1,43 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
+
 <meta charset="UTF-8">
 
 <meta
     name="viewport"
-    content="width=device-width,
-    initial-scale=1,
-    maximum-scale=1,
-    viewport-fit=cover,
-    user-scalable=no"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
 >
 
 <title>Tube Empire — Studio</title>
 
-<!-- Telegram -->
-<script src="https://telegram.org/js/telegram-web-app.js?63"></script>
-
-<!-- Новая система игры -->
-<script src="js/state.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/telegram.js"></script>
-<script src="js/economy.js"></script>
-<script src="js/game.js"></script>
-<script src="js/app.js"></script>
-
 <style>
-
-:root{
-    --bg:#070305;
-    --panel:#14080d;
-    --panel2:#1c0b12;
-    --border:rgba(255,50,80,.35);
-    --accent:#ff2a5f;
-    --gold:#ffd700;
-    --text:#fff;
-    --sub:#ff94a8;
-}
 
 *{
     box-sizing:border-box;
@@ -50,8 +24,8 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:var(--bg);
-    color:var(--text);
+    background:#070305;
+    color:#fff;
     font-family:system-ui,sans-serif;
 }
 
@@ -64,55 +38,56 @@ body{
 
 .portal{
     width:100%;
-    height:100%;
     max-width:420px;
+    height:100%;
     display:flex;
     flex-direction:column;
     padding:8px;
+
     background:
         linear-gradient(
             145deg,
             #190c12,
             #080407
         );
-    border:2px solid var(--border);
+
+    border:2px solid rgba(255,50,80,.35);
     border-radius:18px;
 }
 
 .header{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
     gap:5px;
     padding:6px;
-    background:#16090e;
-    border:1px solid var(--border);
+    border:1px solid rgba(255,50,80,.35);
     border-radius:10px;
+    background:#16090e;
 }
 
-.header button,
 .header a{
-    border:1px solid rgba(255,255,255,.12);
-    background:#241018;
-    color:#fff;
-    padding:6px 9px;
-    border-radius:7px;
-    font-size:9px;
-    font-weight:700;
+    flex:1;
+    text-align:center;
     text-decoration:none;
+    color:#fff;
+    padding:7px 4px;
+    border-radius:7px;
+    background:#241018;
+    border:1px solid rgba(255,255,255,.12);
+    font-size:9px;
+    font-weight:800;
 }
 
-.header .menu{
+.header a:first-child{
     background:#d90429;
 }
 
 .body{
     flex:1;
+    min-height:0;
     display:flex;
     flex-direction:column;
-    gap:7px;
-    padding-top:7px;
-    min-height:0;
+    gap:8px;
+    padding-top:8px;
 }
 
 .stats{
@@ -122,29 +97,28 @@ body{
 
 .stat{
     flex:1;
-    background:rgba(255,255,255,.025);
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:10px;
-    padding:7px;
+    padding:8px;
     text-align:center;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
 }
 
 .label{
-    color:var(--sub);
+    color:#ff94a8;
     font-size:8px;
     font-weight:800;
-    text-transform:uppercase;
 }
 
 .value{
-    color:var(--gold);
-    font-size:15px;
+    color:#ffd700;
+    font-size:16px;
     font-weight:900;
-    margin-top:2px;
+    margin-top:3px;
 }
 
 .small{
-    color:var(--sub);
+    color:#ff94a8;
     font-size:8px;
     margin-top:2px;
 }
@@ -152,8 +126,7 @@ body{
 .trend{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding:6px 10px;
+    padding:7px 10px;
     border:1px dashed rgba(255,215,0,.3);
     border-radius:9px;
     background:rgba(255,215,0,.04);
@@ -161,11 +134,11 @@ body{
 }
 
 .studio{
-    flex:0 0 78px;
+    height:75px;
     display:flex;
-    justify-content:center;
     align-items:center;
-    border:2px solid var(--border);
+    justify-content:center;
+    border:2px solid rgba(255,50,80,.35);
     border-radius:12px;
     background:
         radial-gradient(
@@ -176,48 +149,68 @@ body{
     font-size:28px;
 }
 
-.action{
+.donation{
+    width:100%;
+    padding:8px;
+    border:1px solid #ffd700;
+    border-radius:8px;
+    background:#3a121d;
+    color:#ffd700;
+    font-size:9px;
+    font-weight:900;
+}
+
+.tap-area{
     display:flex;
     justify-content:center;
     align-items:center;
+    padding:3px;
 }
 
 .tap-button{
-    width:76px;
-    height:76px;
+    width:82px;
+    height:82px;
+
     border-radius:50%;
     border:4px solid #fff;
+
     background:
         radial-gradient(
             circle at 35% 30%,
-            #ff6b86,
+            #ff718b,
             #ff174f 45%,
             #72001e
         );
+
     box-shadow:
-        0 0 15px rgba(255,30,90,.5),
+        0 0 20px rgba(255,30,90,.6),
         inset 0 0 15px rgba(255,255,255,.2);
+
     color:#fff;
-    font-size:24px;
+    font-size:26px;
+    font-weight:900;
+
     cursor:pointer;
     touch-action:manipulation;
     user-select:none;
+
+    transition:
+        transform .08s,
+        box-shadow .08s;
 }
 
 .tap-button:active{
-    transform:scale(.91);
+    transform:scale(.88);
+    box-shadow:
+        0 0 35px rgba(255,30,90,.9);
 }
 
-.donation{
-    width:100%;
-    border:1px solid var(--gold);
-    background:#3a121d;
-    color:var(--gold);
-    border-radius:8px;
-    padding:8px;
+.status{
+    text-align:center;
+    min-height:18px;
+    color:#72ffb0;
     font-size:9px;
-    font-weight:900;
-    cursor:pointer;
+    font-weight:800;
 }
 
 .list{
@@ -233,41 +226,49 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:7px 10px;
-    border:1px solid var(--border);
+
+    padding:8px 10px;
+
+    border:1px solid rgba(255,50,80,.35);
     border-radius:9px;
+
     background:#180a10;
+
+    cursor:pointer;
 }
 
 .card-name{
-    color:var(--gold);
+    color:#ffd700;
     font-size:9px;
     font-weight:800;
 }
 
 .card-desc{
-    color:var(--sub);
+    color:#ff94a8;
     font-size:7px;
     margin-top:2px;
 }
 
 .card-count{
     color:#fff;
-    font-size:10px;
-    font-weight:900;
-    background:#0005;
+    background:#0006;
     padding:4px 7px;
     border-radius:6px;
+    font-size:10px;
+    font-weight:900;
 }
 
 .popup{
     position:fixed;
-    pointer-events:none;
     z-index:9999;
-    color:var(--gold);
-    font-size:13px;
+    pointer-events:none;
+
+    color:#ffd700;
+    font-size:14px;
     font-weight:900;
-    animation:popup .55s ease-out forwards;
+
+    animation:
+        popup .55s ease-out forwards;
 }
 
 @keyframes popup{
@@ -285,6 +286,7 @@ body{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -293,10 +295,7 @@ body{
 
     <div class="header">
 
-        <a
-            class="menu"
-            href="index.html"
-        >
+        <a href="index.html">
             ⬅ МЕНЮ
         </a>
 
@@ -313,26 +312,27 @@ body{
 
     <div class="body">
 
+
         <div class="stats">
 
             <div class="stat">
 
                 <div class="label">
-                    Баланс
+                    БАЛАНС
                 </div>
 
                 <div
                     class="value"
                     id="money"
                 >
-                    0.00 €
+                    1000.00 €
                 </div>
 
                 <div
                     class="small"
                     id="income"
                 >
-                    +0.0 €/s
+                    +0.0 €/с
                 </div>
 
             </div>
@@ -341,21 +341,20 @@ body{
             <div class="stat">
 
                 <div class="label">
-                    Энергия
+                    ЭНЕРГИЯ
                 </div>
 
                 <div
                     class="value"
                     id="energy"
                 >
-                    100
+                    100.0
                 </div>
 
                 <div
                     class="small"
-                    id="energyRate"
                 >
-                    0.0/s
+                    Энергия
                 </div>
 
             </div>
@@ -369,7 +368,7 @@ body{
                 🔥 ТРЕНД
             </span>
 
-            <span id="trend">
+            <span>
                 x1.00
             </span>
 
@@ -384,12 +383,13 @@ body{
         <button
             class="donation"
             id="donationButton"
+            type="button"
         >
             🎁 ЗАБРАТЬ ДОХОД
         </button>
 
 
-        <div class="action">
+        <div class="tap-area">
 
             <button
                 class="tap-button"
@@ -403,9 +403,18 @@ body{
 
 
         <div
+            class="status"
+            id="status"
+        >
+            ИГРА ГОТОВА
+        </div>
+
+
+        <div
             class="list"
             id="upgradeList"
         ></div>
+
 
     </div>
 
@@ -414,91 +423,134 @@ body{
 
 <script>
 
-(function(){
-
 "use strict";
 
 
-const upgrades = [
+/*
+==================================================
+ TUBE EMPIRE
+ ПРОСТАЯ РАБОЧАЯ СИСТЕМА
+==================================================
+*/
 
-    {
-        id:"desk",
-        name:"💻 Стол монтажа",
-        desc:"+1 €/с",
-        cost:100,
-        income:1
-    },
 
-    {
-        id:"office",
-        name:"🏢 Офис",
-        desc:"+5 €/с",
-        cost:500,
-        income:5
-    },
+const STORAGE_KEY =
+    "tube_empire_simple_game_v1";
 
-    {
-        id:"clipmaker",
-        name:"🧑‍💻 Клипмейкер",
-        desc:"+15 €/с",
-        cost:1500,
-        income:15
-    },
 
-    {
-        id:"camera",
-        name:"🎥 Оператор",
-        desc:"+50 €/с",
-        cost:5000,
-        income:50
+let game = {
+
+    money:1000,
+
+    energy:100,
+
+    income:0,
+
+    totalEarned:0,
+
+    totalSpent:0,
+
+    upgrades:{
+
+        desk:0,
+
+        office:0,
+
+        clipmaker:0,
+
+        camera:0
+
     }
 
-];
+};
 
 
-function state(){
+/*
+==================================================
+ ЗАГРУЗКА
+==================================================
+*/
 
-    return GameState.getState();
+function loadGame(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if(saved){
+
+            const parsed =
+                JSON.parse(saved);
+
+
+            if(
+                parsed &&
+                typeof parsed === "object"
+            ){
+
+                game = {
+                    ...game,
+                    ...parsed
+                };
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Ошибка загрузки:",
+            error
+        );
+
+    }
 
 }
 
 
-function money(){
+/*
+==================================================
+ СОХРАНЕНИЕ
+==================================================
+*/
+
+function saveGame(){
+
+    try{
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(game)
+        );
+
+    }catch(error){
+
+        console.error(
+            "Ошибка сохранения:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+==================================================
+ ФОРМАТ ДЕНЕГ
+==================================================
+*/
+
+function moneyText(value){
 
     return Number(
-        GameState.get(
-            "player.money",
-            0
-        )
-    );
-
-}
-
-
-function energy(){
-
-    return Number(
-        GameState.get(
-            "player.energy",
-            100
-        )
-    );
-
-}
-
-
-function save(){
-
-    GameStorage.save(
-        GameState.getState()
-    );
-
-}
-
-
-function formatMoney(value){
-
-    return Number(value).toLocaleString(
+        value
+    ).toLocaleString(
         "ru-RU",
         {
             minimumFractionDigits:2,
@@ -509,16 +561,19 @@ function formatMoney(value){
 }
 
 
+/*
+==================================================
+ ОБНОВЛЕНИЕ ЭКРАНА
+==================================================
+*/
+
 function render(){
-
-    const s = state();
-
 
     document.getElementById(
         "money"
     ).textContent =
-        formatMoney(
-            s.player.money
+        moneyText(
+            game.money
         );
 
 
@@ -526,7 +581,7 @@ function render(){
         "energy"
     ).textContent =
         Number(
-            s.player.energy
+            game.energy
         ).toFixed(1);
 
 
@@ -535,23 +590,57 @@ function render(){
     ).textContent =
         "+" +
         Number(
-            s.economy.incomePerSecond
+            game.income
         ).toFixed(1) +
-        " €/s";
-
-
-    document.getElementById(
-        "energyRate"
-    ).textContent =
-        Number(
-            s.economy.energyPerSecond
-        ).toFixed(1) +
-        "/s";
+        " €/с";
 
 
     renderUpgrades();
 
 }
+
+
+/*
+==================================================
+ УЛУЧШЕНИЯ
+==================================================
+*/
+
+const upgrades = [
+
+    {
+        id:"desk",
+        name:"💻 Стол монтажа",
+        description:"+1 €/с",
+        cost:100,
+        income:1
+    },
+
+    {
+        id:"office",
+        name:"🏢 Офис",
+        description:"+5 €/с",
+        cost:500,
+        income:5
+    },
+
+    {
+        id:"clipmaker",
+        name:"🧑‍💻 Клипмейкер",
+        description:"+15 €/с",
+        cost:1500,
+        income:15
+    },
+
+    {
+        id:"camera",
+        name:"🎥 Оператор",
+        description:"+50 €/с",
+        cost:5000,
+        income:50
+    }
+
+];
 
 
 function renderUpgrades(){
@@ -562,187 +651,172 @@ function renderUpgrades(){
         );
 
 
-    const s = state();
+    container.innerHTML = "";
 
 
-    container.innerHTML =
-        upgrades.map(
-            item => {
+    upgrades.forEach(
+        item => {
 
-                const count =
-                    Number(
-                        s.upgrades[item.id] || 0
-                    );
-
-
-                return `
-
-                    <div
-                        class="card"
-                        data-upgrade="${item.id}"
-                    >
-
-                        <div>
-
-                            <div class="card-name">
-                                ${item.name}
-                            </div>
-
-                            <div class="card-desc">
-                                ${item.desc}
-                                ·
-                                ${item.cost.toLocaleString("ru-RU")} €
-                            </div>
-
-                        </div>
-
-                        <div class="card-count">
-                            ${count}
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-        ).join("");
-
-
-    container
-        .querySelectorAll("[data-upgrade]")
-        .forEach(
-            element => {
-
-                element.addEventListener(
-                    "click",
-                    () => {
-
-                        buyUpgrade(
-                            element.dataset.upgrade
-                        );
-
-                    }
+            const count =
+                Number(
+                    game.upgrades[
+                        item.id
+                    ] || 0
                 );
 
-            }
-        );
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "card";
+
+
+            card.innerHTML = `
+
+                <div>
+
+                    <div class="card-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="card-desc">
+                        ${item.description}
+                        ·
+                        ${item.cost.toLocaleString("ru-RU")} €
+                    </div>
+
+                </div>
+
+                <div class="card-count">
+                    ${count}
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                function(){
+
+                    buyUpgrade(
+                        item
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
-function buyUpgrade(id){
+/*
+==================================================
+ ПОКУПКА
+==================================================
+*/
 
-    const item =
-        upgrades.find(
-            x => x.id === id
-        );
-
-
-    if(!item){
-        return;
-    }
-
-
-    const s = state();
-
+function buyUpgrade(item){
 
     if(
-        s.player.money <
+        game.money <
         item.cost
     ){
 
-        TelegramAPI.haptic(
-            "error"
+        setStatus(
+            "❌ НЕДОСТАТОЧНО ДЕНЕГ"
         );
 
         return;
+
     }
 
 
-    s.player.money -=
+    game.money -=
         item.cost;
 
 
-    s.player.totalSpent +=
+    game.totalSpent +=
         item.cost;
 
 
-    s.upgrades[id] =
+    game.upgrades[
+        item.id
+    ] =
         Number(
-            s.upgrades[id] || 0
+            game.upgrades[
+                item.id
+            ] || 0
         ) + 1;
 
 
-    s.economy.incomePerSecond +=
+    game.income +=
         item.income;
 
 
-    save();
-
-    TelegramAPI.haptic(
-        "success"
-    );
+    saveGame();
 
     render();
+
+
+    setStatus(
+        "✅ УЛУЧШЕНИЕ КУПЛЕНО"
+    );
 
 }
 
 
-function tap(event){
+/*
+==================================================
+ ГЛАВНАЯ КНОПКА
+==================================================
+*/
 
-    const s = state();
+function tapGame(event){
 
-
-    /*
-     * Главная кнопка игры.
-     * Каждый тап = +1 €.
-     */
-
-    const amount = 1;
-
-
-    s.player.money +=
-        amount;
-
-
-    s.player.totalEarned +=
-        amount;
-
-
-    s.player.xp +=
-        1;
-
-
-    if(
-        s.player.xp >=
-        s.player.level * 100
-    ){
-
-        s.player.xp = 0;
-
-        s.player.level += 1;
-
-    }
+    console.log(
+        "TAP WORKS"
+    );
 
 
     /*
-     * Небольшой расход энергии.
+     * ГЛАВНОЕ:
+     * деньги увеличиваются
+     * непосредственно здесь.
      */
 
-    s.player.energy =
+    game.money =
+        Number(game.money) + 1;
+
+
+    game.totalEarned =
+        Number(game.totalEarned) + 1;
+
+
+    game.energy =
         Math.max(
             0,
-            s.player.energy - 0.1
+            Number(game.energy) - 0.1
         );
 
 
-    save();
+    saveGame();
 
     render();
 
 
-    TelegramAPI.haptic(
-        "light"
+    setStatus(
+        "✅ +1 €"
     );
 
 
@@ -754,22 +828,22 @@ function tap(event){
 }
 
 
+/*
+==================================================
+ ДОХОД
+==================================================
+*/
+
 function claimIncome(){
 
-    const s = state();
-
-
     const amount =
-        Math.max(
-            0,
-            s.player.energy
-        ) * 0.1;
+        Number(game.energy) * 0.1;
 
 
     if(amount <= 0){
 
-        TelegramAPI.haptic(
-            "error"
+        setStatus(
+            "❌ НЕТ ЭНЕРГИИ"
         );
 
         return;
@@ -777,28 +851,34 @@ function claimIncome(){
     }
 
 
-    s.player.money +=
+    game.money +=
         amount;
 
 
-    s.player.totalEarned +=
+    game.totalEarned +=
         amount;
 
 
-    s.player.energy = 0;
+    game.energy = 0;
 
 
-    save();
+    saveGame();
 
     render();
 
 
-    TelegramAPI.haptic(
-        "success"
+    setStatus(
+        "✅ ДОХОД ПОЛУЧЕН"
     );
 
 }
 
+
+/*
+==================================================
+ ВСПЛЫВАЮЩИЙ +1 €
+==================================================
+*/
 
 function showPopup(
     event,
@@ -819,16 +899,32 @@ function showPopup(
         text;
 
 
+    let x =
+        window.innerWidth / 2;
+
+
+    let y =
+        window.innerHeight / 2;
+
+
+    if(event){
+
+        x =
+            event.clientX;
+
+
+        y =
+            event.clientY;
+
+    }
+
+
     popup.style.left =
-        (
-            event.clientX - 10
-        ) + "px";
+        (x - 15) + "px";
 
 
     popup.style.top =
-        (
-            event.clientY - 25
-        ) + "px";
+        (y - 25) + "px";
 
 
     document.body.appendChild(
@@ -837,54 +933,138 @@ function showPopup(
 
 
     setTimeout(
-        () => popup.remove(),
+        function(){
+
+            popup.remove();
+
+        },
         600
     );
 
 }
 
 
-document
-    .getElementById("tapButton")
-    .addEventListener(
-        "click",
-        tap
+/*
+==================================================
+ СТАТУС
+==================================================
+*/
+
+function setStatus(text){
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        text;
+
+}
+
+
+/*
+==================================================
+ СОБЫТИЯ КНОПОК
+==================================================
+*/
+
+const tapButton =
+    document.getElementById(
+        "tapButton"
     );
 
 
+tapButton.addEventListener(
+    "click",
+    tapGame
+);
+
+
+tapButton.addEventListener(
+    "touchend",
+    function(event){
+
+        event.preventDefault();
+
+        tapGame(event);
+
+    },
+    {
+        passive:false
+    }
+);
+
+
 document
-    .getElementById("donationButton")
+    .getElementById(
+        "donationButton"
+    )
     .addEventListener(
         "click",
         claimIncome
     );
 
 
-document.addEventListener(
-    "game:render",
-    render
-);
+/*
+==================================================
+ АВТОДОХОД
+==================================================
+*/
 
-
-document.addEventListener(
-    "DOMContentLoaded",
+setInterval(
     function(){
 
-        /*
-         * Старт новой игровой системы.
-         */
+        if(
+            game.income > 0
+        ){
 
-        Game.start();
+            const amount =
+                Number(
+                    game.income
+                ) / 10;
 
-        render();
 
-    }
+            game.money +=
+                amount;
+
+
+            game.totalEarned +=
+                amount;
+
+
+            saveGame();
+
+            render();
+
+        }
+
+    },
+    100
 );
 
+
+/*
+==================================================
+ СТАРТ
+==================================================
+*/
+
+loadGame();
 
 render();
 
-})();
+setStatus(
+    "ИГРА ГОТОВА — НАЖМИ ▶"
+);
+
+
+console.log(
+    "Tube Empire loaded"
+);
+
+
+console.log(
+    "Current money:",
+    game.money
+);
 
 </script>
 
