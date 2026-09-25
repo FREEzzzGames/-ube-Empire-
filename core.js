@@ -1,4 +1,4 @@
-// core.js — Tube Empire Core (v5.7 Production Ready)
+// core.js — Tube Empire Core (v5.8 Full Architecture)
 class GameCore {
   constructor() {
     this.initTelegram();
@@ -24,14 +24,11 @@ class GameCore {
   setEnergy(val) { localStorage.setItem("zeitarbeitEnergy", Number(val) || 0); }
 
   getTheme() { return localStorage.getItem("freezzzTheme") || "dark"; }
-  setTheme(theme) { 
-    localStorage.setItem("freezzzTheme", theme); 
-    this.applyTheme(theme); 
-  }
+  setTheme(theme) { localStorage.setItem("freezzzTheme", theme); this.applyTheme(theme); }
   applyTheme(theme) { 
     try { 
       document.documentElement.setAttribute('data-theme', theme);
-      if (document.body) document.body.setAttribute('data-theme', theme); 
+      if(document.body) document.body.setAttribute('data-theme', theme); 
     } catch(e){}
   }
   toggleTheme() {
@@ -51,12 +48,6 @@ class GameCore {
   }
 
   getSound() { return localStorage.getItem("freezzzSound") !== "false"; }
-  toggleSound() {
-    let state = !this.getSound();
-    localStorage.setItem("freezzzSound", state);
-    return state;
-  }
-
   playSound(type = 'click') {
     if (!this.getSound()) return;
     try {
@@ -64,13 +55,10 @@ class GameCore {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (AudioContext) this.audioCtx = new AudioContext();
       }
-      if (this.audioCtx && this.audioCtx.state === 'suspended') {
-        this.audioCtx.resume();
-      }
+      if (this.audioCtx && this.audioCtx.state === 'suspended') this.audioCtx.resume();
       if (this.audioCtx) {
         let osc = this.audioCtx.createOscillator(), gain = this.audioCtx.createGain();
         let freq = 520, dur = 0.08, oscType = 'square';
-        
         if (type === 'tap') { freq = 580; dur = 0.05; oscType = 'triangle'; }
         else if (type === 'buy') { freq = 740; dur = 0.12; oscType = 'square'; }
         else if (type === 'error') { freq = 140; dur = 0.18; oscType = 'sawtooth'; }
@@ -123,20 +111,15 @@ class GameCore {
     let lastActive = Number(localStorage.getItem("tube_empire_last_active") || 0);
     let now = Date.now();
     localStorage.setItem("tube_empire_last_active", now);
-
     if (!lastActive) return null;
     let diffSeconds = Math.floor((now - lastActive) / 1000);
     if (diffSeconds < 30 || diffSeconds > 86400) return null;
-
     let effectiveSeconds = Math.min(diffSeconds, 28800);
     let earnedMoney = effectiveSeconds * eurPerSec;
     let earnedEnergy = effectiveSeconds * energyPerSec;
-
     if (earnedMoney <= 0 && earnedEnergy <= 0) return null;
-
     this.setMoney(this.getMoney() + earnedMoney);
     this.setEnergy(this.getEnergy() + earnedEnergy);
-
     return { seconds: effectiveSeconds, money: earnedMoney, energy: earnedEnergy };
   }
 
@@ -164,31 +147,16 @@ class GameCore {
   getAvatarString() {
     try {
       let s = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
-      if(!s) return "👦 👤 👕 👖";
-      let o = {
-        gender: ['👦','👧'],
-        head: ['👤','🧢','🎧','🕶️','👑'],
-        torso: ['👕','🧥','👔','🥼','👚'],
-        legs: ['👖','🩳','🏃','👗','🥻'],
-        accessory: ['❌','🎙️','📷','📱','💵']
-      };
-      let g = o.gender[s.gender||0] || '👦';
-      let h = o.head[s.head||0] || '👤';
-      let t = o.torso[s.torso||0] || '👕';
-      let l = o.legs[s.legs||0] || '👖';
-      let acc = o.accessory[s.accessory||0] || '❌';
-      return `${g} ${h} ${t} ${l}` + (acc !== '❌' ? ` ${acc}` : '');
-    } catch(e) { return "👦 👤 👕 👖"; }
+      if(!s) return "👦";
+      return ['👦','👧'][s.gender || 0] || '👦';
+    } catch(e) { return "👦"; }
   }
 
   getUserName(def = "Блогер") {
     try {
       const tg = window.Telegram?.WebApp;
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        let username = tg.initDataUnsafe.user.username;
-        let firstname = tg.initDataUnsafe.user.first_name;
-        if (username) return `@${username}`;
-        if (firstname) return firstname;
+        return tg.initDataUnsafe.user.username ? `@${tg.initDataUnsafe.user.username}` : (tg.initDataUnsafe.user.first_name || def);
       }
     } catch(e){}
     return localStorage.getItem("tube_empire_custom_name") || def;
