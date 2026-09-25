@@ -1,8 +1,9 @@
-// core.js — Tube Empire Central Core (v2)
+// core.js — Tube Empire Core with YouTube Algorithm Trends
 class GameCore {
   constructor() {
     this.initTelegram();
     this.applyTheme(this.getTheme());
+    this.initTrendsSystem();
   }
   initTelegram() {
     try {
@@ -75,6 +76,43 @@ class GameCore {
     if (window.Telegram?.WebApp?.HapticFeedback) {
       try { window.Telegram.WebApp.HapticFeedback.impactOccurred(style); } catch(e){}
     }
+  }
+
+  // --- СИСТЕМА ТРЕНДОВ АЛГОРИТМОВ YOUTUBE ---
+  initTrendsSystem() {
+    let trendData = JSON.parse(localStorage.getItem("tube_empire_trend") || "null");
+    let now = Date.now();
+    // Если тренда нет или он устарел (живет 3 минуты = 180000 мс)
+    if (!trendData || now > trendData.expiresAt) {
+      const trends = [
+        { name: "🎮 Gaming Challenge", mult: 2.0, icon: "🔥" },
+        { name: "🎧 ASMR / Podcast", mult: 1.5, icon: "✨" },
+        { name: "🚀 Viral Shorts / Reels", mult: 3.0, icon: "⚡" },
+        { name: "💡 Tech Review & Setup", mult: 1.8, icon: "💎" }
+      ];
+      let selected = trends[Math.floor(Math.random() * trends.length)];
+      trendData = {
+        name: selected.name,
+        mult: selected.mult,
+        icon: selected.icon,
+        expiresAt: now + 180000 // 3 минуты тренд актуален
+      };
+      localStorage.setItem("tube_empire_trend", JSON.stringify(trendData));
+    }
+  }
+
+  getCurrentTrend() {
+    this.initTrendsSystem();
+    try {
+      return JSON.parse(localStorage.getItem("tube_empire_trend"));
+    } catch(e) {
+      return { name: "🎮 Gaming", mult: 2.0, icon: "🔥", expiresAt: Date.now() + 180000 };
+    }
+  }
+
+  getTrendMultiplier() {
+    let trend = this.getCurrentTrend();
+    return trend ? trend.mult : 1.0;
   }
 
   getAvatarString() {
