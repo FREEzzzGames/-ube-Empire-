@@ -2,60 +2,41 @@
 <html lang="ru">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
     name="viewport"
     content="width=device-width,
-             initial-scale=1,
-             maximum-scale=1,
-             viewport-fit=cover,
-             user-scalable=no"
+    initial-scale=1,
+    maximum-scale=1,
+    viewport-fit=cover,
+    user-scalable=no"
 >
 
 <title>Tube Empire — Studio</title>
 
-<!-- Telegram Mini App -->
+<!-- Telegram -->
 <script src="https://telegram.org/js/telegram-web-app.js?63"></script>
 
-<!-- Старая игровая система -->
-<script src="core.js"></script>
-<script src="economy.js"></script>
-<script src="game-logic.js"></script>
-
-<!-- Новая системная основа -->
-<script src="js/storage.js"></script>
+<!-- Новая система игры -->
 <script src="js/state.js"></script>
+<script src="js/storage.js"></script>
 <script src="js/telegram.js"></script>
+<script src="js/economy.js"></script>
+<script src="js/game.js"></script>
 <script src="js/app.js"></script>
 
 <style>
 
 :root{
     --bg:#070305;
-    --p-bg:linear-gradient(135deg,#190c12,#0a0508);
-    --b-col:rgba(255,50,80,0.35);
-    --acc:#ff2a5f;
-    --t-col:#ffd700;
-    --btn:linear-gradient(145deg,#221016,#14080b);
-    --txt:#fff;
+    --panel:#14080d;
+    --panel2:#1c0b12;
+    --border:rgba(255,50,80,.35);
+    --accent:#ff2a5f;
+    --gold:#ffd700;
+    --text:#fff;
     --sub:#ff94a8;
-}
-
-[data-theme="rose"]{
-    --bg:#1a0812;
-    --p-bg:linear-gradient(135deg,#280f1e,#14080f);
-    --t-col:#ffdd33;
-}
-
-[data-theme="light"]{
-    --bg:#f0f2f5;
-    --p-bg:linear-gradient(135deg,#fff,#f0f2f5);
-    --t-col:#b8860b;
-    --btn:#fff;
-    --txt:#1a1a1a;
-    --sub:#666;
 }
 
 *{
@@ -68,10 +49,10 @@ body{
     margin:0;
     width:100%;
     height:100%;
-    background:var(--bg);
-    color:var(--txt);
-    font-family:system-ui,sans-serif;
     overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:system-ui,sans-serif;
 }
 
 body{
@@ -79,330 +60,277 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    position:fixed;
-    inset:0;
 }
 
 .portal{
     width:100%;
     height:100%;
     max-width:420px;
-    max-height:100vh;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
     padding:8px;
-    background:var(--p-bg);
-    border:2px solid var(--b-col);
+    background:
+        linear-gradient(
+            145deg,
+            #190c12,
+            #080407
+        );
+    border:2px solid var(--border);
     border-radius:18px;
 }
 
-.hdr{
+.header{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:5px;
     padding:6px;
-    background:var(--btn);
-    border:1px solid var(--b-col);
+    background:#16090e;
+    border:1px solid var(--border);
     border-radius:10px;
-    font-size:10px;
 }
 
-.hb{
-    background:#d90429;
-    border:none;
+.header button,
+.header a{
+    border:1px solid rgba(255,255,255,.12);
+    background:#241018;
     color:#fff;
-    padding:3px 8px;
-    border-radius:6px;
-    font-size:8px;
-    text-decoration:none;
-    font-weight:700;
-}
-
-.nb{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.1);
-    color:var(--txt);
-    padding:3px 6px;
-    border-radius:6px;
+    padding:6px 9px;
+    border-radius:7px;
     font-size:9px;
+    font-weight:700;
     text-decoration:none;
-    font-weight:600;
-    position:relative;
 }
 
-.dot{
-    position:absolute;
-    top:2px;
-    right:2px;
-    width:7px;
-    height:7px;
-    background:#ff3b30;
-    border-radius:50%;
-    display:none;
+.header .menu{
+    background:#d90429;
 }
 
 .body{
-    flex-grow:1;
+    flex:1;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    gap:6px;
-    padding:4px 0;
-    overflow:hidden;
+    gap:7px;
+    padding-top:7px;
+    min-height:0;
 }
 
-.row{
+.stats{
     display:flex;
     gap:6px;
-    width:100%;
 }
 
-.box{
+.stat{
     flex:1;
-    background:rgba(255,255,255,0.02);
-    border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.09);
     border-radius:10px;
-    padding:6px;
+    padding:7px;
     text-align:center;
 }
 
-.bt{
-    font-size:7.5px;
+.label{
     color:var(--sub);
-    text-transform:uppercase;
-    font-weight:700;
-}
-
-.bv{
-    font-size:14px;
+    font-size:8px;
     font-weight:800;
-    color:var(--t-col);
+    text-transform:uppercase;
+}
+
+.value{
+    color:var(--gold);
+    font-size:15px;
+    font-weight:900;
     margin-top:2px;
 }
 
-.bs{
-    font-size:7.5px;
+.small{
     color:var(--sub);
+    font-size:8px;
     margin-top:2px;
 }
 
-.tr{
-    background:rgba(255,215,0,0.05);
-    border:1px dashed rgba(255,215,0,0.3);
-    border-radius:10px;
-    padding:5px 10px;
-    width:100%;
+.trend{
     display:flex;
     justify-content:space-between;
-    font-size:8.5px;
+    align-items:center;
+    padding:6px 10px;
+    border:1px dashed rgba(255,215,0,.3);
+    border-radius:9px;
+    background:rgba(255,215,0,.04);
+    font-size:9px;
 }
 
-.studio-screen{
-    width:100%;
-    height:75px;
-    background:#0d0407;
-    border:2px solid var(--b-col);
+.studio{
+    flex:0 0 78px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:2px solid var(--border);
     border-radius:12px;
+    background:
+        radial-gradient(
+            circle,
+            #32101c,
+            #0b0407
+        );
+    font-size:28px;
+}
+
+.action{
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:24px;
+    align-items:center;
 }
 
-.sbtn{
-    width:auto;
-    min-width:180px;
-    background:#3a121d;
-    border:1px solid var(--t-col);
-    border-radius:8px;
-    padding:5px 12px;
-    color:var(--t-col);
-    font-size:8.5px;
-    font-weight:800;
-    cursor:pointer;
-    margin:1px auto;
-}
-
-.clicker{
-    width:64px;
-    height:64px;
-    background:radial-gradient(
-        circle,
-        #ff4d6d,
-        #800020
-    );
-    border:3px solid #fff;
+.tap-button{
+    width:76px;
+    height:76px;
     border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    border:4px solid #fff;
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ff6b86,
+            #ff174f 45%,
+            #72001e
+        );
+    box-shadow:
+        0 0 15px rgba(255,30,90,.5),
+        inset 0 0 15px rgba(255,255,255,.2);
+    color:#fff;
+    font-size:24px;
     cursor:pointer;
-    user-select:none;
     touch-action:manipulation;
+    user-select:none;
+}
+
+.tap-button:active{
+    transform:scale(.91);
+}
+
+.donation{
+    width:100%;
+    border:1px solid var(--gold);
+    background:#3a121d;
+    color:var(--gold);
+    border-radius:8px;
+    padding:8px;
+    font-size:9px;
+    font-weight:900;
+    cursor:pointer;
 }
 
 .list{
-    width:100%;
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
     display:flex;
     flex-direction:column;
     gap:5px;
-    max-height:140px;
-    overflow-y:auto;
 }
 
 .card{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:var(--btn);
-    border:1px solid var(--b-col);
-    border-radius:10px;
-    padding:5px 10px;
-    font-size:9.5px;
-    cursor:pointer;
+    padding:7px 10px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:#180a10;
 }
 
-.cn{
-    color:var(--t-col);
-    font-weight:700;
+.card-name{
+    color:var(--gold);
     font-size:9px;
-}
-
-.cd{
-    font-size:7px;
-    color:var(--sub);
-}
-
-.cc{
-    color:var(--acc);
-    font-weight:700;
-    font-size:7.5px;
-}
-
-.cnt{
-    font-size:9.5px;
     font-weight:800;
-    background:rgba(0,0,0,0.3);
-    padding:2px 6px;
+}
+
+.card-desc{
+    color:var(--sub);
+    font-size:7px;
+    margin-top:2px;
+}
+
+.card-count{
+    color:#fff;
+    font-size:10px;
+    font-weight:900;
+    background:#0005;
+    padding:4px 7px;
     border-radius:6px;
 }
 
-@keyframes pop{
+.popup{
+    position:fixed;
+    pointer-events:none;
+    z-index:9999;
+    color:var(--gold);
+    font-size:13px;
+    font-weight:900;
+    animation:popup .55s ease-out forwards;
+}
+
+@keyframes popup{
 
     0%{
-        transform:translateY(0) scale(1);
         opacity:1;
+        transform:translateY(0) scale(1);
     }
 
     100%{
-        transform:translateY(-25px) scale(1.2);
         opacity:0;
+        transform:translateY(-35px) scale(1.15);
     }
 
 }
 
-.pop-txt{
-    position:fixed;
-    color:var(--t-col);
-    font-size:12px;
-    font-weight:800;
-    pointer-events:none;
-    z-index:999;
-    animation:pop 0.4s ease-out forwards;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="portal">
 
-    <div class="hdr">
+    <div class="header">
 
-        <div
-            style="
-                display:flex;
-                gap:4px;
-                align-items:center;
-            "
+        <a
+            class="menu"
+            href="index.html"
         >
+            ⬅ МЕНЮ
+        </a>
 
-            <a
-                href="index.html"
-                class="hb"
-                id="mBtn"
-                onclick="Core.playSound('click')"
-            >
-                ⬅ МЕНЮ
-            </a>
+        <a href="collection.html">
+            🛒 МАГАЗИН
+        </a>
 
-            <a
-                href="collection.html"
-                class="nb"
-                id="sBtn"
-                onclick="Core.playSound('click')"
-            >
-                🛒 Магазин
-                <span
-                    class="dot"
-                    id="sDot"
-                ></span>
-            </a>
-
-            <a
-                href="avatar.html"
-                class="nb"
-                id="aBtn"
-                onclick="Core.playSound('click')"
-            >
-                🎨 Студия
-            </a>
-
-            <button
-                class="nb"
-                id="lBtn"
-                onclick="
-                    Core.toggleLang();
-                    loc();
-                    upd();
-                    Core.playSound('modal');
-                "
-            >
-                🇷🇺
-            </button>
-
-        </div>
+        <a href="avatar.html">
+            🎨 СТУДИЯ
+        </a>
 
     </div>
 
 
     <div class="body">
 
-        <div class="row">
+        <div class="stats">
 
-            <div class="box">
+            <div class="stat">
 
-                <div
-                    class="bt"
-                    id="t1"
-                >
-                    Баланс (€)
+                <div class="label">
+                    Баланс
                 </div>
 
                 <div
-                    class="bv"
-                    id="mTxt"
+                    class="value"
+                    id="money"
                 >
                     0.00 €
                 </div>
 
                 <div
-                    class="bs"
-                    id="cTxt"
+                    class="small"
+                    id="income"
                 >
                     +0.0 €/s
                 </div>
@@ -410,27 +338,24 @@ body{
             </div>
 
 
-            <div class="box">
+            <div class="stat">
 
-                <div
-                    class="bt"
-                    id="t2"
-                >
-                    Просмотры
+                <div class="label">
+                    Энергия
                 </div>
 
                 <div
-                    class="bv"
-                    id="eTxt"
+                    class="value"
+                    id="energy"
                 >
-                    0.0M
+                    100
                 </div>
 
                 <div
-                    class="bs"
-                    id="hTxt"
+                    class="small"
+                    id="energyRate"
                 >
-                    ПК: 0/0
+                    0.0/s
                 </div>
 
             </div>
@@ -438,54 +363,48 @@ body{
         </div>
 
 
-        <div class="tr">
+        <div class="trend">
 
-            <span
-                id="trName"
-                style="color:var(--t-col);"
-            >
-                🔥 Тренд
+            <span>
+                🔥 ТРЕНД
             </span>
 
-            <span
-                id="trTime"
-                style="color:var(--sub);"
-            >
-                03:00
+            <span id="trend">
+                x1.00
             </span>
 
         </div>
 
 
-        <div class="studio-screen">
-
-            <div id="studioView">
-                🎙️ 💻 💡
-            </div>
-
+        <div class="studio">
+            🎙️ 💻 💡
         </div>
 
 
         <button
-            class="sbtn"
-            id="sellTxt"
-            onclick="sellDonations()"
+            class="donation"
+            id="donationButton"
         >
-            🎁 ЗАБРАТЬ ДОНАТЫ (1M = 2.50 €)
+            🎁 ЗАБРАТЬ ДОХОД
         </button>
 
 
-        <div
-            class="clicker"
-            onclick="tap(event)"
-            ontouchstart=""
-        >
+        <div class="action">
+
+            <button
+                class="tap-button"
+                id="tapButton"
+                type="button"
+            >
+                ▶
+            </button>
+
         </div>
 
 
         <div
             class="list"
-            id="uList"
+            id="upgradeList"
         ></div>
 
     </div>
@@ -495,323 +414,421 @@ body{
 
 <script>
 
-const T = {
+(function(){
 
-    ru:{
+"use strict";
 
-        m:"⬅ МЕНЮ",
-        s:"🛒 Магазин",
-        a:"🎨 Студия",
 
-        b1:"Баланс (€)",
-        b2:"Просмотры",
+const upgrades = [
 
-        sell:"🎁 ЗАБРАТЬ ДОНАТЫ (1M = 2.50 €)",
-
-        pr:"Цена",
-        ns:"❌ Нет ПК!",
-
-        names:[
-
-            {
-                n:"💻 Стол монтажа",
-                d:"+3 места"
-            },
-
-            {
-                n:"🏢 Офис",
-                d:"+10 мест"
-            },
-
-            {
-                n:"🧑‍💻 Клипмейкер",
-                d:"Авто-монтаж"
-            },
-
-            {
-                n:"🎥 Оператор",
-                d:"Профи"
-            },
-
-            {
-                n:"🎬 Продюсеры",
-                d:"Мастера"
-            },
-
-            {
-                n:"🤖 Shorts Bot",
-                d:"Генератор"
-            },
-
-            {
-                n:"🎙️ Подкасты",
-                d:"Стрим-ферма"
-            },
-
-            {
-                n:"🌐 MCN-сеть",
-                d:"Макс охват"
-            }
-
-        ]
-
+    {
+        id:"desk",
+        name:"💻 Стол монтажа",
+        desc:"+1 €/с",
+        cost:100,
+        income:1
     },
 
-
-    de:{
-
-        m:"⬅ MENÜ",
-        s:"🛒 Shop",
-        a:"🎨 Studio",
-
-        b1:"Guthaben (€)",
-        b2:"Aufrufe",
-
-        sell:"🎁 SPENDEN ABHOLEN (1M = 2.50 €)",
-
-        pr:"Preis",
-        ns:"❌ Kein Platz!",
-
-        names:[
-
-            {
-                n:"💻 Schnitt-Tisch",
-                d:"+3 Plätze"
-            },
-
-            {
-                n:"🏢 Büro",
-                d:"+10 Plätze"
-            },
-
-            {
-                n:"🧑‍💻 Clipmaker",
-                d:"Auto-Editing"
-            },
-
-            {
-                n:"🎥 Kameramann",
-                d:"Profi"
-            },
-
-            {
-                n:"🎬 Produzenten",
-                d:"Meister"
-            },
-
-            {
-                n:"🤖 Shorts Bot",
-                d:"Generator"
-            },
-
-            {
-                n:"🎙️ Podcasts",
-                d:"Stream-Farm"
-            },
-
-            {
-                n:"🌐 MCN-Netzwerk",
-                d:"Max Reichweite"
-            }
-
-        ]
-
+    {
+        id:"office",
+        name:"🏢 Офис",
+        desc:"+5 €/с",
+        cost:500,
+        income:5
     },
 
+    {
+        id:"clipmaker",
+        name:"🧑‍💻 Клипмейкер",
+        desc:"+15 €/с",
+        cost:1500,
+        income:15
+    },
 
-    en:{
-
-        m:"⬅ MENU",
-        s:"🛒 Shop",
-        a:"🎨 Studio",
-
-        b1:"Balance (€)",
-        b2:"Views",
-
-        sell:"🎁 CLAIM DONATIONS (1M = 2.50 €)",
-
-        pr:"Price",
-        ns:"❌ No PCs!",
-
-        names:[
-
-            {
-                n:"💻 Editing Desk",
-                d:"+3 slots"
-            },
-
-            {
-                n:"🏢 Office",
-                d:"+10 slots"
-            },
-
-            {
-                n:"🧑‍💻 Clipmaker",
-                d:"Auto-editor"
-            },
-
-            {
-                n:"🎥 Cameraman",
-                d:"Pro"
-            },
-
-            {
-                n:"🎬 Producers",
-                d:"Masters"
-            },
-
-            {
-                n:"🤖 Shorts Bot",
-                d:"Generator"
-            },
-
-            {
-                n:"🎙️ Podcasts",
-                d:"Stream farm"
-            },
-
-            {
-                n:"🌐 MCN Network",
-                d:"Max reach"
-            }
-
-        ]
-
+    {
+        id:"camera",
+        name:"🎥 Оператор",
+        desc:"+50 €/с",
+        cost:5000,
+        income:50
     }
 
-};
+];
 
 
-function loc(){
+function state(){
 
-    const language =
-        Core.getLang();
+    return GameState.getState();
 
-    const t =
-        T[language] || T.ru;
-
-    document.getElementById(
-        "mBtn"
-    ).textContent = t.m;
-
-    const shop =
-        document.getElementById("sBtn");
-
-    if(shop){
-
-        shop.firstChild.textContent =
-            t.s + " ";
-    }
-
-    document.getElementById(
-        "aBtn"
-    ).textContent = t.a;
-
-    document.getElementById(
-        "t1"
-    ).textContent = t.b1;
-
-    document.getElementById(
-        "t2"
-    ).textContent = t.b2;
-
-    document.getElementById(
-        "sellTxt"
-    ).textContent = t.sell;
 }
 
 
-function updateStudioVisuals(){
+function money(){
 
-    try{
+    return Number(
+        GameState.get(
+            "player.money",
+            0
+        )
+    );
 
-        const config =
-            JSON.parse(
-                localStorage.getItem(
-                    "tube_empire_studio_config"
-                ) ||
-                '{"walls":0,"neon":0,"poster":0,"pet":0}'
-            );
+}
 
-        const walls = [
-            "🧱",
-            "🪵",
-            "🟫",
-            "⬛",
-            "🟦"
-        ][config.walls] || "🧱";
 
-        const neon = [
-            "🔴",
-            "🔵",
-            "🟢",
-            "🟣",
-            "🟡"
-        ][config.neon] || "🔴";
+function energy(){
 
-        const pet = [
-            "❌",
-            "🐱",
-            "🐶",
-            "🤖",
-            "🦜"
-        ][config.pet] || "❌";
+    return Number(
+        GameState.get(
+            "player.energy",
+            100
+        )
+    );
 
-        document.getElementById(
-            "studioView"
-        ).innerHTML =
-            `${walls} ${neon} ${
-                pet !== "❌" ? pet : "🎙️"
-            }`;
+}
 
-    }catch(error){
 
-        console.warn(
-            "[Studio] visual error",
-            error
+function save(){
+
+    GameStorage.save(
+        GameState.getState()
+    );
+
+}
+
+
+function formatMoney(value){
+
+    return Number(value).toLocaleString(
+        "ru-RU",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    ) + " €";
+
+}
+
+
+function render(){
+
+    const s = state();
+
+
+    document.getElementById(
+        "money"
+    ).textContent =
+        formatMoney(
+            s.player.money
         );
 
+
+    document.getElementById(
+        "energy"
+    ).textContent =
+        Number(
+            s.player.energy
+        ).toFixed(1);
+
+
+    document.getElementById(
+        "income"
+    ).textContent =
+        "+" +
+        Number(
+            s.economy.incomePerSecond
+        ).toFixed(1) +
+        " €/s";
+
+
+    document.getElementById(
+        "energyRate"
+    ).textContent =
+        Number(
+            s.economy.energyPerSecond
+        ).toFixed(1) +
+        "/s";
+
+
+    renderUpgrades();
+
+}
+
+
+function renderUpgrades(){
+
+    const container =
+        document.getElementById(
+            "upgradeList"
+        );
+
+
+    const s = state();
+
+
+    container.innerHTML =
+        upgrades.map(
+            item => {
+
+                const count =
+                    Number(
+                        s.upgrades[item.id] || 0
+                    );
+
+
+                return `
+
+                    <div
+                        class="card"
+                        data-upgrade="${item.id}"
+                    >
+
+                        <div>
+
+                            <div class="card-name">
+                                ${item.name}
+                            </div>
+
+                            <div class="card-desc">
+                                ${item.desc}
+                                ·
+                                ${item.cost.toLocaleString("ru-RU")} €
+                            </div>
+
+                        </div>
+
+                        <div class="card-count">
+                            ${count}
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    container
+        .querySelectorAll("[data-upgrade]")
+        .forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    () => {
+
+                        buyUpgrade(
+                            element.dataset.upgrade
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+function buyUpgrade(id){
+
+    const item =
+        upgrades.find(
+            x => x.id === id
+        );
+
+
+    if(!item){
+        return;
     }
+
+
+    const s = state();
+
+
+    if(
+        s.player.money <
+        item.cost
+    ){
+
+        TelegramAPI.haptic(
+            "error"
+        );
+
+        return;
+    }
+
+
+    s.player.money -=
+        item.cost;
+
+
+    s.player.totalSpent +=
+        item.cost;
+
+
+    s.upgrades[id] =
+        Number(
+            s.upgrades[id] || 0
+        ) + 1;
+
+
+    s.economy.incomePerSecond +=
+        item.income;
+
+
+    save();
+
+    TelegramAPI.haptic(
+        "success"
+    );
+
+    render();
 
 }
 
 
 function tap(event){
 
-    const multiplier =
-        Economy.getTrendMultiplier();
+    const s = state();
 
-    Core.setMoney(
-        Core.getMoney() + multiplier
+
+    /*
+     * Главная кнопка игры.
+     * Каждый тап = +1 €.
+     */
+
+    const amount = 1;
+
+
+    s.player.money +=
+        amount;
+
+
+    s.player.totalEarned +=
+        amount;
+
+
+    s.player.xp +=
+        1;
+
+
+    if(
+        s.player.xp >=
+        s.player.level * 100
+    ){
+
+        s.player.xp = 0;
+
+        s.player.level += 1;
+
+    }
+
+
+    /*
+     * Небольшой расход энергии.
+     */
+
+    s.player.energy =
+        Math.max(
+            0,
+            s.player.energy - 0.1
+        );
+
+
+    save();
+
+    render();
+
+
+    TelegramAPI.haptic(
+        "light"
     );
 
-    Core.setEnergy(
-        Core.getEnergy() +
-        0.2 * multiplier
+
+    showPopup(
+        event,
+        "+1 €"
     );
 
-    Core.playSound("tap");
+}
 
-    Core.haptic("light");
 
-    upd();
+function claimIncome(){
 
+    const s = state();
+
+
+    const amount =
+        Math.max(
+            0,
+            s.player.energy
+        ) * 0.1;
+
+
+    if(amount <= 0){
+
+        TelegramAPI.haptic(
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    s.player.money +=
+        amount;
+
+
+    s.player.totalEarned +=
+        amount;
+
+
+    s.player.energy = 0;
+
+
+    save();
+
+    render();
+
+
+    TelegramAPI.haptic(
+        "success"
+    );
+
+}
+
+
+function showPopup(
+    event,
+    text
+){
 
     const popup =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     popup.className =
-        "pop-txt";
+        "popup";
+
 
     popup.textContent =
-        `+${multiplier}x €`;
+        text;
 
 
     popup.style.left =
-        `${event.clientX - 15}px`;
+        (
+            event.clientX - 10
+        ) + "px";
+
 
     popup.style.top =
-        `${event.clientY - 25}px`;
+        (
+            event.clientY - 25
+        ) + "px";
 
 
     document.body.appendChild(
@@ -821,374 +838,55 @@ function tap(event){
 
     setTimeout(
         () => popup.remove(),
-        400
+        600
     );
 
 }
 
 
-function sellDonations(){
-
-    const energy =
-        Core.getEnergy();
-
-    if(energy < 1){
-
-        Core.playSound("error");
-
-        return;
-    }
-
-
-    Core.setMoney(
-        Core.getMoney() +
-        energy * 2.5
-    );
-
-    Core.setEnergy(0);
-
-    Core.playSound("cash");
-
-    Core.haptic("heavy");
-
-    upd();
-
-}
-
-
-function buy(index){
-
-    const upgrades =
-        GameConfig.getUpgrades();
-
-    const upgrade =
-        upgrades[index];
-
-    if(!upgrade){
-        return;
-    }
-
-
-    const housing =
-        GameConfig.getHousingStats(
-            upgrades
-        );
-
-
-    if(
-        upgrade.type === "worker" &&
-        (housing.tot - housing.used) <= 0
-    ){
-
-        Core.playSound("error");
-
-        return;
-    }
-
-
-    const money =
-        Core.getMoney();
-
-
-    if(money >= upgrade.cost){
-
-        Core.setMoney(
-            money - upgrade.cost
-        );
-
-
-        const newCount =
-            upgrade.count + 1;
-
-
-        localStorage.setItem(
-            "up_" + upgrade.id,
-            newCount
-        );
-
-
-        Core.playSound("buy");
-
-        Core.haptic("medium");
-
-        upd();
-
-    }else{
-
-        Core.playSound("error");
-
-    }
-
-}
-
-
-function upd(){
-
-    const upgrades =
-        GameConfig.getUpgrades();
-
-    const studio =
-        GameConfig.calculateStudioIncome(
-            upgrades
-        );
-
-    const housing =
-        GameConfig.getHousingStats(
-            upgrades
-        );
-
-    const language =
-        Core.getLang();
-
-    const t =
-        T[language] || T.ru;
-
-    const money =
-        Core.getMoney();
-
-    const energy =
-        Core.getEnergy();
-
-
-    document.getElementById(
-        "mTxt"
-    ).textContent =
-        money.toLocaleString(
-            "ru-RU",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        ) + " €";
-
-
-    document.getElementById(
-        "cTxt"
-    ).textContent =
-        `+${studio.eur.toFixed(1)} €/s`;
-
-
-    document.getElementById(
-        "eTxt"
-    ).textContent =
-        energy.toFixed(1) + "M";
-
-
-    document.getElementById(
-        "hTxt"
-    ).textContent =
-        `ПК: ${housing.used}/${housing.tot}`;
-
-
-    const trend =
-        Economy.getCurrentTrend();
-
-
-    const secondsLeft =
-        Math.max(
-            0,
-            Math.ceil(
-                (
-                    trend.expiresAt -
-                    Date.now()
-                ) / 1000
-            )
-        );
-
-
-    document.getElementById(
-        "trName"
-    ).textContent =
-        `${trend.icon} ${trend.name} (x${trend.mult})`;
-
-
-    document.getElementById(
-        "trTime"
-    ).textContent =
-        `${Math.floor(secondsLeft / 60)}:${
-            ("0" + (secondsLeft % 60))
-                .slice(-2)
-        }`;
-
-
-    let html = "";
-
-
-    upgrades.forEach(
-        (upgrade,index) => {
-
-            let canBuy =
-                money >= upgrade.cost;
-
-            const name =
-                t.names[index];
-
-            if(!name){
-                return;
-            }
-
-            let description =
-                name.d;
-
-
-            if(
-                upgrade.type === "worker"
-            ){
-
-                const free =
-                    housing.tot -
-                    housing.used;
-
-
-                canBuy =
-                    canBuy &&
-                    free > 0;
-
-
-                description =
-                    free > 0
-                        ? `+${upgrade.inc}€/s`
-                        : t.ns;
-            }
-
-
-            html += `
-
-                <div
-                    class="card"
-                    style="
-                        opacity:${canBuy ? 1 : 0.6};
-                    "
-                    onclick="buy(${index})"
-                >
-
-                    <div>
-
-                        <div class="cn">
-                            ${name.n}
-                        </div>
-
-                        <div class="cd">
-                            ${description}
-                        </div>
-
-                        <div class="cc">
-                            ${t.pr}:
-                            ${upgrade.cost.toLocaleString()}
-                            €
-                        </div>
-
-                    </div>
-
-                    <div class="cnt">
-                        ${upgrade.count}
-                    </div>
-
-                </div>
-
-            `;
-
-        }
+document
+    .getElementById("tapButton")
+    .addEventListener(
+        "click",
+        tap
     );
 
 
-    document.getElementById(
-        "uList"
-    ).innerHTML = html;
-
-
-    const canAffordAny =
-        upgrades.some(
-            upgrade => {
-
-                if(
-                    money <
-                    upgrade.cost
-                ){
-                    return false;
-                }
-
-                if(
-                    upgrade.type === "worker" &&
-                    (
-                        housing.tot -
-                        housing.used
-                    ) <= 0
-                ){
-                    return false;
-                }
-
-                return true;
-            }
-        );
-
-
-    const shopDot =
-        document.getElementById(
-            "sDot"
-        );
-
-
-    if(shopDot){
-
-        shopDot.style.display =
-            canAffordAny
-                ? "block"
-                : "none";
-    }
-
-
-    Core.applyTheme(
-        Core.getTheme()
+document
+    .getElementById("donationButton")
+    .addEventListener(
+        "click",
+        claimIncome
     );
 
-    updateStudioVisuals();
 
-}
-
-
-let lastTick =
-    Date.now();
+document.addEventListener(
+    "game:render",
+    render
+);
 
 
-const LEGACY_TICK_INTERVAL =
-    100;
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        /*
+         * Старт новой игровой системы.
+         */
+
+        Game.start();
+
+        render();
+
+    }
+);
 
 
-setInterval(
+render();
 
-    () => {
+})();
 
-        const now =
-            Date.now();
+</script>
 
-        const delta =
-            now - lastTick;
-
-        lastTick =
-            now;
-
-
-        const upgrades =
-            GameConfig.getUpgrades();
-
-        const studio =
-            GameConfig.calculateStudioIncome(
-                upgrades
-            );
-
-
-        if(
-            studio.eur > 0 ||
-            studio.eng > 0
-        ){
-
-            Core.setMoney(
-                Core.getMoney() +
-                studio.eur *
-                delta /
-                1000
-            );
-
-
-            C
+</body>
+</html>
