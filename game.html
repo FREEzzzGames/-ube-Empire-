@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tube Empire — Studio</title><script src="core.js"></script>
+<title>Tube Empire — Studio</title>
+<script src="core.js"></script>
+<script src="economy.js"></script>
+<script src="game-logic.js"></script>
 <style>
 :root{--bg:#070305;--p-bg:linear-gradient(135deg,#190c12,#0a0508);--b-col:rgba(255,50,80,0.35);--acc:#ff2a5f;--t-col:#ffd700;--btn:linear-gradient(145deg,#221016,#14080b);--txt:#fff;--sub:#ff94a8;}
 [data-theme="rose"]{--bg:#1a0812;--p-bg:linear-gradient(135deg,#280f1e,#14080f);--t-col:#ffdd33;}
@@ -39,10 +42,10 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 <div class="portal">
   <div class="hdr">
     <div style="display:flex;gap:4px;align-items:center;">
-      <a href="index.html" class="hb" id="mBtn">⬅ МЕНЮ</a>
-      <a href="collection.html" class="nb" id="sBtn">🛒 Магазин<span class="dot" id="sDot"></span></a>
-      <a href="avatar.html" class="nb" id="aBtn">🎨 Студия</a>
-      <button class="nb" onclick="Core.toggleLang();loc();upd();">🇷🇺</button>
+      <a href="index.html" class="hb" id="mBtn" onclick="Core.playSound('click')">⬅ МЕНЮ</a>
+      <a href="collection.html" class="nb" id="sBtn" onclick="Core.playSound('click')">🛒 Магазин<span class="dot" id="sDot"></span></a>
+      <a href="avatar.html" class="nb" id="aBtn" onclick="Core.playSound('click')">🎨 Студия</a>
+      <button class="nb" onclick="Core.toggleLang();loc();upd();Core.playSound('modal');" id="lBtn">🇷🇺</button>
     </div>
   </div>
   
@@ -77,28 +80,6 @@ const T = {
   }
 };
 
-const cfg=[
-  {id:'wagon',base:100,slots:3,mult:1.25,type:'housing'},{id:'dorm',base:800,slots:10,mult:1.3,type:'housing'},
-  {id:'azubi',base:25,inc:0.1,eng:0.05,mult:1.12,type:'worker'},{id:'elektrik',base:150,inc:0.4,eng:0.1,mult:1.15,type:'worker'},
-  {id:'brigade',base:1200,inc:2,eng:0.8,mult:1.18,type:'worker'},{id:'wind',base:9500,inc:14,eng:8.5,req:2,mult:1.2,type:'station'},
-  {id:'solar',base:120000,inc:110,eng:65,req:8,mult:1.22,type:'station'},{id:'aes',base:1500000,inc:850,eng:450,req:30,mult:1.25,type:'station'}
-];
-
-let ups = cfg.map(c => {
-  let cnt = Number(localStorage.getItem("up_" + c.id) || 0), cost = c.base;
-  for(let i=0; i<cnt; i++) cost = Math.floor(cost * c.mult);
-  return {...c, count: cnt, cost};
-});
-
-function getH(){
-  let tot = 0, used = 0; 
-  ups.forEach(u => {
-    if(u.type === 'housing') tot += u.count * u.slots;
-    if(u.type === 'worker') used += u.count;
-  });
-  return {tot, used};
-}
-
 function loc(){
   let l = Core.getLang(), t = T[l] || T.ru;
   document.getElementById('mBtn').textContent = t.m;
@@ -114,14 +95,13 @@ function updateStudioVisuals(){
     let st = JSON.parse(localStorage.getItem("tube_empire_studio_config") || '{"walls":0,"neon":0,"poster":0,"pet":0}');
     let walls = ['🧱', '🪵', '🟫', '⬛', '🟦'][st.walls] || '🧱';
     let neon = ['🔴', '🔵', '🟢', '🟣', '🟡'][st.neon] || '🔴';
-    let poster = ['🖼️', '🎮', '🚀', '🔥', '⭐'][st.poster] || '🖼️';
     let pet = ['❌', '🐱', '🐶', '🤖', '🦜'][st.pet] || '❌';
-    document.getElementById('studioView').innerHTML = `${walls} ${poster} ${neon} ${pet !== '❌' ? pet : '🎙️'}`;
+    document.getElementById('studioView').innerHTML = `${walls} ${neon} ${pet !== '❌' ? pet : '🎙️'}`;
   } catch(e) {}
 }
 
 function tap(e){
-  let m = Core.getTrendMultiplier();
+  let m = Economy.getTrendMultiplier();
   Core.setMoney(Core.getMoney() + m); Core.setEnergy(Core.getEnergy() + 0.2 * m);
   Core.playSound('tap'); Core.haptic('light'); upd();
   let p = document.createElement('div'); p.className = 'pop-txt'; p.textContent = `+${m}x €`;
@@ -137,38 +117,29 @@ function sellDonations(){
 }
 
 function buy(i){
-  let u = ups[i], h = getH();
+  let ups = GameConfig.getUpgrades();
+  let u = ups[i], h = GameConfig.getHousingStats(ups);
   if(u.type === 'worker' && (h.tot - h.used) <= 0){ Core.playSound('error'); return; }
   let mon = Core.getMoney();
   if(mon >= u.cost){
-    Core.setMoney(mon - u.cost); u.count++; u.cost = Math.floor(u.cost * u.mult);
-    localStorage.setItem("up_" + u.id, u.count);
+    Core.setMoney(mon - u.cost);
+    let newCount = u.count + 1;
+    localStorage.setItem("up_" + u.id, newCount);
     Core.playSound('buy'); Core.haptic('medium'); upd();
   } else { Core.playSound('error'); }
 }
 
-function calc(){
-  let eur = 0, eng = 0, h = getH(), tm = Core.getTrendMultiplier();
-  ups.forEach(u => {
-    if(u.type === 'worker'){ eur += u.inc * u.count; eng += u.eng * u.count; }
-    else if(u.type === 'station'){
-      let req = u.req * u.count, eff = req > 0 ? Math.min(1, h.used / req) : 1;
-      if(h.used === 0 && req > 0) eff = 0.1;
-      eur += u.inc * u.count * eff; eng += u.eng * u.count * eff;
-    }
-  });
-  eur += Core.getTotalCorporationIncome();
-  return {eur: eur * tm, eng: eng * tm};
-}
-
 function upd(){
-  let st = calc(), h = getH(), lang = Core.getLang(), t = T[lang] || T.ru, mon = Core.getMoney(), eng = Core.getEnergy();
+  let ups = GameConfig.getUpgrades();
+  let st = GameConfig.calculateStudioIncome(ups), h = GameConfig.getHousingStats(ups);
+  let lang = Core.getLang(), t = T[lang] || T.ru, mon = Core.getMoney(), eng = Core.getEnergy();
+  
   document.getElementById('mTxt').textContent = mon.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
   document.getElementById('cTxt').textContent = `+${st.eur.toFixed(1)} €/s`;
   document.getElementById('eTxt').textContent = eng.toFixed(1) + "M";
   document.getElementById('hTxt').textContent = `ПК: ${h.used}/${h.tot}`;
   
-  let tr = Core.getCurrentTrend(), left = Math.max(0, Math.ceil((tr.expiresAt - Date.now()) / 1000));
+  let tr = Economy.getCurrentTrend(), left = Math.max(0, Math.ceil((tr.expiresAt - Date.now()) / 1000));
   document.getElementById('trName').textContent = `${tr.icon} ${tr.name} (x${tr.mult})`;
   document.getElementById('trTime').textContent = `${Math.floor(left/60)}:${('0'+(left%60)).slice(-2)}`;
 
@@ -196,7 +167,8 @@ function upd(){
 }
 
 setInterval(()=>{
-  let st = calc();
+  let ups = GameConfig.getUpgrades();
+  let st = GameConfig.calculateStudioIncome(ups);
   if(st.eur > 0 || st.eng > 0){
     Core.setMoney(Core.getMoney() + st.eur / 10);
     Core.setEnergy(Core.getEnergy() + st.eng / 10);
@@ -206,7 +178,9 @@ setInterval(()=>{
 
 document.addEventListener("DOMContentLoaded", () => {
   loc();
-  let st = calc(), off = Core.checkOfflineEarnings(st.eur, st.eng);
+  let ups = GameConfig.getUpgrades();
+  let st = GameConfig.calculateStudioIncome(ups);
+  let off = Economy.checkOfflineEarnings(st.eur, st.eng);
   if(off){ setTimeout(()=>alert(`📈 Оффлайн-доход:\n💰 +${off.money.toFixed(2)} €\n🔴 +${off.energy.toFixed(1)}M`), 400); }
   upd();
 });
