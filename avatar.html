@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tube Empire — Личный кабинет</title>
+<script src="core.js"></script>
+<style>
+:root, [data-theme="dark"] {
+  --portal-bg: rgba(20, 10, 10, 0.96);
+  --border-col: rgba(255, 0, 0, 0.5);
+  --accent-col: #ff0000;
+  --title-col: #ffcc00;
+  --btn-bg: rgba(40, 15, 15, 0.95);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --text-main: #fff;
+  --text-sub: #ff8888;
+  --body-bg: #0a0505;
+}
+[data-theme="rose"] {
+  --portal-bg: rgba(30, 10, 25, 0.96);
+  --border-col: rgba(233, 30, 99, 0.6);
+  --accent-col: #e91e63;
+  --title-col: #ffeb3b;
+  --btn-bg: rgba(60, 15, 40, 0.95);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --text-main: #fff;
+  --text-sub: #ff80ab;
+  --body-bg: #150510;
+}
+[data-theme="light"] {
+  --portal-bg: rgba(245, 247, 250, 0.96);
+  --border-col: rgba(211, 47, 47, 0.4);
+  --accent-col: #d32f2f;
+  --title-col: #e65100;
+  --btn-bg: rgba(255, 255, 255, 0.95);
+  --glass-bg: rgba(230, 235, 245, 0.85);
+  --text-main: #1a1a1a;
+  --text-sub: #555555;
+  --body-bg: #e0e4ec;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition:background 0.3s;}
+body{
+  padding:6px;display:flex;justify-content:center;align-items:center;
+  position: fixed; inset: 0;
+}
+.portal{
+  width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
+  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 8px; z-index: 10;
+  background: var(--portal-bg); border: 2.5px solid var(--border-col);
+  border-radius: 16px; box-shadow: 0 0 35px rgba(0, 0, 0, 0.2);
+  position: relative; overflow-y: auto;
+}
+
+.game-ui-header { 
+  display: flex; justify-content: space-between; align-items: center; 
+  padding: 5px 8px; background: var(--btn-bg); border: 1.5px solid var(--border-col); 
+  border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
+}
+.back-btn {
+  background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
+  padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
+}
+.header-username {
+  color: var(--title-col); font-weight: bold; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ВКЛАДКИ КАБИНЕТА */
+.cabinet-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 4px 0; flex-shrink: 0;
+}
+.cab-tab-btn {
+  background: var(--btn-bg); border: 1.5px solid var(--border-col); border-radius: 7px;
+  padding: 5px 4px; font-size: 8px; color: var(--text-main); font-family: monospace;
+  font-weight: bold; cursor: pointer; text-align: center; transition: all 0.1s;
+}
+.cab-tab-btn:active { transform: scale(0.97); }
+.cab-tab-btn.active {
+  background: var(--accent-col); border-color: var(--title-col); color: #fff;
+  box-shadow: 0 0 8px rgba(255,0,0,0.3);
+}
+
+.tab-content { display: none; flex-direction: column; flex-grow: 1; gap: 4px; overflow-y: auto; text-align: left; }
+.tab-content.active { display: flex; }
+
+/* КОНСТРУКТОР */
+.constructor-main-layout {
+  display: flex; gap: 6px; align-items: stretch; margin: 2px 0; flex-shrink: 0;
+}
+.avatar-preview-box {
+  flex: 0 0 80px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 4px; height: 125px;
+}
+.constructor-preview {
+  font-size: 20px; background: none; border: none; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  line-height: 1.2; word-break: break-all; text-align: center;
+}
+.categories-tabs {
+  flex-grow: 1; display: flex; flex-direction: column; gap: 3px; justify-content: space-between; height: 125px;
+}
+.tab-btn {
+  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 5px;
+  padding: 5px 8px; font-size: 8px; color: var(--text-main); font-family: monospace;
+  text-align: left; cursor: pointer; font-weight: bold; width: 100%; transition: all 0.1s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tab-btn:active { transform: scale(0.97); }
+.tab-btn.active {
+  background: var(--accent-col); border-color: var(--title-col); color: #fff;
+  box-shadow: 0 0 5px rgba(255,0,0,0.3);
+}
+
+.options-selection-box {
+  flex-grow: 1; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 4px;
+  overflow-y: auto; text-align: left; margin: 2px 0; max-height: 170px;
+}
+.section-title-label { font-size: 7.5px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
+.options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.option-tile {
+  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
+  padding: 5px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; font-family: monospace; font-size: 15px; transition: transform 0.1s;
+}
+.option-tile:active { transform: scale(0.92); }
+.option-tile.active {
+  border: 2px solid var(--title-col); background: rgba(255,204,0,0.15); box-shadow: 0 0 6px rgba(255,204,0,0.3);
+}
+.option-name { font-size: 6px; color: var(--text-main); margin-top: 2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+/* СПИСКИ НАГРАД И ТОПА */
+.list-container {
+  display: flex; flex-direction: column; gap: 5px; flex-grow: 1; overflow-y: auto; text-align: left; padding: 2px;
+}
+.award-card, .rank-card {
+  background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 8px;
+  padding: 7px 9px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.award-left, .rank-left { display: flex; align-items: center; gap: 8px; overflow: hidden; }
+.award-icon, .rank-pos { font-size: 16px; font-weight: bold; color: var(--title-col); flex-shrink: 0; }
+.award-title, .rank-name { font-size: 8.5px; font-weight: bold; color: var(--title-col); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.award-desc, .rank-sub { font-size: 6.5px; color: var(--text-sub); }
+.badge-status { font-size: 7px; padding: 2px 5px; border-radius: 5px; font-weight: bold; flex-shrink: 0; }
+.badge-status.unlocked { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+.badge-status.locked { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
+
+.save-btn {
+  width: 100%; background: linear-gradient(135deg, var(--title-col), #c09a00); border: none;
+  border-radius: 8px; padding: 8px; font-weight: bold; font-size: 9.5px; color: #000; cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,204,0,0.4); font-family: monospace; flex-shrink: 0; margin-top: 3px;
+}
+.save-btn:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+
+<div class="portal">
+  <div class="game-ui-header">
+    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
+    <div class="header-username" id="headerUsername">TUBE EMPIRE</div>
+  </div>
+
+  <!-- ВКЛАДКИ КАБИНЕТА -->
+  <div class="cabinet-tabs">
+    <button class="cab-tab-btn active" onclick="switchTab('avatar')" id="tabAvatar">👤 Персонаж</button>
+    <button class="cab-tab-btn" onclick="switchTab('awards')" id="tabAwards">🏆 Награды</button>
+    <button class="cab-tab-btn" onclick="switchTab('ranking')" id="tabRanking">📊 Топ Каналов</button>
+  </div>
+
+  <!-- ВКЛАДКА 1: ПЕРСОНАЖ / АВАТАР -->
+  <div class="tab-content active" id="contentAvatar">
+    <div class="constructor-main-layout">
+      <div class="avatar-preview-box">
+        <div class="constructor-preview" id="modalAvatarPreview">👦</div>
+      </div>
+      <div class="categories-tabs" id="categoriesTabsContainer"></div>
+    </div>
+
+    <div class="options-selection-box" id="optionsSelectionContainer">
+      <div class="section-title-label" id="activeCategoryLabel">Выберите элемент</div>
+      <div class="options-grid" id="optionsGridContainer"></div>
+    </div>
+  </div>
+
+  <!-- ВКЛАДКА 2: ЗАЛ НАГРАД -->
+  <div class="tab-content" id="contentAwards">
+    <div class="list-container" id="awardsListContainer"></div>
+  </div>
+
+  <!-- ВКЛАДКА 3: ТОП КАНАЛОВ -->
+  <div class="tab-content" id="contentRanking">
+    <div class="list-container" id="rankingListContainer"></div>
+  </div>
+
+  <button class="save-btn" onclick="window.location.href='index.html'" id="saveBtnTxt">💾 СОХРАНИТЬ И ВЕРНУТЬСЯ</button>
+</div>
+
+<script>
+const langData = {
+  ru: {
+    menu: "⬅ МЕНЮ", save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", 
+    tabA: "👤 Персонаж", tabAw: "🏆 Награды", tabR: "📊 Топ Каналов",
+    selectEl: "Выберите элемент",
+    categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" },
+    items: {
+      m: "Парень", f: "Девушка", default: "Обычная", cap: "Бейсболка", headphones: "Наушники",
+      glasses: "Очки", crown: "Корона", tshirt: "Футболка", hoodie: "Худи", suit: "Костюм",
+      jacket: "Кожанка", top: "Топ", jeans: "Джинсы", shorts: "Шорты", pants: "Спортивки",
+      skirt: "Юбка", kilt: "Килт", none: "Нет", mic: "Микрофон", cam: "Камера", phone: "Телефон", money: "Купюры"
+    },
+    unlocked: "Получено", locked: "Заблокировано",
+    awards: [
+      { icon: "🥉", title: "Первые 10,000 просмотров", desc: "Наберите 10k просмотров на канале", req: 10000 },
+      { icon: "🥈", title: "Серебряная кнопка Tube", desc: "Достигните 100k просмотров", req: 100000 },
+      { icon: "🥇", title: "Золотая кнопка Tube", desc: "Соберите 1,000,000 просмотров", req: 1000000 },
+      { icon: "💎", title: "Бриллиантовый магнат", desc: "Заработайте 50,000 € баланса", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (Вы)", subs: "1.2M", views: "25.4M" }
+    ]
+  },
+  de: {
+    menu: "⬅ ZURÜCK", save: "💾 SPEICHERN & ZURÜCK", 
+    tabA: "👤 Charakter", tabAw: "🏆 Trophäen", tabR: "📊 Top Kanäle",
+    selectEl: "Element wählen",
+    categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" },
+    items: {
+      m: "Junge", f: "Mädchen", default: "Normal", cap: "Kappe", headphones: "Kopfhörer",
+      glasses: "Brille", crown: "Krone", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Anzug",
+      jacket: "Jacke", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Hose",
+      skirt: "Rock", kilt: "Kilt", none: "Kein", mic: "Mikro", cam: "Kamera", phone: "Handy", money: "Geld"
+    },
+    unlocked: "Freigeschaltet", locked: "Gesperrt",
+    awards: [
+      { icon: "🥉", title: "Erste 10.000 Aufrufe", desc: "Erreiche 10k Aufrufe", req: 10000 },
+      { icon: "🥈", title: "Silberner Button", desc: "Erreiche 100k Aufrufe", req: 100000 },
+      { icon: "🥇", title: "Goldener Button", desc: "Erreiche 1.000.000 Aufrufe", req: 1000000 },
+      { icon: "💎", title: "Diamant-Magnat", desc: "Verdiene 50.000 € Guthaben", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (Du)", subs: "1.2M", views: "25.4M" }
+    ]
+  },
+  en: {
+    menu: "⬅ MENU", save: "💾 SAVE & RETURN", 
+    tabA: "👤 Character", tabAw: "🏆 Awards", tabR: "📊 Top Channels",
+    selectEl: "Select element",
+    categories: { gender: "Gender", head: "Head", torso: "Torso", legs: "Legs", accessory: "Accessory" },
+    items: {
+      m: "Boy", f: "Girl", default: "Default", cap: "Cap", headphones: "Headphones",
+      glasses: "Glasses", crown: "Crown", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Suit",
+      jacket: "Jacket", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Pants",
+      skirt: "Skirt", kilt: "Kilt", none: "None", mic: "Mic", cam: "Camera", phone: "Phone", money: "Cash"
+    },
+    unlocked: "Unlocked", locked: "Locked",
+    awards: [
+      { icon: "🥉", title: "First 10,000 Views", desc: "Reach 10k views on channel", req: 10000 },
+      { icon: "🥈", title: "Silver Tube Button", desc: "Reach 100k views", req: 100000 },
+      { icon: "🥇", title: "Gold Tube Button", desc: "Reach 1,000,000 views", req: 1000000 },
+      { icon: "💎", title: "Diamond Mogul", desc: "Earn 50,000 € balance", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (You)", subs: "1.2M", views: "25.4M" }
+    ]
+  }
+};
+
+const avatarOptions = {
+  gender: [{ id: 'm', symbol: '👦' }, { id: 'f', symbol: '👧' }],
+  head: [{ id: 'default', icon: '👤' }, { id: 'cap', icon: '🧢' }, { id: 'headphones', icon: '🎧' }, { id: 'glasses', icon: '🕶️' }, { id: 'crown', icon: '👑' }],
+  torso: [{ id: 'tshirt', icon: '👕' }, { id: 'hoodie', icon: '🧥' }, { id: 'suit', icon: '👔' }, { id: 'jacket', icon: '🥼' }, { id: 'top', icon: '👚' }],
+  legs: [{ id: 'jeans', icon: '👖' }, { id: 'shorts', icon: '🩳' }, { id: 'pants', icon: '🏃' }, { id: 'skirt', icon: '👗' }, { id: 'kilt', icon: '🥻' }],
+  accessory: [{ id: 'none', icon: '❌' }, { id: 'mic', icon: '🎙️' }, { id: 'cam', icon: '📷' }, { id: 'phone', icon: '📱' }, { id: 'money', icon: '💵' }]
+};
+
+let storageKey = "tube_empire_avatar_config";
+let defaultConfig = { gender: 0, head: 0, torso: 0, legs: 0, accessory: 0 };
+let currentConfig = loadConfig();
+let activeCategory = 'gender';
+let currentTab = 'avatar';
+
+function loadConfig() {
+  try {
+    let saved = JSON.parse(localStorage.getItem(storageKey));
+    return saved ? { ...defaultConfig, ...saved } : { ...defaultConfig };
+  } catch (e) { return { ...defaultConfig }; }
+}
+
+function getAvatarStringFormatted() {
+  let s = currentConfig;
+  let o = avatarOptions;
+  let g = o.gender[s.gender||0].symbol;
+  let h = o.head[s.head||0].icon;
+  let t = o.torso[s.torso||0].icon;
+  let l = o.legs[s.legs||0].icon;
+  let acc = o.accessory[s.accessory||0].icon;
+  return `${g}<br>${h}<br>${t}<br>${l}<br>${acc !== '❌' ? acc : ''}`;
+}
+
+function switchTab(tabName) {
+  currentTab = tabName;
+  document.querySelectorAll('.cab-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  
+  if (tabName === 'avatar') {
+    document.getElementById('tabAvatar').classList.add('active');
+    document.getElementById('contentAvatar').classList.add('active');
+  } else if (tabName === 'awards') {
+    document.getElementById('tabAwards').classList.add('active');
+    document.getElementById('contentAwards').classList.add('active');
+  } else if (tabName === 'ranking') {
+    document.getElementById('tabRanking').classList.add('active');
+    document.getElementById('contentRanking').classList.add('active');
+  }
+}
+
+function renderUI() {
+  let lang = Core.getLang();
+  let t = langData[lang];
+  document.getElementById('menuBtnTxt').textContent = t.menu;
+  document.getElementById('saveBtnTxt').textContent = t.save;
+  document.getElementById('tabAvatar').textContent = t.tabA;
+  document.getElementById('tabAwards').textContent = t.tabAw;
+  document.getElementById('tabRanking').textContent = t.tabR;
+  document.getElementById('activeCategoryLabel').textContent = `${t.selectEl} (${t.categories[activeCategory]}):`;
+
+  document.getElementById('headerUsername').textContent = Core.getUserName();
+  document.getElementById('modalAvatarPreview').innerHTML = getAvatarStringFormatted();
+
+  let tabsContainer = document.getElementById('categoriesTabsContainer');
+  let tabsHtml = "";
+  Object.keys(avatarOptions).forEach(cat => {
+    let isActive = cat === activeCategory ? 'active' : '';
+    tabsHtml += `<button class="tab-btn ${isActive}" onclick="setActiveCategory('${cat}')"><span>${t.categories[cat]}</span><span>▶</span></button>`;
+  });
+  tabsContainer.innerHTML = tabsHtml;
+
+  let gridContainer = document.getElementById('optionsGridContainer');
+  let gridHtml = "";
+  let list = avatarOptions[activeCategory];
+  let currentSelectedIndex = currentConfig[activeCategory];
+
+  list.forEach((item, idx) => {
+    let isSelected = idx === currentSelectedIndex ? 'active' : '';
+    let displayIcon = item.symbol || item.icon;
+    let itemName = t.items[item.id] || item.id;
+    gridHtml += `
+      <div class="option-tile ${isSelected}" onclick="selectOption('${activeCategory}', ${idx})">
+        <div>${displayIcon}</div>
+        <div class="option-name">${itemName}</div>
+      </div>
+    `;
+  });
+  gridContainer.innerHTML = gridHtml;
+
+  let currentViews = Core.getEnergy() * 1000000;
+  let currentMoney = Core.getMoney();
+  let awardsHtml = "";
+  t.awards.forEach(aw => {
+    let unlocked = aw.req < 1000 ? (currentMoney >= aw.req) : (currentViews >= aw.req);
+    let statusClass = unlocked ? "unlocked" : "locked";
+    let statusText = unlocked ? t.unlocked : t.locked;
+    awardsHtml += `
+      <div class="award-card">
+        <div class="award-left">
+          <div class="award-icon">${aw.icon}</div>
+          <div>
+            <div class="award-title">${aw.title}</div>
+            <div class="award-desc">${aw.desc}</div>
+          </div>
+        </div>
+        <div class="badge-status ${statusClass}">${statusText}</div>
+      </div>
+    `;
+  });
+  document.getElementById('awardsListContainer').innerHTML = awardsHtml;
+
+  let rankingHtml = "";
+  t.channels.forEach(ch => {
+    rankingHtml += `
+      <div class="rank-card">
+        <div class="rank-left">
+          <div class="rank-pos">#${ch.pos}</div>
+          <div>
+            <div class="rank-name">${ch.name}</div>
+            <div class="rank-sub">Subs: ${ch.subs} | Views: ${ch.views}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById('rankingListContainer').innerHTML = rankingHtml;
+}
+
+function setActiveCategory(cat) {
+  activeCategory = cat;
+  renderUI();
+}
+
+function selectOption(category, index) {
+  currentConfig[category] = index;
+  localStorage.setItem(storageKey, JSON.stringify(currentConfig));
+  renderUI();
+}
+
+renderUI();
+</script>
+</body>
+</html>
