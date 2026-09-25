@@ -1,9 +1,10 @@
-// core.js — Tube Empire Core (v4 with Corporate Holdings)
+// core.js — Tube Empire Core (v5 with Offline Idle Earnings)
 class GameCore {
   constructor() {
     this.initTelegram();
     this.applyTheme(this.getTheme());
     this.initTrendsSystem();
+    this.recordLastActiveTime();
   }
   initTelegram() {
     try {
@@ -111,7 +112,41 @@ class GameCore {
     return trend ? trend.mult : 1.0;
   }
 
-  // --- КОРПОРАТИВНЫЕ АКТИВЫ (БИЗНЕСЫ) ---
+  // --- ОФФЛАЙН ДОХОД (IDLE) ---
+  recordLastActiveTime() {
+    localStorage.setItem("tube_empire_last_active", Date.now());
+  }
+
+  checkOfflineEarnings(eurPerSec, energyPerSec) {
+    let lastActive = Number(localStorage.getItem("tube_empire_last_active") || 0);
+    let now = Date.now();
+    this.recordLastActiveTime(); // сразу обновляем таймер
+
+    if (!lastActive) return null;
+
+    let diffSeconds = Math.floor((now - lastActive) / 1000);
+    // Игнорируем если прошло меньше 30 секунд или больше 24 часов (86400 сек)
+    if (diffSeconds < 30 || diffSeconds > 86400) return null;
+
+    // Ограничиваем максимальный офлайн-заработок 8 часами (28800 сек), чтобы стимулировать заходить
+    let effectiveSeconds = Math.min(diffSeconds, 28800);
+
+    let earnedMoney = effectiveSeconds * eurPerSec;
+    let earnedEnergy = effectiveSeconds * energyPerSec;
+
+    if (earnedMoney <= 0 && earnedEnergy <= 0) return null;
+
+    this.setMoney(this.getMoney() + earnedMoney);
+    this.setEnergy(this.getEnergy() + earnedEnergy);
+
+    return {
+      seconds: effectiveSeconds,
+      money: earnedMoney,
+      energy: earnedEnergy
+    };
+  }
+
+  // --- КОРПОРАТИВНЫЕ АКТИВЫ ---
   getCorporationAssets() {
     return [
       { id: 'corp_merch', cost: 50000, incomePerSec: 15, icon: '👕', name: { ru: 'Мерч-магазин', de: 'Merch Shop', en: 'Merch Shop' } },
@@ -136,9 +171,7 @@ class GameCore {
   buyCorporationAsset(id) {
     let assets = this.getCorporationAssets();
     let asset = assets.find(a => a.id === id);
-    if (!asset) return false;
-    if (localStorage.getItem(id) === "true") return false; // Уже куплено
-
+    if (!asset || localStorage.getItem(id) === "true") return false;
     let money = this.getMoney();
     if (money >= asset.cost) {
       money -= asset.cost;
@@ -184,3 +217,4 @@ class GameCore {
   }
 }
 const Core = new GameCore();
+                                      
