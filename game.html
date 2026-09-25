@@ -62,24 +62,25 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .res-title { font-size: 7px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
 .res-val { font-size: 14px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,204,0,0.4); margin-top: 1px; }
 .res-sub { font-size: 7px; color: var(--text-sub); margin-top: 1px; }
-.money-pipe { width: 100%; height: 6px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-col); border-radius: 3px; position: relative; overflow: hidden; }
+.trend-widget { background: var(--glass-bg); border: 1px dashed var(--title-col); border-radius: 6px; padding: 4px 8px; width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 8px; flex-shrink: 0; }
+.money-pipe { width: 100%; height: 5px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-col); border-radius: 3px; position: relative; overflow: hidden; }
 .money-flow { position: absolute; top: 0; left: -100%; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, transparent, transparent 6px, var(--title-col) 6px, var(--title-col) 12px, var(--text-main) 12px, var(--text-main) 16px); opacity: 0.75; animation: flowMoney 1.5s linear infinite; }
 @keyframes flowMoney { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
 .sell-energy-btn { width: 100%; background: var(--btn-bg); border: 1px solid var(--title-col); border-radius: 6px; padding: 5px; color: var(--title-col); font-family: monospace; font-size: 9px; font-weight: bold; cursor: pointer; text-align: center; }
 .progress-bar-container { width: 100%; height: 2px; background: rgba(0,0,0,0.1); border-radius: 2px; overflow: hidden; }
 .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-col), var(--title-col)); width: 0%; transition: width 0.2s ease; }
 .click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; margin: 0; }
-.click-target { width: 62px; height: 62px; background: radial-gradient(circle at 35% 35%, var(--accent-col), #800000); border: 2.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; cursor: pointer; box-shadow: 0 0 15px rgba(255,0,0,0.4); user-select: none; touch-action: manipulation; }
+.click-target { width: 58px; height: 58px; background: radial-gradient(circle at 35% 35%, var(--accent-col), #800000); border: 2.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; box-shadow: 0 0 15px rgba(255,0,0,0.4); user-select: none; touch-action: manipulation; }
 .click-target:active { transform: scale(0.88); }
-.upgrades-list { width: 100%; display: flex; flex-direction: column; gap: 4px; max-height: 190px; overflow-y: auto; padding-right: 2px; }
-.upgrade-card { display: flex; justify-content: space-between; align-items: center; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px 8px; font-size: 9.5px; text-align: left; cursor: pointer; min-height: 40px; }
+.upgrades-list { width: 100%; display: flex; flex-direction: column; gap: 4px; max-height: 175px; overflow-y: auto; padding-right: 2px; }
+.upgrade-card { display: flex; justify-content: space-between; align-items: center; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px 8px; font-size: 9.5px; text-align: left; cursor: pointer; min-height: 38px; }
 .upgrade-info { display: flex; flex-direction: column; gap: 1px; }
-.upgrade-name { color: var(--title-col); font-weight: bold; font-size: 9.5px; }
-.upgrade-desc { font-size: 7px; color: var(--text-sub); }
-.upgrade-cost { color: var(--accent-col); font-weight: bold; font-size: 8px; }
-.upgrade-count { font-size: 10px; font-weight: bold; color: var(--text-main); background: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-col); }
+.upgrade-name { color: var(--title-col); font-weight: bold; font-size: 9px; }
+.upgrade-desc { font-size: 6.5px; color: var(--text-sub); }
+.upgrade-cost { color: var(--accent-col); font-weight: bold; font-size: 7.5px; }
+.upgrade-count { font-size: 9.5px; font-weight: bold; color: var(--text-main); background: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-col); }
 @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-30px) scale(1.15); opacity: 0; } }
-.floating-text { position: fixed; color: var(--title-col); font-size: 13px; font-weight: bold; pointer-events: none; z-index: 99999; animation: floatUp 0.35s ease-out forwards; }
+.floating-text { position: fixed; color: var(--title-col); font-size: 12px; font-weight: bold; pointer-events: none; z-index: 99999; animation: floatUp 0.35s ease-out forwards; }
 </style>
 </head>
 <body>
@@ -107,6 +108,12 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
         <div class="res-val" id="energyTxt">0.0M</div>
         <div class="res-sub" id="housingSubTxt">ПК-места: 0/0</div>
       </div>
+    </div>
+
+    <!-- Виджет трендов YouTube алгоритмов -->
+    <div class="trend-widget" id="trendWidget">
+      <span id="trendTitle" style="color:var(--title-col); font-weight:bold;">🔥 Тренд: Загрузка...</span>
+      <span id="trendTimer" style="color:var(--text-sub);">03:00</span>
     </div>
 
     <div class="money-pipe"><div class="money-flow"></div></div>
@@ -220,8 +227,9 @@ function getHousingStats() {
 }
 
 function clickEnergy(e) {
-  let money = Core.getMoney() + 1;
-  let energy = Core.getEnergy() + 0.2;
+  let trendMult = Core.getTrendMultiplier();
+  let money = Core.getMoney() + (1 * trendMult);
+  let energy = Core.getEnergy() + (0.2 * trendMult);
   Core.setMoney(money);
   Core.setEnergy(energy);
 
@@ -230,7 +238,7 @@ function clickEnergy(e) {
   updateUI();
 
   let pop = document.createElement('div');
-  pop.textContent = "+1 € / 🔴"; pop.className = "floating-text";
+  pop.textContent = `+${trendMult}x € / 🔴`; pop.className = "floating-text";
   pop.style.left = (e.clientX - 15) + "px"; pop.style.top = (e.clientY - 25) + "px";
   document.body.appendChild(pop); setTimeout(() => pop.remove(), 350);
 }
@@ -270,6 +278,7 @@ function buyUpgrade(index) {
 
 function calculateStats() {
   let totalEurSec = 0, totalEnergySec = 0, housing = getHousingStats();
+  let trendMult = Core.getTrendMultiplier();
   upgrades.forEach(up => {
     if (up.type === 'worker') {
       totalEurSec += up.incomeEur * up.count; totalEnergySec += up.energyMWh * up.count;
@@ -281,7 +290,10 @@ function calculateStats() {
       totalEnergySec += (up.energyMWh * up.count) * eff;
     }
   });
-  return { totalEurSec, totalEnergySec };
+  return { 
+    totalEurSec: totalEurSec * trendMult, 
+    totalEnergySec: totalEnergySec * trendMult 
+  };
 }
 
 function updateUI() {
@@ -297,6 +309,14 @@ function updateUI() {
   setTxt('cpsTxt', `+${stats.totalEurSec.toFixed(1)} €/s`);
   setTxt('energyTxt', energy.toFixed(1) + (lang === 'ru' ? "M" : (lang === 'de' ? " Mio" : "M")));
   setTxt('housingSubTxt', `PC: ${housing.usedSlots}/${housing.totalSlots}`);
+
+  // Обновление виджета трендов
+  let trend = Core.getCurrentTrend();
+  let timeLeft = Math.max(0, Math.ceil((trend.expiresAt - Date.now()) / 1000));
+  let mins = Math.floor(timeLeft / 60);
+  let secs = timeLeft % 60;
+  setTxt('trendTitle', `${trend.icon} ${trend.name} (x${trend.mult})`);
+  setTxt('trendTimer', `${mins}:${secs < 10 ? '0' : ''}${secs}`);
 
   let cheapestCost = Math.min(...upgrades.map(u => u.cost));
   let fillEl = document.getElementById('progressFill');
