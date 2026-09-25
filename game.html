@@ -1,250 +1,165 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tube Empire — Студия</title>
-<script src="core.js"></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tube Empire</title><script src="core.js"></script>
 <style>
-:root, [data-theme="dark"] {
-  --portal-bg: rgba(20, 10, 10, 0.96); --border-col: rgba(255, 0, 0, 0.4);
-  --accent-col: #ff0000; --title-col: #ffcc00; --btn-bg: rgba(40, 15, 15, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.03); --text-main: #fff; --text-sub: #ff8888; --body-bg: #0a0505;
-}
-[data-theme="rose"] {
-  --portal-bg: rgba(30, 10, 25, 0.96); --border-col: rgba(233, 30, 99, 0.5);
-  --accent-col: #e91e63; --title-col: #ffeb3b; --btn-bg: rgba(60, 15, 40, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.03); --text-main: #fff; --text-sub: #ff80ab; --body-bg: #150510;
-}
-[data-theme="light"] {
-  --portal-bg: rgba(245, 247, 250, 0.96); --border-col: rgba(211, 47, 47, 0.4);
-  --accent-col: #d32f2f; --title-col: #e65100; --btn-bg: rgba(255, 255, 255, 0.9);
-  --glass-bg: rgba(230, 235, 245, 0.85); --text-main: #1a1a1a; --text-sub: #555; --body-bg: #e0e4ec;
-}
+:root{--bg:#0a0505;--p-bg:rgba(20,10,10,0.96);--b-col:rgba(255,0,0,0.4);--acc:#ff0000;--t-col:#ffcc00;--btn:rgba(40,15,15,0.9);--txt:#fff;--sub:#ff8888;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--txt);font-family:monospace;overflow:hidden;}
 body{padding:4px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
-.portal{width:100%;height:100%;max-width:420px;max-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:6px;background:var(--portal-bg);border:2px solid var(--border-col);border-radius:14px;position:relative;}
-.header{display:flex;justify-content:space-between;align-items:center;padding:4px 6px;background:var(--btn-bg);border:1px solid var(--border-col);border-radius:6px;font-size:9.5px;}
-.h-left{display:flex;gap:2px;align-items:center;}
-.btn-mini{background:rgba(217,30,30,0.85);border:1px solid #ff4d4d;color:#fff;padding:2px 4px;border-radius:4px;font-size:7px;text-decoration:none;font-weight:bold;cursor:pointer;}
-.btn-nav{background:var(--glass-bg);border:1px solid var(--accent-col);color:var(--text-main);padding:2px 4px;border-radius:4px;font-size:8px;text-decoration:none;font-weight:bold;position:relative;display:flex;align-items:center;}
+.portal{width:100%;height:100%;max-width:420px;max-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:6px;background:var(--p-bg);border:2px solid var(--b-col);border-radius:14px;}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:4px;background:var(--btn);border:1px solid var(--b-col);border-radius:6px;font-size:9px;}
+.hb{background:rgba(217,30,30,0.85);border:1px solid #f44;color:#fff;padding:2px 4px;border-radius:4px;font-size:7px;text-decoration:none;font-weight:bold;}
+.nb{background:rgba(255,255,255,0.03);border:1px solid var(--acc);color:var(--txt);padding:2px 4px;border-radius:4px;font-size:8px;text-decoration:none;font-weight:bold;position:relative;display:flex;align-items:center;}
 .dot{position:absolute;top:1px;right:2px;width:6px;height:6px;background:#ff3b30;border-radius:50%;display:none;}
-.body-box{flex-grow:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:2px 0;gap:4px;overflow:hidden;}
-.res-row{display:flex;gap:4px;width:100%;}
-.res-card{flex:1;background:var(--glass-bg);border:1px solid var(--border-col);border-radius:6px;padding:4px;text-align:center;}
-.rt{font-size:7px;color:var(--text-sub);text-transform:uppercase;font-weight:bold;}
-.rv{font-size:13px;font-weight:bold;color:var(--title-col);margin-top:1px;}
-.rs{font-size:7px;color:var(--text-sub);margin-top:1px;}
-.trend{background:var(--glass-bg);border:1px dashed var(--title-col);border-radius:6px;padding:4px 8px;width:100%;display:flex;justify-content:space-between;font-size:8px;}
-.pipe{width:100%;height:4px;background:rgba(0,0,0,0.2);border:1px solid var(--border-col);border-radius:2px;overflow:hidden;position:relative;}
-.pflow{position:absolute;inset:0;width:200%;background:repeating-linear-gradient(90deg,transparent,transparent 6px,var(--title-col) 6px,var(--title-col) 12px);animation:flow 1.5s linear infinite;}
-@keyframes flow{0%{transform:translateX(0);}100%{transform:translateX(50%);}}
-.sell-btn{width:100%;background:var(--btn-bg);border:1px solid var(--title-col);border-radius:6px;padding:5px;color:var(--title-col);font-size:9px;font-weight:bold;cursor:pointer;}
-.clicker{width:56px;height:56px;background:radial-gradient(circle at 35% 35%,var(--accent-col),#800000);border:2px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:22px;cursor:pointer;user-select:none;}
+.body{flex-grow:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:4px;overflow:hidden;padding:2px 0;}
+.row{display:flex;gap:4px;width:100%;}.box{flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--b-col);border-radius:6px;padding:4px;text-align:center;}
+.bt{font-size:7px;color:var(--sub);text-transform:uppercase;font-weight:bold;}.bv{font-size:13px;font-weight:bold;color:var(--t-col);margin-top:1px;}.bs{font-size:7px;color:var(--sub);margin-top:1px;}
+.tr{background:rgba(255,255,255,0.03);border:1px dashed var(--t-col);border-radius:6px;padding:4px 8px;width:100%;display:flex;justify-content:space-between;font-size:8px;}
+.sbtn{width:100%;background:var(--btn);border:1px solid var(--t-col);border-radius:6px;padding:5px;color:var(--t-col);font-size:9px;font-weight:bold;cursor:pointer;}
+.clicker{width:54px;height:54px;background:radial-gradient(circle at 35% 35%,var(--acc),#800000);border:2px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:22px;cursor:pointer;user-select:none;}
 .clicker:active{transform:scale(0.88);}
 .list{width:100%;display:flex;flex-direction:column;gap:4px;max-height:170px;overflow-y:auto;padding-right:2px;}
-.card{display:flex;justify-content:space-between;align-items:center;background:var(--btn-bg);border:1px solid var(--border-col);border-radius:6px;padding:5px 8px;font-size:9.5px;cursor:pointer;min-height:36px;text-align:left;}
-.c-info{display:flex;flex-direction:column;gap:1px;}
-.c-name{color:var(--title-col);font-weight:bold;font-size:9px;}
-.c-desc{font-size:6.5px;color:var(--text-sub);}
-.c-cost{color:var(--accent-col);font-weight:bold;font-size:7.5px;}
-.c-cnt{font-size:9.5px;font-weight:bold;background:rgba(0,0,0,0.2);padding:2px 5px;border-radius:4px;border:1px solid var(--border-col);}
-@keyframes float{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-25px) scale(1.1);opacity:0;}}
-.pop{position:fixed;color:var(--title-col);font-size:11px;font-weight:bold;pointer-events:none;z-index:999;animation:float 0.35s ease-out forwards;}
+.card{display:flex;justify-content:space-between;align-items:center;background:var(--btn);border:1px solid var(--b-col);border-radius:6px;padding:5px 8px;font-size:9px;cursor:pointer;min-height:36px;text-align:left;}
+.cn{color:var(--t-col);font-weight:bold;font-size:9px;}.cd{font-size:6px;color:var(--sub);}.cc{color:var(--acc);font-weight:bold;font-size:7px;}
+.cnt{font-size:9px;font-weight:bold;background:rgba(0,0,0,0.2);padding:2px 5px;border-radius:4px;border:1px solid var(--b-col);}
+@keyframes pop{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-25px) scale(1.1);opacity:0;}}
+.pop-txt{position:fixed;color:var(--t-col);font-size:11px;font-weight:bold;pointer-events:none;z-index:999;animation:pop 0.35s ease-out forwards;}
 </style>
 </head>
 <body>
 <div class="portal">
-  <div class="header">
-    <div class="h-left">
-      <a href="index.html" class="btn-mini" id="mBtn">⬅ МЕНЮ</a>
-      <a href="collection.html" class="btn-nav" id="sBtn">🛒 Магазин<span class="dot" id="sDot"></span></a>
-      <a href="avatar.html" class="btn-nav" id="aBtn">🎨 Студия</a>
-      <a href="gallery.html" class="btn-nav" id="gBtn">🏆 Награды</a>
-      <a href="leaderboard.html" class="btn-nav" id="rBtn">📊 Топ</a>
-      <button class="btn-nav" onclick="toggleLang()" id="lBtn">🇷🇺</button>
+  <div class="hdr">
+    <div style="display:flex;gap:2px;align-items:center;">
+      <a href="index.html" class="hb" id="mBtn">⬅ МЕНЮ</a>
+      <a href="collection.html" class="nb" id="sBtn">🛒 Магазин<span class="dot" id="sDot"></span></a>
+      <a href="avatar.html" class="nb" id="aBtn">🎨 Студия</a>
+      <a href="gallery.html" class="nb" id="gBtn">🏆</a>
+      <a href="leaderboard.html" class="nb" id="rBtn">📊</a>
+      <button class="nb" onclick="Core.toggleLang();loc();upd();" id="lBtn">🇷🇺</button>
     </div>
   </div>
-  <div class="body-box">
-    <div class="res-row">
-      <div class="res-card"><div class="rt" id="rt1">Баланс (€)</div><div class="rv" id="mTxt">0.00 €</div><div class="rs" id="cTxt">+0.0 €/s</div></div>
-      <div class="res-card"><div class="rt" id="rt2">Просмотры</div><div class="rv" id="eTxt">0.0M</div><div class="rs" id="hTxt">ПК: 0/0</div></div>
+  <div class="body">
+    <div class="row">
+      <div class="box"><div class="bt" id="t1">Баланс (€)</div><div class="bv" id="mTxt">0.00 €</div><div class="bs" id="cTxt">+0.0 €/s</div></div>
+      <div class="box"><div class="bt" id="t2">Просмотры</div><div class="bv" id="eTxt">0.0M</div><div class="bs" id="hTxt">ПК: 0/0</div></div>
     </div>
-    <div class="trend"><span id="trName" style="color:var(--title-col);font-weight:bold;">🔥 Тренд</span><span id="trTime" style="color:var(--text-sub);">03:00</span></div>
-    <div class="pipe"><div class="pflow"></div></div>
-    <button class="sell-btn" id="sellTxt" onclick="sellEnergy()">💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)</button>
-    <div style="width:100%;height:2px;background:rgba(0,0,0,0.1);border-radius:2px;"><div id="pFill" style="height:100%;background:linear-gradient(90deg,var(--accent-col),var(--title-col));width:0%;"></div></div>
+    <div class="tr"><span id="trName" style="color:var(--t-col);font-weight:bold;">🔥 Тренд</span><span id="trTime" style="color:var(--sub);">03:00</span></div>
+    <div style="width:100%;height:4px;background:rgba(0,0,0,0.2);border:1px solid var(--b-col);border-radius:2px;overflow:hidden;position:relative;"><div style="position:absolute;inset:0;width:200%;background:repeating-linear-gradient(90deg,transparent,transparent 6px,var(--t-col) 6px,var(--t-col) 12px);animation:fl 1.5s linear infinite;"></div></div>
+    <button class="sbtn" id="sellTxt" onclick="sell()">💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)</button>
+    <div style="width:100%;height:2px;background:rgba(0,0,0,0.1);"><div id="pFill" style="height:100%;background:linear-gradient(90deg,var(--acc),var(--t-col));width:0%;"></div></div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
       <div class="clicker" onclick="tap(event)">🔴</div>
-      <div style="font-size:7px;color:var(--text-sub);" id="tapTxt">Тапай для записи ролика!</div>
+      <div style="font-size:7px;color:var(--sub);" id="tapTxt">Тапай для записи ролика!</div>
     </div>
     <div class="list" id="uList"></div>
   </div>
 </div>
+<style>@keyframes fl{0%{transform:translateX(0);}100%{transform:translateX(50%);}}</style>
 <script>
-const L = {
-  ru: {m:"⬅ МЕНЮ",s:"🛒 Магазин",a:"🎨 Студия",g:"🏆 Награды",r:"📊 Топ",b1:"Баланс (€)",b2:"Просмотры",sell:"💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)",tap:"Тапай для записи ролика!",pr:"Цена",ns:"❌ Нет ПК мест!",
-    items:[{n:"💻 Стол монтажа",d:"+3 ПК места"},{n:"🏢 Офис студия",d:"+10 ПК мест"},{n:"🧑‍💻 Клипмейкер",d:"Авто-монтаж"},{n:"🎥 Оператор",d:"Профи контент"},{n:"🎬 Продюсеры",d:"Медиа-мастера"},{n:"🤖 Shorts Бот",d:"Генератор роликов"},{n:"🎙️ Подкасты",d:"Стрим-ферма"},{n:"🌐 MCN-сеть",d:"Макс. охват"}]},
-  de: {m:"⬅ MENÜ",s:"🛒 Shop",a:"🎨 Studio",g:"🏆 Trophäen",r:"📊 Top",b1:"Guthaben (€)",b2:"Aufrufe",sell:"💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)",tap:"Tippen für Video!",pr:"Preis",ns:"❌ Kein Platz!",
-    items:[{n:"💻 Schnittplatz",d:"+3 PC Plätze"},{n:"🏢 Studio Büro",d:"+10 PC Plätze"},{n:"🧑‍💻 Junior Editor",d:"Auto-Editing"},{n:"🎥 Kameramann",d:"Content-Profi"},{n:"🎬 Produzenten",d:"Medienmeister"},{n:"🤖 Shorts Bot",d:"Auto-Generator"},{n:"🎙️ Podcast Studio",d:"Stream-Farm"},{n:"🌐 Top MCN",d:"Max Ertrag"}]},
-  en: {m:"⬅ MENU",s:"🛒 Shop",a:"🎨 Studio",g:"🏆 Awards",r:"📊 Top",b1:"Balance (€)",b2:"Views",sell:"💰 CASHOUT ADDSENSE (1M = 2.50 €)",tap:"Tap to record!",pr:"Price",ns:"❌ No PCs!",
-    items:[{n:"💻 Editing Desk",d:"+3 PC slots"},{n:"🏢 Studio Office",d:"+10 PC slots"},{n:"🧑‍💻 Video Editor",d:"Auto-editing"},{n:"🎥 Cameraman",d:"Content pro"},{n:"🎬 Producer Team",d:"Media masters"},{n:"🤖 Shorts Bot",d:"Auto-generator"},{n:"🎙️ Podcast Studio",d:"Stream farm"},{n:"🌐 Top MCN",d:"Max earnings"}]}
+const T = {
+  ru:{m:"⬅ МЕНЮ",s:"🛒 Магазин",a:"🎨 Студия",b1:"Баланс (€)",b2:"Просмотры",sell:"💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)",tap:"Тапай для записи ролика!",pr:"Цена",ns:"❌ Нет ПК!"},
+  de:{m:"⬅ MENÜ",s:"🛒 Shop",a:"🎨 Studio",b1:"Guthaben (€)",b2:"Aufrufe",sell:"💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)",tap:"Tippen!",pr:"Preis",ns:"❌ Kein Platz!"},
+  en:{m:"⬅ MENU",s:"🛒 Shop",a:"🎨 Studio",b1:"Balance (€)",b2:"Views",sell:"💰 CASHOUT ADDSENSE (1M = 2.50 €)",tap:"Tap to record!",pr:"Price",ns:"❌ No PCs!"}
 };
-
-function toggleLang(){ Core.toggleLang(); updateLang(); updateUI(); }
-function updateLang(){
-  let t = L[Core.getLang()] || L.ru;
-  document.getElementById('mBtn').textContent = t.m;
-  document.getElementById('sBtn').firstChild.textContent = t.s + " ";
-  document.getElementById('aBtn').textContent = t.a;
-  document.getElementById('gBtn').textContent = t.g;
-  document.getElementById('rBtn').textContent = t.r;
-  document.getElementById('lBtn').textContent = Core.getLang() === 'ru' ? '🇷🇺' : (Core.getLang() === 'de' ? '🇩🇪' : '🇬🇧');
-  document.getElementById('rt1').textContent = t.b1;
-  document.getElementById('rt2').textContent = t.b2;
-  document.getElementById('sellTxt').textContent = t.sell;
-  document.getElementById('tapTxt').textContent = t.tap;
+function loc(){
+  let l=Core.getLang(), t=T[l]||T.ru;
+  document.getElementById('mBtn').textContent=t.m;
+  document.getElementById('sBtn').firstChild.textContent=t.s+" ";
+  document.getElementById('aBtn').textContent=t.a;
+  document.getElementById('lBtn').textContent=l==='ru'?'🇷🇺':(l==='de'?'🇩🇪':'🇬🇧');
+  document.getElementById('t1').textContent=t.b1; document.getElementById('t2').textContent=t.b2;
+  document.getElementById('sellTxt').textContent=t.sell; document.getElementById('tapTxt').textContent=t.tap;
 }
-
-const upgrades = [
-  {id:'wagon',cost:100,slots:3,mult:1.25,type:'housing'},
-  {id:'dorm',cost:800,slots:10,mult:1.30,type:'housing'},
-  {id:'azubi',cost:25,inc:0.1,eng:0.05,mult:1.12,type:'worker'},
-  {id:'elektrik',cost:150,inc:0.4,eng:0.1,mult:1.15,type:'worker'},
-  {id:'brigade',cost:1200,inc:2,eng:0.8,mult:1.18,type:'worker'},
-  {id:'wind',base:9500,cost:9500,inc:14,eng:8.5,req:2,mult:1.20,type:'station'},
-  {id:'solar',base:120000,cost:120000,inc:110,eng:65,req:8,mult:1.22,type:'station'},
-  {id:'aes',base:1500000,cost:1500000,inc:850,eng:450,req:30,mult:1.25,type:'station'}
+const cfg=[
+  {id:'wagon',base:100,slots:3,mult:1.25,type:'housing'},{id:'dorm',base:800,slots:10,mult:1.3,type:'housing'},
+  {id:'azubi',base:25,inc:0.1,eng:0.05,mult:1.12,type:'worker'},{id:'elektrik',base:150,inc:0.4,eng:0.1,mult:1.15,type:'worker'},
+  {id:'brigade',base:1200,inc:2,eng:0.8,mult:1.18,type:'worker'},{id:'wind',base:9500,inc:14,eng:8.5,req:2,mult:1.2,type:'station'},
+  {id:'solar',base:120000,inc:110,eng:65,req:8,mult:1.22,type:'station'},{id:'aes',base:1500000,inc:850,eng:450,req:30,mult:1.25,type:'station'}
 ];
+const names=[{n:"💻 Стол монтажа",d:"+3 места"},{n:"🏢 Офис",d:"+10 мест"},{n:"🧑‍💻 Клипмейкер",d:"Авто-монтаж"},{n:"🎥 Оператор",d:"Профи"},{n:"🎬 Продюсеры",d:"Мастера"},{n:"🤖 Shorts Бот",d:"Генератор"},{n:"🎙️ Подкасты",d:"Стрим-ферма"},{n:"🌐 MCN-сеть",d:"Макс охват"}];
 
-// Восстановление сохраненных данных апгрейдов
-function initUpgradesData(){
-  upgrades.forEach(u => {
-    let cnt = Number(localStorage.getItem("up_"+u.id)||0);
-    u.count = cnt;
-    // пересчитываем стоимость с учетом купленных
-    for(let i=0; i<cnt; i++) {
-      u.cost = Math.floor(u.cost * u.mult);
-    }
-  });
+let ups=cfg.map(c=>{
+  let cnt=Number(localStorage.getItem("up_"+c.id)||0), cost=c.base;
+  for(let i=0;i<cnt;i++) cost=Math.floor(cost*c.mult);
+  return {...c, count:cnt, cost};
+});
+function getH(){
+  let tot=0,used=0; ups.forEach(u=>{if(u.type==='housing')tot+=u.count*u.slots;if(u.type==='worker')used+=u.count;});
+  return {tot,used};
 }
-
-function getHousing(){
-  let total=0, used=0;
-  upgrades.forEach(u => {
-    if(u.type==='housing') total += u.count * u.slots;
-    if(u.type==='worker') used += u.count;
-  });
-  return {total, used};
-}
-
 function tap(e){
-  let mult = Core.getTrendMultiplier();
-  Core.setMoney(Core.getMoney() + mult);
-  Core.setEnergy(Core.getEnergy() + 0.2 * mult);
-  Core.playSound(520, 'triangle', 0.08); Core.haptic('light');
-  updateUI();
-  let p = document.createElement('div');
-  p.className = 'pop'; p.textContent = `+${mult}x`;
-  p.style.left = (e.clientX-10)+'px'; p.style.top = (e.clientY-20)+'px';
+  let m=Core.getTrendMultiplier();
+  Core.setMoney(Core.getMoney()+m); Core.setEnergy(Core.getEnergy()+0.2*m);
+  Core.playSound(520,'triangle',0.08); Core.haptic('light'); upd();
+  let p=document.createElement('div'); p.className='pop-txt'; p.textContent=`+${m}x`;
+  p.style.left=(e.clientX-10)+'px'; p.style.top=(e.clientY-20)+'px';
   document.body.appendChild(p); setTimeout(()=>p.remove(),350);
 }
-
-function sellEnergy(){
-  let eng = Core.getEnergy();
-  if(eng < 1) { Core.playSound(150, 'sawtooth', 0.15); return; }
-  Core.setMoney(Core.getMoney() + eng * 2.5);
-  Core.setEnergy(0);
-  Core.playSound(880, 'square', 0.2); Core.haptic('heavy');
-  updateUI();
+function sell(){
+  let e=Core.getEnergy(); if(e<1){Core.playSound(150,'sawtooth',0.15);return;}
+  Core.setMoney(Core.getMoney()+e*2.5); Core.setEnergy(0);
+  Core.playSound(880,'square',0.2); Core.haptic('heavy'); upd();
 }
-
 function buy(i){
-  let u = upgrades[i], h = getHousing();
-  if(u.type==='worker' && (h.total - h.used) <= 0) { Core.playSound(120, 'sawtooth', 0.2); return; }
-  let mon = Core.getMoney();
-  if(mon >= u.cost){
-    Core.setMoney(mon - u.cost);
-    u.count++; u.cost = Math.floor(u.cost * u.mult);
-    localStorage.setItem("up_"+u.id, u.count);
-    Core.playSound(720, 'square', 0.15); Core.haptic('medium');
-    updateUI();
-  } else { Core.playSound(140, 'sawtooth', 0.2); }
+  let u=ups[i], h=getH(); if(u.type==='worker'&&(h.tot-h.used)<=0){Core.playSound(120,'sawtooth',0.2);return;}
+  let mon=Core.getMoney();
+  if(mon>=u.cost){
+    Core.setMoney(mon-u.cost); u.count++; u.cost=Math.floor(u.cost*u.mult);
+    localStorage.setItem("up_"+u.id,u.count);
+    Core.playSound(720,'square',0.15); Core.haptic('medium'); upd();
+  }else{Core.playSound(140,'sawtooth',0.2);}
 }
-
-function calcStats(){
-  let eur=0, eng=0, h=getHousing(), tm=Core.getTrendMultiplier();
-  upgrades.forEach(u => {
-    if(u.type==='worker'){ eur+=u.inc*u.count; eng+=u.eng*u.count; }
+function calc(){
+  let eur=0,eng=0,h=getH(),tm=Core.getTrendMultiplier();
+  ups.forEach(u=>{
+    if(u.type==='worker'){eur+=u.inc*u.count;eng+=u.eng*u.count;}
     else if(u.type==='station'){
-      let req = (u.req||0)*u.count, eff = req>0 ? Math.min(1, h.used/req) : 1;
-      if(h.used===0 && req>0) eff = 0.1;
-      eur+=(u.inc||0)*u.count*eff; eng+=(u.eng||0)*u.count*eff;
+      let req=u.req*u.count, eff=req>0?Math.min(1,h.used/req):1;
+      if(h.used===0&&req>0)eff=0.1;
+      eur+=u.inc*u.count*eff; eng+=u.eng*u.count*eff;
     }
   });
-  if(typeof Core.getTotalCorporationIncome === 'function') {
-    eur += Core.getTotalCorporationIncome();
-  }
-  return {eur: eur*tm, eng: eng*tm};
+  eur+=Core.getTotalCorporationIncome();
+  return {eur:eur*tm, eng:eng*tm};
 }
-
-function updateUI(){
-  let st = calcStats(), h = getHousing(), t = L[Core.getLang()] || L.ru, mon = Core.getMoney(), eng = Core.getEnergy();
-  document.getElementById('mTxt').textContent = mon.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
-  document.getElementById('cTxt').textContent = `+${st.eur.toFixed(1)} €/s`;
-  document.getElementById('eTxt').textContent = eng.toFixed(1)+"M";
-  document.getElementById('hTxt').textContent = `ПК: ${h.used}/${h.total}`;
+function upd(){
+  let st=calc(), h=getH(), t=T[Core.getLang()]||T.ru, mon=Core.getMoney(), eng=Core.getEnergy();
+  document.getElementById('mTxt').textContent=mon.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+  document.getElementById('cTxt').textContent=`+${st.eur.toFixed(1)} €/s`;
+  document.getElementById('eTxt').textContent=eng.toFixed(1)+"M";
+  document.getElementById('hTxt').textContent=`ПК: ${h.used}/${h.tot}`;
   
-  let tr = Core.getCurrentTrend(), left = Math.max(0,Math.ceil((tr.expiresAt-Date.now())/1000));
-  document.getElementById('trName').textContent = `${tr.icon} ${tr.name} (x${tr.mult})`;
-  document.getElementById('trTime').textContent = `${Math.floor(left/60)}:${('0'+(left%60)).slice(-2)}`;
+  let tr=Core.getCurrentTrend(), left=Math.max(0,Math.ceil((tr.expiresAt-Date.now())/1000));
+  document.getElementById('trName').textContent=`${tr.icon} ${tr.name} (x${tr.mult})`;
+  document.getElementById('trTime').textContent=`${Math.floor(left/60)}:${('0'+(left%60)).slice(-2)}`;
 
-  let cheap = Math.min(...upgrades.map(u=>u.cost));
-  document.getElementById('pFill').style.width = Math.min(100,(mon/cheap)*100)+"%";
+  let cheap=Math.min(...ups.map(u=>u.cost));
+  document.getElementById('pFill').style.width=Math.min(100,(mon/cheap)*100)+"%";
 
-  let html = "";
-  upgrades.forEach((u, idx) => {
-    let can = mon >= u.cost, loc = t.items[idx], desc = loc.d;
+  let html="";
+  ups.forEach((u,idx)=>{
+    let can=mon>=u.cost, nm=names[idx], desc=nm.d;
     if(u.type==='worker'){
-      let free = h.total - h.used; can = can && free > 0;
-      desc = free > 0 ? `+${u.inc}€/s, +${u.eng}M/s` : `<span style="color:#e74c3c">${t.ns}</span>`;
+      let free=h.tot-h.used; can=can&&free>0;
+      desc=free>0?`+${u.inc}€/s`:t.ns;
     }
-    html += `<div class="card" style="opacity:${can?1:0.6};" onclick="buy(${idx})"><div class="c-info"><div class="c-name">${loc.n}</div><div class="c-desc">${desc}</div><div class="c-cost">${t.pr}: ${u.cost.toLocaleString()} €</div></div><div class="c-cnt">${u.count}</div></div>`;
+    html+=`<div class="card" style="opacity:${can?1:0.6};" onclick="buy(${idx})"><div style="display:flex;flex-direction:column;gap:1px;"><div class="cn">${nm.n}</div><div class="cd">${desc}</div><div class="cc">${t.pr}: ${u.cost.toLocaleString()} €</div></div><div class="cnt">${u.count}</div></div>`;
   });
-  document.getElementById('uList').innerHTML = html;
+  document.getElementById('uList').innerHTML=html;
 
-  let luxC = [1500,7500,25000,85000,250000,750000,2000000,5500000,14000000,35000000,85000000,200000000,450000000,1000000000,2200000000,4800000000,10000000000,22000000000,50000000000,120000000000];
-  let dot = luxC.some((c,i)=>localStorage.getItem(`lux_${i+1}`)!=="true" && mon>=c);
-  if(typeof Core.getCorporationAssets === 'function') {
-    dot = dot || Core.getCorporationAssets().some(a=>!Core.isAssetOwned(a.id)&&mon>=a.cost);
-  }
-  dot = dot || upgrades.some(u=>mon>=u.cost);
-  document.getElementById('sDot').style.display = dot ? 'block' : 'none';
+  let luxC=[1500,7500,25000,85000,250000,750000,2000000,5500000,14000000,35000000,85000000,200000000,450000000,1000000000,2200000000,4800000000,10000000000,22000000000,50000000000,120000000000];
+  let dot=luxC.some((c,i)=>localStorage.getItem(`lux_${i+1}`)!=="true"&&mon>=c)||Core.getCorporationAssets().some(a=>!Core.isAssetOwned(a.id)&&mon>=a.cost)||ups.some(u=>mon>=u.cost);
+  document.getElementById('sDot').style.display=dot?'block':'none';
 }
-
-setInterval(()=>{
-  let st = calcStats();
-  if(st.eur>0 || st.eng>0){
-    Core.setMoney(Core.getMoney() + st.eur/10);
-    Core.setEnergy(Core.getEnergy() + st.eng/10);
-    updateUI();
-  }
-},100);
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  initUpgradesData();
-  updateLang();
-  let st = calcStats();
-  if(typeof Core.checkOfflineEarnings === 'function') {
-    let off = Core.checkOfflineEarnings(st.eur, st.eng);
-    if(off){
-      setTimeout(()=>alert(`📈 Пока вас не было:\n💰 +${off.money.toFixed(2)} €\n🔴 +${off.energy.toFixed(1)}M просмотров`), 400);
-    }
-  }
-  updateUI();
+setInterval(()=>{let st=calc();if(st.eur>0||st.eng>0){Core.setMoney(Core.getMoney()+st.eur/10);Core.setEnergy(Core.getEnergy()+st.eng/10);upd();}},100);
+document.addEventListener("DOMContentLoaded",()=>{
+  loc();
+  let st=calc(), off=Core.checkOfflineEarnings(st.eur,st.eng);
+  if(off){setTimeout(()=>alert(`📈 Оффлайн-доход:\n💰 +${off.money.toFixed(2)} €\n🔴 +${off.energy.toFixed(1)}M`),400);}
+  upd();
 });
 </script>
 </body>
 </html>
-
