@@ -7,381 +7,231 @@
 <script src="core.js"></script>
 <style>
 :root, [data-theme="dark"] {
-  --portal-bg: rgba(20, 10, 10, 0.96);
-  --border-col: rgba(255, 0, 0, 0.4);
-  --accent-col: #ff0000;
-  --title-col: #ffcc00;
-  --btn-bg: rgba(40, 15, 15, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --housing-col: #3498db;
-  --text-main: #fff;
-  --text-sub: #ff8888;
-  --body-bg: #0a0505;
+  --portal-bg: rgba(20, 10, 10, 0.96); --border-col: rgba(255, 0, 0, 0.4);
+  --accent-col: #ff0000; --title-col: #ffcc00; --btn-bg: rgba(40, 15, 15, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.03); --text-main: #fff; --text-sub: #ff8888; --body-bg: #0a0505;
 }
 [data-theme="rose"] {
-  --portal-bg: rgba(30, 10, 25, 0.96);
-  --border-col: rgba(233, 30, 99, 0.5);
-  --accent-col: #e91e63;
-  --title-col: #ffeb3b;
-  --btn-bg: rgba(60, 15, 40, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --housing-col: #ff4081;
-  --text-main: #fff;
-  --text-sub: #ff80ab;
-  --body-bg: #150510;
+  --portal-bg: rgba(30, 10, 25, 0.96); --border-col: rgba(233, 30, 99, 0.5);
+  --accent-col: #e91e63; --title-col: #ffeb3b; --btn-bg: rgba(60, 15, 40, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.03); --text-main: #fff; --text-sub: #ff80ab; --body-bg: #150510;
 }
 [data-theme="light"] {
-  --portal-bg: rgba(245, 247, 250, 0.96);
-  --border-col: rgba(211, 47, 47, 0.4);
-  --accent-col: #d32f2f;
-  --title-col: #e65100;
-  --btn-bg: rgba(255, 255, 255, 0.9);
-  --glass-bg: rgba(230, 235, 245, 0.85);
-  --housing-col: #0288d1;
-  --text-main: #1a1a1a;
-  --text-sub: #555555;
-  --body-bg: #e0e4ec;
+  --portal-bg: rgba(245, 247, 250, 0.96); --border-col: rgba(211, 47, 47, 0.4);
+  --accent-col: #d32f2f; --title-col: #e65100; --btn-bg: rgba(255, 255, 255, 0.9);
+  --glass-bg: rgba(230, 235, 245, 0.85); --text-main: #1a1a1a; --text-sub: #555; --body-bg: #e0e4ec;
 }
-
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition:background 0.3s;}
+html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;}
 body{padding:4px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
-.portal{
-  width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
-  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 6px; z-index: 10; background: var(--portal-bg); border: 2px solid var(--border-col);
-  border-radius: 14px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.2); position: relative;
-}
-.game-ui-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; width: 100%; flex-shrink: 0; font-size: 9.5px; }
-.header-left { display: flex; gap: 2px; align-items: center; }
-.back-btn { background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff; padding: 2px 4px; border-radius: 4px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 7px; }
-.shop-link-btn, .gallery-link-btn, .rank-link-btn, .lang-btn { background: var(--glass-bg); border: 1px solid var(--accent-col); color: var(--text-main); padding: 2px 4px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; position: relative; }
-.mlbb-dot-shop { position: absolute; top: 1px; right: 2px; width: 6px; height: 6px; background: #ff3b30; border-radius: 50%; box-shadow: 0 0 5px #ff3b30; display: none; }
-.clicker-body { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 2px 0; width: 100%; gap: 4px; overflow: hidden; }
-.resources-container { display: flex; gap: 4px; width: 100%; }
-.res-box { flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 4px; text-align: center; }
-.res-title { font-size: 7px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
-.res-val { font-size: 14px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,204,0,0.4); margin-top: 1px; }
-.res-sub { font-size: 7px; color: var(--text-sub); margin-top: 1px; }
-.trend-widget { background: var(--glass-bg); border: 1px dashed var(--title-col); border-radius: 6px; padding: 4px 8px; width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 8px; flex-shrink: 0; }
-.money-pipe { width: 100%; height: 5px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-col); border-radius: 3px; position: relative; overflow: hidden; }
-.money-flow { position: absolute; top: 0; left: -100%; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, transparent, transparent 6px, var(--title-col) 6px, var(--title-col) 12px, var(--text-main) 12px, var(--text-main) 16px); opacity: 0.75; animation: flowMoney 1.5s linear infinite; }
-@keyframes flowMoney { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
-.sell-energy-btn { width: 100%; background: var(--btn-bg); border: 1px solid var(--title-col); border-radius: 6px; padding: 5px; color: var(--title-col); font-family: monospace; font-size: 9px; font-weight: bold; cursor: pointer; text-align: center; }
-.progress-bar-container { width: 100%; height: 2px; background: rgba(0,0,0,0.1); border-radius: 2px; overflow: hidden; }
-.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-col), var(--title-col)); width: 0%; transition: width 0.2s ease; }
-.click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; margin: 0; }
-.click-target { width: 58px; height: 58px; background: radial-gradient(circle at 35% 35%, var(--accent-col), #800000); border: 2.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; box-shadow: 0 0 15px rgba(255,0,0,0.4); user-select: none; touch-action: manipulation; }
-.click-target:active { transform: scale(0.88); }
-.upgrades-list { width: 100%; display: flex; flex-direction: column; gap: 4px; max-height: 175px; overflow-y: auto; padding-right: 2px; }
-.upgrade-card { display: flex; justify-content: space-between; align-items: center; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px 8px; font-size: 9.5px; text-align: left; cursor: pointer; min-height: 38px; }
-.upgrade-info { display: flex; flex-direction: column; gap: 1px; }
-.upgrade-name { color: var(--title-col); font-weight: bold; font-size: 9px; }
-.upgrade-desc { font-size: 6.5px; color: var(--text-sub); }
-.upgrade-cost { color: var(--accent-col); font-weight: bold; font-size: 7.5px; }
-.upgrade-count { font-size: 9.5px; font-weight: bold; color: var(--text-main); background: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-col); }
-@keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-30px) scale(1.15); opacity: 0; } }
-.floating-text { position: fixed; color: var(--title-col); font-size: 12px; font-weight: bold; pointer-events: none; z-index: 99999; animation: floatUp 0.35s ease-out forwards; }
+.portal{width:100%;height:100%;max-width:420px;max-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:6px;background:var(--portal-bg);border:2px solid var(--border-col);border-radius:14px;position:relative;}
+.header{display:flex;justify-content:space-between;align-items:center;padding:4px 6px;background:var(--btn-bg);border:1px solid var(--border-col);border-radius:6px;font-size:9.5px;}
+.h-left{display:flex;gap:2px;align-items:center;}
+.btn-mini{background:rgba(217,30,30,0.85);border:1px solid #ff4d4d;color:#fff;padding:2px 4px;border-radius:4px;font-size:7px;text-decoration:none;font-weight:bold;cursor:pointer;}
+.btn-nav{background:var(--glass-bg);border:1px solid var(--accent-col);color:var(--text-main);padding:2px 4px;border-radius:4px;font-size:8px;text-decoration:none;font-weight:bold;position:relative;display:flex;align-items:center;}
+.dot{position:absolute;top:1px;right:2px;width:6px;height:6px;background:#ff3b30;border-radius:50%;display:none;}
+.body-box{flex-grow:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:2px 0;gap:4px;overflow:hidden;}
+.res-row{display:flex;gap:4px;width:100%;}
+.res-card{flex:1;background:var(--glass-bg);border:1px solid var(--border-col);border-radius:6px;padding:4px;text-align:center;}
+.rt{font-size:7px;color:var(--text-sub);text-transform:uppercase;font-weight:bold;}
+.rv{font-size:13px;font-weight:bold;color:var(--title-col);margin-top:1px;}
+.rs{font-size:7px;color:var(--text-sub);margin-top:1px;}
+.trend{background:var(--glass-bg);border:1px dashed var(--title-col);border-radius:6px;padding:4px 8px;width:100%;display:flex;justify-content:space-between;font-size:8px;}
+.pipe{width:100%;height:4px;background:rgba(0,0,0,0.2);border:1px solid var(--border-col);border-radius:2px;overflow:hidden;position:relative;}
+.pflow{position:absolute;inset:0;width:200%;background:repeating-linear-gradient(90deg,transparent,transparent 6px,var(--title-col) 6px,var(--title-col) 12px);animation:flow 1.5s linear infinite;}
+@keyframes flow{0%{transform:translateX(0);}100%{transform:translateX(50%);}}
+.sell-btn{width:100%;background:var(--btn-bg);border:1px solid var(--title-col);border-radius:6px;padding:5px;color:var(--title-col);font-size:9px;font-weight:bold;cursor:pointer;}
+.clicker{width:56px;height:56px;background:radial-gradient(circle at 35% 35%,var(--accent-col),#800000);border:2px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:22px;cursor:pointer;user-select:none;}
+.clicker:active{transform:scale(0.88);}
+.list{width:100%;display:flex;flex-direction:column;gap:4px;max-height:170px;overflow-y:auto;padding-right:2px;}
+.card{display:flex;justify-content:space-between;align-items:center;background:var(--btn-bg);border:1px solid var(--border-col);border-radius:6px;padding:5px 8px;font-size:9.5px;cursor:pointer;min-height:36px;text-align:left;}
+.c-info{display:flex;flex-direction:column;gap:1px;}
+.c-name{color:var(--title-col);font-weight:bold;font-size:9px;}
+.c-desc{font-size:6.5px;color:var(--text-sub);}
+.c-cost{color:var(--accent-col);font-weight:bold;font-size:7.5px;}
+.c-cnt{font-size:9.5px;font-weight:bold;background:rgba(0,0,0,0.2);padding:2px 5px;border-radius:4px;border:1px solid var(--border-col);}
+@keyframes float{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-25px) scale(1.1);opacity:0;}}
+.pop{position:fixed;color:var(--title-col);font-size:11px;font-weight:bold;pointer-events:none;z-index:999;animation:float 0.35s ease-out forwards;}
 </style>
 </head>
 <body>
-
 <div class="portal">
-  <div class="game-ui-header">
-    <div class="header-left">
-      <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-      <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">
-        🛒 Магазин
-        <span class="mlbb-dot-shop" id="shopDot"></span>
-      </a>
-      <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🏆 Награды</a>
-      <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">📊 Топ</a>
-      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇷🇺 RU</button>
+  <div class="header">
+    <div class="h-left">
+      <a href="index.html" class="btn-mini" id="mBtn">⬅ МЕНЮ</a>
+      <a href="collection.html" class="btn-nav" id="sBtn">🛒 Магазин<span class="dot" id="sDot"></span></a>
+      <a href="avatar.html" class="btn-nav" id="aBtn">🎨 Студия</a>
+      <a href="gallery.html" class="btn-nav" id="gBtn">🏆 Награды</a>
+      <a href="leaderboard.html" class="btn-nav" id="rBtn">📊 Топ</a>
+      <button class="btn-nav" onclick="toggleLang()" id="lBtn">🇷🇺</button>
     </div>
   </div>
-
-  <div class="clicker-body">
-    <div class="resources-container">
-      <div class="res-box">
-        <div class="res-title" id="resBudgetTitle">Баланс (€)</div>
-        <div class="res-val" id="moneyTxt">0.00 €</div>
-        <div class="res-sub" id="cpsTxt">+0.0 €/сек</div>
-      </div>
-      <div class="res-box">
-        <div class="res-title" id="resEnergyTitle">Просмотры (Mio)</div>
-        <div class="res-val" id="energyTxt">0.0M</div>
-        <div class="res-sub" id="housingSubTxt">ПК-места: 0/0</div>
-      </div>
+  <div class="body-box">
+    <div class="res-row">
+      <div class="res-card"><div class="rt" id="rt1">Баланс (€)</div><div class="rv" id="mTxt">0.00 €</div><div class="rs" id="cTxt">+0.0 €/s</div></div>
+      <div class="res-card"><div class="rt" id="rt2">Просмотры</div><div class="rv" id="eTxt">0.0M</div><div class="rs" id="hTxt">ПК: 0/0</div></div>
     </div>
-
-    <div class="trend-widget" id="trendWidget">
-      <span id="trendTitle" style="color:var(--title-col); font-weight:bold;">🔥 Тренд: Загрузка...</span>
-      <span id="trendTimer" style="color:var(--text-sub);">03:00</span>
+    <div class="trend"><span id="trName" style="color:var(--title-col);font-weight:bold;">🔥 Тренд</span><span id="trTime" style="color:var(--text-sub);">03:00</span></div>
+    <div class="pipe"><div class="pflow"></div></div>
+    <button class="sell-btn" id="sellTxt" onclick="sellEnergy()">💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)</button>
+    <div style="width:100%;height:2px;background:rgba(0,0,0,0.1);border-radius:2px;"><div id="pFill" style="height:100%;background:linear-gradient(90deg,var(--accent-col),var(--title-col));width:0%;"></div></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+      <div class="clicker" onclick="tap(event)">🔴</div>
+      <div style="font-size:7px;color:var(--text-sub);" id="tapTxt">Тапай для записи ролика!</div>
     </div>
-
-    <div class="money-pipe"><div class="money-flow"></div></div>
-    <button class="sell-energy-btn" id="sellBtnTxt" onclick="sellEnergy()">💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)</button>
-    <div class="progress-bar-container"><div class="progress-bar-fill" id="progressFill"></div></div>
-
-    <div class="click-target-container">
-      <div class="click-target" onclick="clickEnergy(event)">🔴</div>
-      <div style="font-size: 7px; color: var(--text-sub);" id="tapHintTxt">Тапай для записи ролика!</div>
-    </div>
-
-    <div class="upgrades-list" id="upgradesList"></div>
+    <div class="list" id="uList"></div>
   </div>
 </div>
-
 <script>
-const langData = {
-  ru: {
-    menu: "⬅ МЕНЮ", shop: "🛒 Магазин", gallery: "🏆 Награды", rank: "📊 Топ",
-    budget: "Баланс (€)", energy: "Просмотры (Mio)",
-    sellBtn: "💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)", tapHint: "Тапай для записи ролика!",
-    price: "Цена", noSlots: "❌ Нет свободных рабочих мест!",
-    items: [
-      { name: "💻 Стол для монтажа", desc: "+3 рабочих места в студии", type: "housing" },
-      { name: "🏢 Офис-студия блогеров", desc: "+10 рабочих мест в студии", type: "housing" },
-      { name: "🧑‍💻 Начинающий клипмейкер", desc: "Авто-монтаж (требует ПК)", type: "worker" },
-      { name: "🎥 Сценарист / Оператор", desc: "Профи контента (требует ПК)", type: "worker" },
-      { name: "🎬 Продюсерская команда", desc: "Медиа-мастера (требует ПК)", type: "worker" },
-      { name: "🤖 Бот для Shorts/Reels", desc: "Авто-генерация роликов", type: "station" },
-      { name: "🎙️ Студия подкастов", desc: "Стрим-ферма (+ просмотры)", type: "station" },
-      { name: "🌐 Топовая MCN-сеть", desc: "Максимальные просмотры и доход", type: "station" }
-    ]
-  },
-  de: {
-    menu: "⬅ MENÜ", shop: "🛒 Shop", gallery: "🏆 Trophäen", rank: "📊 Top",
-    budget: "Guthaben (€)", energy: "Aufrufe (Mio)",
-    sellBtn: "💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)", tapHint: "Tippen für Video-Upload!",
-    price: "Preis", noSlots: "❌ Keine Arbeitsplätze frei!",
-    items: [
-      { name: "💻 Schnittplatz", desc: "+3 Plätze im Studio", type: "housing" },
-      { name: "🏢 Blogger-Studiobüro", desc: "+10 Plätze im Studio", type: "housing" },
-      { name: "🧑‍💻 Junior Editor", desc: "Auto-Editing (braucht Platz)", type: "worker" },
-      { name: "🎥 Kameramann / Autor", desc: "Content-Profi (braucht Platz)", type: "worker" },
-      { name: "🎬 Produzenten-Team", desc: "Medienmeister (braucht Platz)", type: "worker" },
-      { name: "🤖 Shorts/Reels Bot", desc: "Auto-Videogenerator", type: "station" },
-      { name: "🎙️ Podcast Studio", desc: "Stream-Farm (+ Aufrufe)", type: "station" },
-      { name: "🌐 Top MCN-Netzwerk", desc: "Maximale Aufrufe & Ertrag", type: "station" }
-    ]
-  },
-  en: {
-    menu: "⬅ MENU", shop: "🛒 Shop", gallery: "🏆 Awards", rank: "📊 Top",
-    budget: "Balance (€)", energy: "Views (Mio)",
-    sellBtn: "💰 CASHOUT ADDSENSE (1M = 2.50 €)", tapHint: "Tap to record video!",
-    price: "Price", noSlots: "❌ No free workspaces!",
-    items: [
-      { name: "💻 Editing Desk", desc: "+3 studio workspaces", type: "housing" },
-      { name: "🏢 Blogger Studio Office", desc: "+10 studio workspaces", type: "housing" },
-      { name: "🧑‍💻 Junior Video Editor", desc: "Auto-editing (needs workspace)", type: "worker" },
-      { name: "🎥 Scriptwriter / Cameraman", desc: "Content pro (needs workspace)", type: "worker" },
-      { name: "🎬 Producer Team", desc: "Media masters (needs workspace)", type: "worker" },
-      { name: "🤖 Shorts/Reels Bot", desc: "Auto-video generator", type: "station" },
-      { name: "🎙️ Podcast Studio", desc: "Stream farm (+ views)", type: "station" },
-      { name: "🌐 Top MCN Network", desc: "Maximum views & earnings", type: "station" }
-    ]
-  }
+const L = {
+  ru: {m:"⬅ МЕНЮ",s:"🛒 Магазин",a:"🎨 Студия",g:"🏆 Награды",r:"📊 Топ",b1:"Баланс (€)",b2:"Просмотры",sell:"💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)",tap:"Тапай для записи ролика!",pr:"Цена",ns:"❌ Нет ПК мест!",
+    items:[{n:"💻 Стол монтажа",d:"+3 ПК места"},{n:"🏢 Офис студия",d:"+10 ПК мест"},{n:"🧑‍💻 Клипмейкер",d:"Авто-монтаж"},{n:"🎥 Оператор",d:"Профи контент"},{n:"🎬 Продюсеры",d:"Медиа-мастера"},{n:"🤖 Shorts Бот",d:"Генератор роликов"},{n:"🎙️ Подкасты",d:"Стрим-ферма"},{n:"🌐 MCN-сеть",d:"Макс. охват"}]},
+  de: {m:"⬅ MENÜ",s:"🛒 Shop",a:"🎨 Studio",g:"🏆 Trophäen",r:"📊 Top",b1:"Guthaben (€)",b2:"Aufrufe",sell:"💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)",tap:"Tippen für Video!",pr:"Preis",ns:"❌ Kein Platz!",
+    items:[{n:"💻 Schnittplatz",d:"+3 PC Plätze"},{n:"🏢 Studio Büro",d:"+10 PC Plätze"},{n:"🧑‍💻 Junior Editor",d:"Auto-Editing"},{n:"🎥 Kameramann",d:"Content-Profi"},{n:"🎬 Produzenten",d:"Medienmeister"},{n:"🤖 Shorts Bot",d:"Auto-Generator"},{n:"🎙️ Podcast Studio",d:"Stream-Farm"},{n:"🌐 Top MCN",d:"Max Ertrag"}]},
+  en: {m:"⬅ MENU",s:"🛒 Shop",a:"🎨 Studio",g:"🏆 Awards",r:"📊 Top",b1:"Balance (€)",b2:"Views",sell:"💰 CASHOUT ADDSENSE (1M = 2.50 €)",tap:"Tap to record!",pr:"Price",ns:"❌ No PCs!",
+    items:[{n:"💻 Editing Desk",d:"+3 PC slots"},{n:"🏢 Studio Office",d:"+10 PC slots"},{n:"🧑‍💻 Video Editor",d:"Auto-editing"},{n:"🎥 Cameraman",d:"Content pro"},{n:"🎬 Producer Team",d:"Media masters"},{n:"🤖 Shorts Bot",d:"Auto-generator"},{n:"🎙️ Podcast Studio",d:"Stream farm"},{n:"🌐 Top MCN",d:"Max earnings"}]}
 };
 
-function toggleLanguage() {
-  Core.toggleLang();
-  updateLanguageUI();
-  updateUI();
+function toggleLang(){ Core.toggleLang(); updateLang(); updateUI(); }
+function updateLang(){
+  let t = L[Core.getLang()] || L.ru;
+  document.getElementById('mBtn').textContent = t.m;
+  document.getElementById('sBtn').firstChild.textContent = t.s + " ";
+  document.getElementById('aBtn').textContent = t.a;
+  document.getElementById('gBtn').textContent = t.g;
+  document.getElementById('rBtn').textContent = t.r;
+  document.getElementById('lBtn').textContent = Core.getLang() === 'ru' ? '🇷🇺' : (Core.getLang() === 'de' ? '🇩🇪' : '🇬🇧');
+  document.getElementById('rt1').textContent = t.b1;
+  document.getElementById('rt2').textContent = t.b2;
+  document.getElementById('sellTxt').textContent = t.sell;
+  document.getElementById('tapTxt').textContent = t.tap;
 }
 
-function updateLanguageUI() {
-  let lang = Core.getLang();
-  let t = langData[lang] || langData.ru;
-  
-  const setTxt = (id, val) => { let el = document.getElementById(id); if(el) el.textContent = val; };
-  
-  setTxt('menuBtnTxt', t.menu);
-  setTxt('shopBtnTxt', t.shop);
-  setTxt('galleryBtnTxt', t.gallery);
-  setTxt('rankBtnTxt', t.rank);
-  setTxt('resBudgetTitle', t.budget);
-  setTxt('resEnergyTitle', t.energy);
-  setTxt('sellBtnTxt', t.sellBtn);
-  setTxt('tapHintTxt', t.tapHint);
-  
-  let langLabels = { ru: "🇷🇺 RU", de: "🇩🇪 DE", en: "🇬🇧 EN" };
-  setTxt('langBtn', langLabels[lang] || "🇷🇺 RU");
-}
-
-let upgrades = [
-  { id: 'wagon', cost: 100, housingSlots: 3, count: Number(localStorage.getItem("up_wagon") || 0), mult: 1.25, type: 'housing' },
-  { id: 'dorm', cost: 800, housingSlots: 10, count: Number(localStorage.getItem("up_dorm") || 0), mult: 1.30, type: 'housing' },
-  { id: 'azubi', cost: 25, incomeEur: 0.1, energyMWh: 0.05, count: Number(localStorage.getItem("up_azubi") || 0), mult: 1.12, type: 'worker' },
-  { id: 'elektrik', cost: 150, incomeEur: 0.4, energyMWh: 0.1, count: Number(localStorage.getItem("up_elektrik") || 0), mult: 1.15, type: 'worker' },
-  { id: 'brigade', cost: 1200, incomeEur: 2, energyMWh: 0.8, count: Number(localStorage.getItem("up_brigade") || 0), mult: 1.18, type: 'worker' },
-  { id: 'wind', cost: 9500, incomeEur: 14, energyMWh: 8.5, workersNeeded: 2, count: Number(localStorage.getItem("up_wind") || 0), mult: 1.20, type: 'station' },
-  { id: 'solar', cost: 120000, incomeEur: 110, energyMWh: 65, workersNeeded: 8, count: Number(localStorage.getItem("up_solar") || 0), mult: 1.22, type: 'station' },
-  { id: 'aes', cost: 1500000, incomeEur: 850, energyMWh: 450, workersNeeded: 30, count: Number(localStorage.getItem("up_aes") || 0), mult: 1.25, type: 'station' }
+const uCfg = [
+  {id:'wagon',base:100,slots:3,mult:1.25,type:'housing'},
+  {id:'dorm',base:800,slots:10,mult:1.30,type:'housing'},
+  {id:'azubi',base:25,inc:0.1,eng:0.05,mult:1.12,type:'worker'},
+  {id:'elektrik',base:150,inc:0.4,eng:0.1,mult:1.15,type:'worker'},
+  {id:'brigade',base:1200,inc:2,eng:0.8,mult:1.18,type:'worker'},
+  {id:'wind',base:9500,inc:14,eng:8.5,req:2,mult:1.20,type:'station'},
+  {id:'solar',base:120000,inc:110,eng:65,req:8,mult:1.22,type:'station'},
+  {id:'aes',base:1500000,inc:850,eng:450,req:30,mult:1.25,type:'station'}
 ];
 
-function getHousingStats() {
-  let totalSlots = 0, usedSlots = 0;
-  upgrades.forEach(up => {
-    if (up.type === 'housing') totalSlots += up.count * up.housingSlots;
-    if (up.type === 'worker') usedSlots += up.count;
+function getUpgrades(){
+  return uCfg.map(c => {
+    let cnt = Number(localStorage.getItem("up_"+c.id)||0);
+    let cost = c.base;
+    for(let i=0;i<cnt;i++) cost = Math.floor(cost * c.mult);
+    return {...c, count: cnt, cost};
   });
-  return { totalSlots, usedSlots };
+}
+let upgrades = getUpgrades();
+
+function getHousing(){
+  let total=0, used=0;
+  upgrades.forEach(u => {
+    if(u.type==='housing') total += u.count * u.slots;
+    if(u.type==='worker') used += u.count;
+  });
+  return {total, used};
 }
 
-function clickEnergy(e) {
-  let trendMult = Core.getTrendMultiplier();
-  let money = Core.getMoney() + (1 * trendMult);
-  let energy = Core.getEnergy() + (0.2 * trendMult);
-  Core.setMoney(money);
-  Core.setEnergy(energy);
-
-  Core.playSound(520, 'triangle', 0.08);
-  Core.haptic('light');
+function tap(e){
+  let mult = Core.getTrendMultiplier();
+  Core.setMoney(Core.getMoney() + mult);
+  Core.setEnergy(Core.getEnergy() + 0.2 * mult);
+  Core.playSound(520, 'triangle', 0.08); Core.haptic('light');
   updateUI();
-
-  let pop = document.createElement('div');
-  pop.textContent = `+${trendMult}x € / 🔴`; pop.className = "floating-text";
-  pop.style.left = (e.clientX - 15) + "px"; pop.style.top = (e.clientY - 25) + "px";
-  document.body.appendChild(pop); setTimeout(() => pop.remove(), 350);
+  let p = document.createElement('div');
+  p.className = 'pop'; p.textContent = `+${mult}x`;
+  p.style.left = (e.clientX-10)+'px'; p.style.top = (e.clientY-20)+'px';
+  document.body.appendChild(p); setTimeout(()=>p.remove(),350);
 }
 
-function sellEnergy() {
-  let energy = Core.getEnergy();
-  if (energy < 1) { Core.playSound(150, 'sawtooth', 0.15); return; }
-  let earned = energy * 2.50;
-  let money = Core.getMoney() + earned;
-  Core.setMoney(money);
+function sellEnergy(){
+  let eng = Core.getEnergy();
+  if(eng < 1) { Core.playSound(150, 'sawtooth', 0.15); return; }
+  Core.setMoney(Core.getMoney() + eng * 2.5);
   Core.setEnergy(0);
-
-  Core.playSound(880, 'square', 0.2);
-  Core.haptic('heavy');
+  Core.playSound(880, 'square', 0.2); Core.haptic('heavy');
   updateUI();
 }
 
-function buyUpgrade(index) {
-  let up = upgrades[index], housing = getHousingStats();
-  if (up.type === 'worker' && (housing.totalSlots - housing.usedSlots) <= 0) {
-    Core.playSound(120, 'sawtooth', 0.2); Core.haptic('heavy'); return;
-  }
-  let money = Core.getMoney();
-  if (money >= up.cost) {
-    money -= up.cost;
-    Core.setMoney(money);
-    up.count++;
-    up.cost = Math.floor(up.cost * up.mult);
-    localStorage.setItem("up_" + up.id, up.count);
-    Core.playSound(720, 'square', 0.15);
-    Core.haptic('medium');
+function buy(i){
+  let u = upgrades[i], h = getHousing();
+  if(u.type==='worker' && (h.total - h.used) <= 0) { Core.playSound(120, 'sawtooth', 0.2); return; }
+  let mon = Core.getMoney();
+  if(mon >= u.cost){
+    Core.setMoney(mon - u.cost);
+    u.count++; u.cost = Math.floor(u.cost * u.mult);
+    localStorage.setItem("up_"+u.id, u.count);
+    Core.playSound(720, 'square', 0.15); Core.haptic('medium');
     updateUI();
-  } else {
-    Core.playSound(140, 'sawtooth', 0.2);
-  }
+  } else { Core.playSound(140, 'sawtooth', 0.2); }
 }
 
-function calculateStats() {
-  let totalEurSec = 0, totalEnergySec = 0, housing = getHousingStats();
-  let trendMult = Core.getTrendMultiplier();
-  
-  upgrades.forEach(up => {
-    if (up.type === 'worker') {
-      totalEurSec += up.incomeEur * up.count; totalEnergySec += up.energyMWh * up.count;
-    } else if (up.type === 'station') {
-      let req = (up.workersNeeded || 0) * up.count;
-      let eff = req > 0 ? Math.min(1.0, housing.usedSlots / req) : 1.0;
-      if (housing.usedSlots === 0 && req > 0) eff = 0.1;
-      totalEurSec += (up.incomeEur * up.count) * eff;
-      totalEnergySec += (up.energyMWh * up.count) * eff;
+function calcStats(){
+  let eur=0, eng=0, h=getHousing(), tm=Core.getTrendMultiplier();
+  upgrades.forEach(u => {
+    if(u.type==='worker'){ eur+=u.inc*u.count; eng+=u.eng*u.count; }
+    else if(u.type==='station'){
+      let req = u.req*u.count, eff = req>0 ? Math.min(1, h.used/req) : 1;
+      if(h.used===0 && req>0) eff = 0.1;
+      eur+=u.inc*u.count*eff; eng+=u.eng*u.count*eff;
     }
   });
-
-  let corpIncome = Core.getTotalCorporationIncome();
-  totalEurSec += corpIncome;
-
-  return { 
-    totalEurSec: totalEurSec * trendMult, 
-    totalEnergySec: totalEnergySec * trendMult 
-  };
+  eur += Core.getTotalCorporationIncome();
+  return {eur: eur*tm, eng: eng*tm};
 }
 
-function updateUI() {
-  let stats = calculateStats(), housing = getHousingStats();
-  let lang = Core.getLang();
-  let t = langData[lang] || langData.ru;
-  let money = Core.getMoney();
-  let energy = Core.getEnergy();
+function updateUI(){
+  let st = calcStats(), h = getHousing(), t = L[Core.getLang()] || L.ru, mon = Core.getMoney(), eng = Core.getEnergy();
+  document.getElementById('mTxt').textContent = mon.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+  document.getElementById('cTxt').textContent = `+${st.eur.toFixed(1)} €/s`;
+  document.getElementById('eTxt').textContent = eng.toFixed(1)+"M";
+  document.getElementById('hTxt').textContent = `ПК: ${h.used}/${h.total}`;
+  
+  let tr = Core.getCurrentTrend(), left = Math.max(0,Math.ceil((tr.expiresAt-Date.now())/1000));
+  document.getElementById('trName').textContent = `${tr.icon} ${tr.name} (x${tr.mult})`;
+  document.getElementById('trTime',).textContent = `${Math.floor(left/60)}:${('0'+(left%60)).slice(-2)}`;
 
-  const setTxt = (id, val) => { let el = document.getElementById(id); if(el) el.textContent = val; };
+  let cheap = Math.min(...upgrades.map(u=>u.cost));
+  document.getElementById('pFill').style.width = Math.min(100,(mon/cheap)*100)+"%";
 
-  setTxt('moneyTxt', money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €");
-  setTxt('cpsTxt', `+${stats.totalEurSec.toFixed(1)} €/s`);
-  setTxt('energyTxt', energy.toFixed(1) + (lang === 'ru' ? "M" : (lang === 'de' ? " Mio" : "M")));
-  setTxt('housingSubTxt', `PC: ${housing.usedSlots}/${housing.totalSlots}`);
-
-  let trend = Core.getCurrentTrend();
-  let timeLeft = Math.max(0, Math.ceil((trend.expiresAt - Date.now()) / 1000));
-  let mins = Math.floor(timeLeft / 60);
-  let secs = timeLeft % 60;
-  setTxt('trendTitle', `${trend.icon} ${trend.name} (x${trend.mult})`);
-  setTxt('trendTimer', `${mins}:${secs < 10 ? '0' : ''}${secs}`);
-
-  let cheapestCost = Math.min(...upgrades.map(u => u.cost));
-  let fillEl = document.getElementById('progressFill');
-  if(fillEl) fillEl.style.width = Math.min(100, (money / cheapestCost) * 100) + "%";
-
-  let listHtml = "";
-  upgrades.forEach((up, idx) => {
-    let currentCost = Math.floor(up.cost), canBuy = money >= currentCost, localizedItem = t.items[idx];
-    let subInfo = localizedItem.desc;
-    if (up.type === 'worker') {
-      let freeSlots = housing.totalSlots - housing.usedSlots;
-      canBuy = canBuy && freeSlots > 0;
-      subInfo = freeSlots > 0 ? `+${up.incomeEur}€/s, +${up.energyMWh}M/s` : `<span style="color:#e74c3c">${t.noSlots}</span>`;
+  let html = "";
+  upgrades.forEach((u, idx) => {
+    let can = mon >= u.cost, loc = t.items[idx], desc = loc.d;
+    if(u.type==='worker'){
+      let free = h.total - h.used; can = can && free > 0;
+      desc = free > 0 ? `+${u.inc}€/s, +${u.eng}M/s` : `<span style="color:#e74c3c">${t.ns}</span>`;
     }
-    listHtml += `
-      <div class="upgrade-card ${up.type === 'housing' ? 'housing' : ''}" style="opacity: ${canBuy ? 1 : 0.6};" onclick="buyUpgrade(${idx})">
-        <div class="upgrade-info">
-          <div class="upgrade-name">${localizedItem.name}</div>
-          <div class="upgrade-desc">${subInfo}</div>
-          <div class="upgrade-cost">${t.price}: ${currentCost.toLocaleString()} €</div>
-        </div>
-        <div class="upgrade-count">${up.count}</div>
-      </div>
-    `;
+    html += `<div class="card" style="opacity:${can?1:0.6};" onclick="buy(${idx})"><div class="c-info"><div class="c-name">${loc.n}</div><div class="c-desc">${desc}</div><div class="c-cost">${t.pr}: ${u.cost.toLocaleString()} €</div></div><div class="c-cnt">${u.count}</div></div>`;
   });
-  let listEl = document.getElementById('upgradesList');
-  if(listEl) listEl.innerHTML = listHtml;
+  document.getElementById('uList').innerHTML = html;
 
-  // MLBB Красная точка на кнопке магазина и проверка доступных покупок
-  const luxuryCosts = [1500, 7500, 25000, 85000, 250000, 750000, 2000000, 5500000, 14000000, 35000000, 85000000, 200000000, 450000000, 1000000000, 2200000000, 4800000000, 10000000000, 22000000000, 50000000000, 120000000000];
-  let canBuyLuxury = luxuryCosts.some((cost, i) => localStorage.getItem(`lux_${i+1}`) !== "true" && money >= cost);
-  let canBuyCorp = Core.getCorporationAssets().some(asset => !Core.isAssetOwned(asset.id) && money >= asset.cost);
-  let canBuyUpgrade = upgrades.some(up => money >= up.cost);
-
-  let shopDot = document.getElementById('shopDot');
-  if(shopDot) {
-    shopDot.style.display = (canBuyLuxury || canBuyCorp || canBuyUpgrade) ? 'block' : 'none';
-  }
+  let luxC = [1500,7500,25000,85000,250000,750000,2000000,5500000,14000000,35000000,85000000,200000000,450000000,1000000000,2200000000,4800000000,10000000000,22000000000,50000000000,120000000000];
+  let dot = luxC.some((c,i)=>localStorage.getItem(`lux_${i+1}`)!=="true" && mon>=c) || Core.getCorporationAssets().some(a=>!Core.isAssetOwned(a.id)&&mon>=a.cost) || upgrades.some(u=>mon>=u.cost);
+  document.getElementById('sDot').style.display = dot ? 'block' : 'none';
 }
 
-setInterval(() => {
-  let stats = calculateStats();
-  if (stats.totalEurSec > 0 || stats.totalEnergySec > 0) {
-    let money = Core.getMoney() + (stats.totalEurSec / 10);
-    let energy = Core.getEnergy() + (stats.totalEnergySec / 10);
-    Core.setMoney(money);
-    Core.setEnergy(energy);
+setInterval(()=>{
+  let st = calcStats();
+  if(st.eur>0 || st.eng>0){
+    Core.setMoney(Core.getMoney() + st.eur/10);
+    Core.setEnergy(Core.getEnergy() + st.eng/10);
     updateUI();
   }
-}, 100);
+},100);
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateLanguageUI();
-  
-  // Расчет и показ оффлайн дохода
-  let stats = calculateStats();
-  let offline = Core.checkOfflineEarnings(stats.totalEurSec, stats.totalEnergySec);
-  if (offline) {
-    let hours = Math.floor(offline.seconds / 3600);
-    let mins = Math.floor((offline.seconds % 3600) / 60);
-    let timeSt
+document.addEventListener("DOMContentLoaded", ()=>{
+  updateLang();
+  let st = calcStats(), off = Core.checkOfflineEarnings(st.eur, st.eng);
+  if(off){
+    setTimeout(()=>alert(`📈 Пока вас не было:\n💰 +${off.money.toFixed(2)} €\n🔴 +${off.energy.toFixed(1)}M просмотров`), 400);
+  }
+  updateUI();
+});
+</script>
+</body>
+</html>
