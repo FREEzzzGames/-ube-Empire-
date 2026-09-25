@@ -1,4 +1,4 @@
-// core.js — Tube Empire Core with YouTube Algorithm Trends
+// core.js — Tube Empire Core (v4 with Corporate Holdings)
 class GameCore {
   constructor() {
     this.initTelegram();
@@ -78,11 +78,10 @@ class GameCore {
     }
   }
 
-  // --- СИСТЕМА ТРЕНДОВ АЛГОРИТМОВ YOUTUBE ---
+  // --- СИСТЕМА ТРЕНДОВ АЛГОРИТМОВ ---
   initTrendsSystem() {
     let trendData = JSON.parse(localStorage.getItem("tube_empire_trend") || "null");
     let now = Date.now();
-    // Если тренда нет или он устарел (живет 3 минуты = 180000 мс)
     if (!trendData || now > trendData.expiresAt) {
       const trends = [
         { name: "🎮 Gaming Challenge", mult: 2.0, icon: "🔥" },
@@ -95,7 +94,7 @@ class GameCore {
         name: selected.name,
         mult: selected.mult,
         icon: selected.icon,
-        expiresAt: now + 180000 // 3 минуты тренд актуален
+        expiresAt: now + 180000 
       };
       localStorage.setItem("tube_empire_trend", JSON.stringify(trendData));
     }
@@ -103,16 +102,55 @@ class GameCore {
 
   getCurrentTrend() {
     this.initTrendsSystem();
-    try {
-      return JSON.parse(localStorage.getItem("tube_empire_trend"));
-    } catch(e) {
-      return { name: "🎮 Gaming", mult: 2.0, icon: "🔥", expiresAt: Date.now() + 180000 };
-    }
+    try { return JSON.parse(localStorage.getItem("tube_empire_trend")); } 
+    catch(e) { return { name: "🎮 Gaming", mult: 2.0, icon: "🔥", expiresAt: Date.now() + 180000 }; }
   }
 
   getTrendMultiplier() {
     let trend = this.getCurrentTrend();
     return trend ? trend.mult : 1.0;
+  }
+
+  // --- КОРПОРАТИВНЫЕ АКТИВЫ (БИЗНЕСЫ) ---
+  getCorporationAssets() {
+    return [
+      { id: 'corp_merch', cost: 50000, incomePerSec: 15, icon: '👕', name: { ru: 'Мерч-магазин', de: 'Merch Shop', en: 'Merch Shop' } },
+      { id: 'corp_agency', cost: 500000, incomePerSec: 120, icon: '📈', name: { ru: 'Рекламное агентство', de: 'Werbeagentur', en: 'Ad Agency' } },
+      { id: 'corp_esports', cost: 5000000, incomePerSec: 950, icon: '🎮', name: { ru: 'Киберспортивный клуб', de: 'eSports Team', en: 'eSports Club' } },
+      { id: 'corp_soft', cost: 50000000, incomePerSec: 7500, icon: '💻', name: { ru: 'Студия софта и игр', de: 'Software-Studio', en: 'Game Studio' } },
+      { id: 'corp_conglomerate', cost: 1000000000, incomePerSec: 65000, icon: '🌐', name: { ru: 'Медиа-Конгломерат', de: 'Medien-Konglomerat', en: 'Media Conglomerate' } }
+    ];
+  }
+
+  getTotalCorporationIncome() {
+    let assets = this.getCorporationAssets();
+    let total = 0;
+    assets.forEach(asset => {
+      if (localStorage.getItem(asset.id) === "true") {
+        total += asset.incomePerSec;
+      }
+    });
+    return total;
+  }
+
+  buyCorporationAsset(id) {
+    let assets = this.getCorporationAssets();
+    let asset = assets.find(a => a.id === id);
+    if (!asset) return false;
+    if (localStorage.getItem(id) === "true") return false; // Уже куплено
+
+    let money = this.getMoney();
+    if (money >= asset.cost) {
+      money -= asset.cost;
+      this.setMoney(money);
+      localStorage.setItem(id, "true");
+      return true;
+    }
+    return false;
+  }
+
+  isAssetOwned(id) {
+    return localStorage.getItem(id) === "true";
   }
 
   getAvatarString() {
