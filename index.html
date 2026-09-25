@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tube Empire</title>
+<script src="core.js"></script>
+<style>
+:root,[data-theme="dark"]{--bg:rgba(20,10,10,.94);--border:rgba(255,0,0,.5);--accent:#ff0000;--title:#ffcc00;--btn:rgba(40,15,15,.95);--glass:rgba(30,12,12,.8);--text:#fff;--sub:#ff8888;--body:#0a0505;}
+[data-theme="rose"]{--bg:rgba(30,10,25,.94);--border:rgba(233,30,99,.6);--accent:#e91e63;--title:#ffeb3b;--btn:rgba(60,15,40,.95);--glass:rgba(45,12,32,.85);--text:#fff;--sub:#ff80ab;--body:#150510;}
+[data-theme="light"]{--bg:rgba(245,247,250,.95);--border:rgba(211,47,47,.4);--accent:#d32f2f;--title:#e65100;--btn:rgba(255,255,255,.95);--glass:rgba(230,235,245,.9);--text:#1a1a1a;--sub:#555;--body:#e0e4ec;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;width:100%;height:100%;background:var(--body);color:var(--text);font-family:monospace;overflow:hidden;transition:background .3s;}
+body{padding:6px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
+.menu{width:100%;height:100%;max-width:420px;max-height:100vh;text-align:center;display:flex;flex-direction:column;justify-content:space-between;padding:8px;z-index:10;background:var(--bg);border:2.5px solid var(--border);border-radius:14px;box-shadow:0 0 30px rgba(0,0,0,.3);backdrop-filter:blur(6px);position:relative;overflow-y:auto;}
+.header{display:flex;justify-content:space-between;align-items:center;width:100%;gap:4px;flex-shrink:0;}
+.h-right{display:flex;gap:4px;align-items:center;}
+.btn{background:var(--glass);border:1.5px solid var(--accent);color:var(--text);padding:3px 6px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:8.5px;font-family:monospace;}
+.btn:active{opacity:.7;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;}
+.card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:var(--glass);border:1.5px solid var(--border);border-radius:10px;padding:6px;cursor:pointer;height:68px;text-align:center;}
+.card:active{transform:scale(.97);}
+.avatar{font-size:18px;line-height:1;word-break:break-all;}
+.p-info{width:100%;gap:1px;}
+.p-name{font-size:8.5px;font-weight:bold;color:var(--title);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-sub{font-size:6.5px;color:var(--sub);}
+.chat-card{background:var(--glass);border:1.5px dashed var(--accent);border-radius:10px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;cursor:pointer;height:68px;}
+.chat-card:active{transform:scale(.97);}
+.c-head{display:flex;justify-content:space-between;align-items:center;font-size:8px;font-weight:bold;color:var(--title);}
+.c-list{display:flex;flex-direction:column;gap:1px;}
+.c-msg{font-size:6.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-msg span{color:var(--text);font-weight:bold;}
+.stats{background:var(--glass);border:1.5px solid var(--border);border-radius:8px;padding:5px 8px;display:flex;flex-direction:column;gap:2px;text-align:left;flex-shrink:0;}
+.s-row{display:flex;justify-content:space-between;font-size:9px;}
+.s-lbl{color:var(--sub);}
+.s-val{font-weight:bold;color:var(--title);}
+.actions{display:flex;flex-direction:column;gap:4px;width:100%;flex-shrink:0;}
+.act-btn{width:100%;background:var(--btn);border:1.5px solid var(--accent);border-radius:7px;padding:8px;color:var(--text);font-family:monospace;font-size:10.5px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;}
+.act-btn:active{transform:scale(.97);}
+.act-btn.primary{background:linear-gradient(135deg,rgba(255,204,0,.4),rgba(200,150,0,.85));border-color:var(--title);color:#000;font-size:11.5px;box-shadow:0 0 10px rgba(255,204,0,.3);}
+.act-btn.lottery{background:linear-gradient(135deg,rgba(241,196,15,.35),rgba(211,84,0,.85));border-color:#f1c40f;color:#ffcc00;box-shadow:0 0 8px rgba(241,196,15,.25);}
+.footer{font-size:7px;color:var(--sub);flex-shrink:0;}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:12px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal.active{opacity:1;pointer-events:auto;}
+.m-content{background:var(--bg);border:2.5px solid var(--title);border-radius:12px;padding:10px;text-align:center;width:100%;max-width:360px;height:360px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 0 25px rgba(255,204,0,.4);}
+.m-msgs{flex-grow:1;background:var(--glass);border:1px solid var(--border);border-radius:8px;padding:5px;overflow-y:auto;text-align:left;display:flex;flex-direction:column;gap:5px;margin:5px 0;}
+.msg-item{font-size:8px;background:rgba(0,0,0,.2);padding:3px 5px;border-radius:5px;border-left:2px solid var(--accent);}
+.msg-s{font-weight:bold;color:var(--title);margin-bottom:1px;}
+.msg-t{color:var(--text);word-break:break-all;}
+.m-input-area{display:flex;gap:4px;}
+.m-input{flex-grow:1;background:var(--glass);border:1.5px solid var(--border);border-radius:6px;padding:5px;color:var(--text);font-family:monospace;font-size:8.5px;}
+.m-send{background:var(--title);border:none;border-radius:6px;padding:5px 9px;font-weight:bold;cursor:pointer;font-size:8.5px;color:#000;}
+.m-cd{font-size:7px;color:var(--sub);margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="menu">
+  <div class="header">
+    <button class="btn" onclick="toggleLang()" id="langBtn">🇷🇺 RU</button>
+    <div class="h-right">
+      <button class="btn" onclick="toggleTheme()" id="themeBtn">🌙 DARK</button>
+      <button class="btn" onclick="toggleSound()" id="soundBtn">🔊 ON</button>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" onclick="location.href='avatar.html'">
+      <div class="avatar" id="avatarDisplay">👦</div>
+      <div class="p-info">
+        <div class="p-name" id="nameTxt">TUBE EMPIRE PRO</div>
+        <div class="p-sub" id="subTxt">Личный кабинет ⚙️</div>
+      </div>
+    </div>
+    <div class="chat-card" onclick="openChat()">
+      <div class="c-head"><span id="chatTitle">💬 Глобальный</span><span>▶</span></div>
+      <div class="c-list" id="miniChat"></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="s-row"><span class="s-lbl" id="lblBal">Баланс:</span><span class="s-val" id="valBal">0.00 €</span></div>
+    <div class="s-row"><span class="s-lbl" id="lblViews">Просмотры:</span><span class="s-val" id="valViews">0.0M</span></div>
+  </div>
+
+  <div class="actions">
+    <a href="game.html" class="act-btn primary" id="bPlay">🔴 ЗАПИСАТЬ РОЛИК</a>
+    <a href="lottery.html" class="act-btn lottery" id="bLot">🎟️ Лотерея</a>
+    <a href="collection.html" class="act-btn" id="bShop">💎 Магазин блогера</a>
+  </div>
+
+  <div class="footer">tube empire corporation v1.0</div>
+</div>
+
+<div class="modal" id="modalChat" onclick="closeChat()">
+  <div class="m-content" onclick="event.stopPropagation()">
+    <div style="font-size:10.5px;font-weight:bold;color:var(--title);" id="mTitle">💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ</div>
+    <div class="m-msgs" id="fullMsgs"></div>
+    <div>
+      <div class="m-input-area">
+        <input type="text" id="chatInput" class="m-input" placeholder="Написать..." maxlength="150">
+        <button class="m-send" onclick="sendMsg()" id="mSend">ОТПРАВИТЬ</button>
+      </div>
+      <div class="m-cd" id="mCd">Доступно раз в 10 минут.</div>
+    </div>
+    <button class="btn" style="width:100%;padding:5px;background:#333;margin-top:3px;" onclick="closeChat()" id="mClose">ЗАКРЫТЬ</button>
+  </div>
+</div>
+
+<script>
+class ChatSys {
+  constructor() {
+    this.key = "tube_empire_global_chat";
+    this.cdKey = "tube_empire_chat_cooldown";
+    if(!localStorage.getItem(this.key)) {
+      localStorage.setItem(this.key, JSON.stringify([
+        {s:"MrBeast",a:"👑👕💵👖",t:"Снимаю видео с островом!"},
+        {s:"PewDiePie",a:"🎧🧥👖👖",t:"Привет из Японии!"},
+        {s:"Marshmello",a:"🧢👕👖👟", t:"Готовлю трек!"}
+      ]));
+    }
+  }
+  get() { try { return JSON.parse(localStorage.getItem(this.key)) || []; } catch(e) { return []; } }
+  recent(n=3) { return this.get().slice(-n).reverse(); }
+  cd() {
+    let t = Number(localStorage.getItem(this.cdKey)) || 0, d = Date.now() - t;
+    return d < 600000 ? Math.ceil((600000 - d)/1000) : 0;
+  }
+  send(name, av, txt) {
+    if(this.cd() > 0) return {ok:false};
+    if(!txt || !txt.trim()) return {ok:false};
+    let m = this.get();
+    m.push({s:name, a:av, t:txt.trim().substring(0,150), time:Date.now()});
+    if(m.length>50) m.shift();
+    localStorage.setItem(this.key, JSON.stringify(m));
+    localStorage.setItem(this.cdKey, Date.now());
+    return {ok:true};
+  }
+}
+const Chat = new ChatSys();
+
+const dict = {
+  ru: {b:"Баланс:",v:"Просмотры:",pl:"🔴 ЗАПИСАТЬ РОЛИК",lot:"🎟️ Лотерея",sh:"💎 Магазин блогера",son:"🔊 ЗВУК ВКЛ",soff:"🔇 ЗВУК ВЫКЛ",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Глобальный",mct:"💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",snd:"ОТПРАВИТЬ",cls:"ЗАКРЫТЬ",sub:"Кабинет ⚙️",ph:"Написать...",cinfo:"Доступно раз в 10 минут.",wc:"⏳ Подождите: ",me:"Вы"},
+  de: {b:"Guthaben:",v:"Aufrufe:",pl:"🔴 VIDEO AUFNEHMEN",lot:"🎟️ Lotterie",sh:"💎 Blogger Shop",son:"🔊 TON AN",soff:"🔇 TON AUS",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBALER BLOGGER CHAT",snd:"SENDEN",cls:"SCHLIESSEN",sub:"Kabinett ⚙️",ph:"Nachricht...",cinfo:"Alle 10 Minuten möglich.",wc:"⏳ Warten: ",me:"Du"},
+  en: {b:"Balance:",v:"Views:",pl:"🔴 RECORD VIDEO",lot:"🎟️ Lottery",sh:"💎 Blogger Shop",son:"🔊 SOUND ON",soff:"🔇 SOUND OFF",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBAL BLOGGER CHAT",snd:"SEND",cls:"CLOSE",sub:"Cabinet ⚙️",ph:"Type...",cinfo:"Available once every 10 min.",wc:"⏳ Wait: ",me:"You"}
+};
+
+function toggleLang() { Core.toggleLang(); updateUI(); }
+function toggleSound() { Core.toggleSound(); updateUI(); }
+function toggleTheme() { Core.toggleTheme(); updateUI(); }
+
+function renderMiniChat() {
+  let r = Chat.recent(3), html = "";
+  if(r.length===0) html=`<div class="c-msg">Нет сообщений...</div>`;
+  else r.forEach(m => html+=`<div class="c-msg">${m.a||''} <span>${m.s}:</span> ${m.t}</div>`);
+  document.getElementById('miniChat').innerHTML = html;
+}
+function openChat() { renderFullChat(); document.getElementById('modalChat').classList.add('active'); }
+function closeChat() { document.getElementById('modalChat').classList.remove('active'); }
+
+function renderFullChat() {
+  let msgs = Chat.get(), html = "";
+  msgs.slice(-20).reverse().forEach(m => {
+    html+=`<div class="msg-item"><div class="msg-s">${m.a||''} ${m.s}</div><div class="msg-t">${m.t}</div></div>`;
+  });
+  document.getElementById('fullMsgs').innerHTML = html;
+  let cd = Chat.cd(), lang = Core.getLang(), t = dict[lang], cdEl = document.getElementById('mCd');
+  cdEl.textContent = cd > 0 ? `${t.wc}${Math.floor(cd/60)}м ${cd%60}с` : t.cinfo;
+}
+
+function sendMsg() {
+  let lang = Core.getLang(), t = dict[lang], inp = document.getElementById('chatInput');
+  let res = Chat.send(t.me, Core.getAvatarString(), inp.value);
+  if(res.ok !== false && inp.value.trim()) { inp.value=""; renderFullChat(); renderMiniChat(); }
+  else { alert(t.cinfo); }
+}
+
+function updateUI() {
+  let lang = Core.getLang(), theme = Core.getTheme(), sound = Core.getSound();
+  let t = dict[lang];
+  document.getElementById('lblBal').textContent = t.b;
+  document.getElementById('lblViews').textContent = t.v;
+  document.getElementById('bPlay').textContent = t.pl;
+  document.getElementById('bLot').textContent = t.lot;
+  document.getElementById('bShop').textContent = t.sh;
+  document.getElementById('langBtn').textContent = lang==="ru"?"🇷🇺 RU":(lang==="de"?"🇩🇪 DE":"🇬🇧 EN");
+  document.getElementById('soundBtn').textContent = sound ? t.son : t.soff;
+  document.getElementById('chatTitle').textContent = t.ct;
+  document.getElementById('mTitle').textContent = t.mct;
+  document.getElementById('mSend').textContent = t.snd;
+  document.getElementById('mClose').textContent = t.cls;
+  document.getElementById('chatInput').placeholder = t.ph;
+  document.getElementById('subTxt').textContent = t.sub;
+  document.getElementById('avatarDisplay').textContent = Core.getAvatarString();
+  document.getElementById('nameTxt').textContent = Core.getUserName();
+  
+  let tdMap = { dark: t.td, rose: t.tr, light: t.tl };
+  document.getElementById('themeBtn').textContent = tdMap[theme] || t.td;
+
+  let money = Core.getMoney();
+  let views = Core.getEnergy();
+  let vUnit = lang==='ru'?" млн":(lang==='de'?" Mio":"M");
+
+  document.getElementById('valBal').textContent = money.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
+  document.getElementById('valViews').textContent = views.toFixed(1) + vUnit;
+}
+
+updateUI();
+renderMiniChat();
+</script>
+</body>
+</html>
