@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tube Empire — Game</title>
+
+<title>Tube Empire</title>
 
 <style>
 *{
@@ -14,15 +15,13 @@
 html,body{
     margin:0;
     padding:0;
-    width:100%;
     min-height:100%;
     background:#090b12;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    min-height:100vh;
     display:flex;
     justify-content:center;
 }
@@ -33,52 +32,54 @@ body{
     min-height:100vh;
     padding:16px;
     background:
-        radial-gradient(circle at 50% 20%,#20284b 0,#101525 35%,#090b12 75%);
+        radial-gradient(
+            circle at 50% 15%,
+            #29335f 0%,
+            #11172a 40%,
+            #090b12 80%
+        );
 }
 
 .header{
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     margin-bottom:14px;
 }
 
 .logo{
-    font-size:22px;
+    font-size:21px;
     font-weight:900;
-    letter-spacing:.5px;
 }
 
-.status{
+.online{
+    background:#17251d;
+    color:#72f7a0;
     padding:7px 10px;
     border-radius:10px;
-    background:#171c2c;
-    color:#8df5b0;
     font-size:12px;
     font-weight:bold;
 }
 
 .balance{
-    background:linear-gradient(145deg,#171d32,#0d111d);
-    border:1px solid #303b60;
-    border-radius:18px;
     padding:18px;
     text-align:center;
-    box-shadow:0 10px 30px #0008;
+    border-radius:18px;
+    background:#111726;
+    border:1px solid #34405f;
 }
 
-.balance-title{
-    color:#8993ad;
-    font-size:13px;
+.label{
+    color:#8c97b0;
+    font-size:12px;
     text-transform:uppercase;
-    letter-spacing:1px;
 }
 
 .money{
     margin-top:5px;
+    color:#72f7a0;
     font-size:38px;
     font-weight:900;
-    color:#72f7a0;
 }
 
 .stats{
@@ -89,85 +90,87 @@ body{
 }
 
 .stat{
+    padding:14px;
     background:#111624;
-    border:1px solid #252e47;
+    border:1px solid #29334b;
     border-radius:14px;
-    padding:13px;
 }
 
-.stat-label{
-    color:#78829b;
+.stat-title{
+    color:#78839d;
     font-size:11px;
-    text-transform:uppercase;
 }
 
 .stat-value{
     margin-top:5px;
     font-size:20px;
-    font-weight:800;
+    font-weight:bold;
 }
 
-.game-card{
+.card{
     margin-top:14px;
-    background:#101522;
-    border:1px solid #29334f;
-    border-radius:22px;
     padding:20px;
     text-align:center;
+    background:#101522;
+    border:1px solid #303b59;
+    border-radius:22px;
 }
 
-.game-title{
-    font-size:20px;
+.title{
+    font-size:21px;
     font-weight:900;
 }
 
-.game-subtitle{
+.subtitle{
     margin-top:6px;
-    color:#858fa8;
+    color:#8994ad;
     font-size:13px;
 }
 
-.tap-area{
+.tap{
+    width:210px;
+    height:210px;
     margin:25px auto 18px;
-    width:220px;
-    height:220px;
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
     background:
-        radial-gradient(circle,#242f59 0,#151d38 48%,#0d1221 70%);
-    border:4px solid #536aa8;
-    box-shadow:
-        0 0 25px #4668bd88,
-        inset 0 0 35px #000;
-    cursor:pointer;
+        radial-gradient(
+            circle,
+            #344579 0%,
+            #182341 55%,
+            #0c1120 100%
+        );
+    border:5px solid #6178c0;
+    box-shadow:0 0 35px #526fc088;
     user-select:none;
     touch-action:manipulation;
-    transition:.08s;
 }
 
-.tap-area:active{
+.tap:active{
     transform:scale(.94);
-    border-color:#7b9cff;
-    box-shadow:
-        0 0 45px #557cffaa,
-        inset 0 0 35px #000;
 }
 
-.tap-icon{
-    font-size:70px;
+.play{
+    font-size:65px;
 }
 
 .tap-text{
-    margin-top:10px;
+    margin-top:8px;
     font-size:13px;
-    color:#aeb9d5;
+    font-weight:bold;
+}
+
+.message{
+    min-height:20px;
+    color:#77eaff;
+    font-size:13px;
     font-weight:bold;
 }
 
 .energy{
-    margin-top:12px;
+    margin-top:15px;
 }
 
 .energy-head{
@@ -181,20 +184,277 @@ body{
 .energy-bar{
     height:10px;
     background:#080b12;
-    border-radius:20px;
+    border-radius:10px;
     overflow:hidden;
 }
 
 .energy-fill{
-    height:100%;
     width:100%;
+    height:100%;
     background:linear-gradient(90deg,#58d9ff,#8d7cff);
-    border-radius:20px;
-    transition:.2s;
 }
 
-.message{
-    min-height:20px;
-    margin-top:10px;
-    color:#77eaff;
-    font-size
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+button{
+    padding:14px 8px;
+    border:0;
+    border-radius:13px;
+    color:white;
+    background:#252e48;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.bonus{
+    background:#5d55d9;
+}
+
+.reset{
+    background:#3a2230;
+    color:#ff9eb9;
+}
+
+.footer{
+    margin-top:15px;
+    text-align:center;
+    color:#566078;
+    font-size:11px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <div class="header">
+        <div class="logo">🎬 TUBE EMPIRE</div>
+        <div class="online">ONLINE</div>
+    </div>
+
+    <div class="balance">
+        <div class="label">Баланс</div>
+        <div class="money" id="money">1 000.00 €</div>
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">ПРОСМОТРЫ</div>
+            <div class="stat-value" id="views">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">ДОХОД / КЛИК</div>
+            <div class="stat-value">1.00 €</div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="title">СТУДИЯ</div>
+
+        <div class="subtitle">
+            Нажимай и зарабатывай
+        </div>
+
+        <div class="tap" id="tap">
+
+            <div>
+                <div class="play">▶️</div>
+                <div class="tap-text">НАЖМИ</div>
+            </div>
+
+        </div>
+
+        <div class="message" id="message">
+            ИГРА ГОТОВА — НАЖМИ ▶
+        </div>
+
+        <div class="energy">
+
+            <div class="energy-head">
+                <span>Энергия</span>
+                <span id="energyText">100 / 100</span>
+            </div>
+
+            <div class="energy-bar">
+                <div class="energy-fill" id="energy"></div>
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button class="bonus" id="bonus">
+                🎁 БОНУС +100 €
+            </button>
+
+            <button class="reset" id="reset">
+                ♻ СБРОС
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Tube Empire • Game Test
+    </div>
+
+</div>
+
+<script>
+const KEY="tube_empire_game_v3";
+
+let game={
+    money:1000,
+    views:0,
+    energy:100
+};
+
+const money=document.getElementById("money");
+const views=document.getElementById("views");
+const energy=document.getElementById("energy");
+const energyText=document.getElementById("energyText");
+const message=document.getElementById("message");
+const tap=document.getElementById("tap");
+const bonus=document.getElementById("bonus");
+const reset=document.getElementById("reset");
+
+function save(){
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(game)
+    );
+}
+
+function load(){
+
+    try{
+
+        const data=
+            localStorage.getItem(KEY);
+
+        if(data){
+            game={
+                ...game,
+                ...JSON.parse(data)
+            };
+        }
+
+    }catch(e){
+        console.log(e);
+    }
+
+    render();
+}
+
+function render(){
+
+    money.textContent=
+        Number(game.money).toLocaleString(
+            "de-DE",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        )+" €";
+
+    views.textContent=
+        game.views.toLocaleString("de-DE");
+
+    energy.style.width=
+        game.energy+"%";
+
+    energyText.textContent=
+        Math.floor(game.energy)+" / 100";
+}
+
+tap.addEventListener(
+    "click",
+    function(){
+
+        if(game.energy<=0){
+
+            message.textContent=
+                "⚡ Нет энергии";
+
+            return;
+        }
+
+        game.money+=1;
+        game.views+=1;
+        game.energy-=1;
+
+        message.textContent=
+            "Заработано +1.00 €";
+
+        render();
+        save();
+    }
+);
+
+bonus.addEventListener(
+    "click",
+    function(){
+
+        game.money+=100;
+
+        message.textContent=
+            "🎁 Получен бонус +100 €";
+
+        render();
+        save();
+    }
+);
+
+reset.addEventListener(
+    "click",
+    function(){
+
+        if(!confirm("Сбросить игру?")){
+            return;
+        }
+
+        game={
+            money:1000,
+            views:0,
+            energy:100
+        };
+
+        message.textContent=
+            "Игра сброшена";
+
+        render();
+        save();
+    }
+);
+
+setInterval(
+    function(){
+
+        if(game.energy<100){
+
+            game.energy++;
+
+            render();
+            save();
+        }
+
+    },
+    3000
+);
+
+load();
+</script>
+
+</body>
+</html>
