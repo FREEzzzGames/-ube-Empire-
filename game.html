@@ -31,6 +31,8 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .cd{font-size:7px;color:var(--sub);}
 .cc{color:var(--acc);font-weight:700;font-size:7.5px;}
 .cnt{font-size:9.5px;font-weight:800;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:6px;}
+@keyframes pop{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-25px) scale(1.2);opacity:0;}}
+.pop-txt{position:fixed;color:var(--t-col);font-size:12px;font-weight:800;pointer-events:none;z-index:999;animation:pop 0.4s ease-out forwards;}
 </style>
 </head>
 <body>
@@ -46,8 +48,8 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
   
   <div class="body">
     <div class="row">
-      <div class="box"><div class="bt">Баланс (€)</div><div class="bv" id="mTxt">0.00 €</div><div class="bs" id="cTxt">+0.0 €/s</div></div>
-      <div class="box"><div class="bt">Просмотры</div><div class="bv" id="eTxt">0.0M</div><div class="bs" id="hTxt">ПК: 0/0</div></div>
+      <div class="box"><div class="bt" id="t1">Баланс (€)</div><div class="bv" id="mTxt">0.00 €</div><div class="bs" id="cTxt">+0.0 €/s</div></div>
+      <div class="box"><div class="bt" id="t2">Просмотры</div><div class="bv" id="eTxt">0.0M</div><div class="bs" id="hTxt">ПК: 0/0</div></div>
     </div>
     
     <div class="tr"><span id="trName" style="color:var(--t-col);">🔥 Тренд</span><span id="trTime" style="color:var(--sub);">03:00</span></div>
@@ -64,13 +66,13 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 
 <script>
 const T = {
-  ru:{m:"⬅ МЕНЮ", s:"🛒 Магазин", a:"🎨 Студия", sell:"🎁 ЗАБРАТЬ ДОНАТЫ (1M = 2.50 €)", pr:"Цена", ns:"❌ Нет ПК!",
+  ru:{m:"⬅ МЕНЮ",s:"🛒 Магазин",a:"🎨 Студия",b1:"Баланс (€)",b2:"Просмотры",sell:"🎁 ЗАБРАТЬ ДОНАТЫ (1M = 2.50 €)",pr:"Цена",ns:"❌ Нет ПК!",
     names:[{n:"💻 Стол монтажа",d:"+3 места"},{n:"🏢 Офис",d:"+10 мест"},{n:"🧑‍💻 Клипмейкер",d:"Авто-монтаж"},{n:"🎥 Оператор",d:"Профи"},{n:"🎬 Продюсеры",d:"Мастера"},{n:"🤖 Shorts Bot",d:"Генератор"},{n:"🎙️ Подкасты",d:"Стрим-ферма"},{n:"🌐 MCN-сеть",d:"Макс охват"}]
   },
-  de:{m:"⬅ MENÜ", s:"🛒 Shop", a:"🎨 Studio", sell:"🎁 SPENDEN ABHOLEN (1M = 2.50 €)", pr:"Preis", ns:"❌ Kein Platz!",
+  de:{m:"⬅ MENÜ",s:"🛒 Shop",a:"🎨 Studio",b1:"Guthaben (€)",b2:"Aufrufe",sell:"🎁 SPENDEN ABHOLEN (1M = 2.50 €)",pr:"Preis",ns:"❌ Kein Platz!",
     names:[{n:"💻 Schnitt-Tisch",d:"+3 Plätze"},{n:"🏢 Büro",d:"+10 Plätze"},{n:"🧑‍💻 Clipmaker",d:"Auto-Editing"},{n:"🎥 Kameramann",d:"Profi"},{n:"🎬 Produzenten",d:"Meister"},{n:"🤖 Shorts Bot",d:"Generator"},{n:"🎙️ Podcasts",d:"Stream-Farm"},{n:"🌐 MCN-Netzwerk",d:"Max Reichweite"}]
   },
-  en:{m:"⬅ MENU", s:"🛒 Shop", a:"🎨 Studio", sell:"🎁 CLAIM DONATIONS (1M = 2.50 €)", pr:"Price", ns:"❌ No PCs!",
+  en:{m:"⬅ MENU",s:"🛒 Shop",a:"🎨 Studio",b1:"Balance (€)",b2:"Views",sell:"🎁 CLAIM DONATIONS (1M = 2.50 €)",pr:"Price",ns:"❌ No PCs!",
     names:[{n:"💻 Editing Desk",d:"+3 slots"},{n:"🏢 Office",d:"+10 slots"},{n:"🧑‍💻 Clipmaker",d:"Auto-editor"},{n:"🎥 Cameraman",d:"Pro"},{n:"🎬 Producers",d:"Masters"},{n:"🤖 Shorts Bot",d:"Generator"},{n:"🎙️ Podcasts",d:"Stream farm"},{n:"🌐 MCN Network",d:"Max reach"}]
   }
 };
@@ -98,36 +100,55 @@ function getH(){
 }
 
 function loc(){
-  let l = window.Core ? Core.getLang() : 'ru', t = T[l] || T.ru;
+  let l = Core.getLang(), t = T[l] || T.ru;
   document.getElementById('mBtn').textContent = t.m;
+  document.getElementById('sBtn').firstChild.textContent = t.s + " ";
   document.getElementById('aBtn').textContent = t.a;
+  document.getElementById('t1').textContent = t.b1;
+  document.getElementById('t2').textContent = t.b2;
   document.getElementById('sellTxt').textContent = t.sell;
 }
 
+function updateStudioVisuals(){
+  try {
+    let st = JSON.parse(localStorage.getItem("tube_empire_studio_config") || '{"walls":0,"neon":0,"poster":0,"pet":0}');
+    let walls = ['🧱', '🪵', '🟫', '⬛', '🟦'][st.walls] || '🧱';
+    let neon = ['🔴', '🔵', '🟢', '🟣', '🟡'][st.neon] || '🔴';
+    let poster = ['🖼️', '🎮', '🚀', '🔥', '⭐'][st.poster] || '🖼️';
+    let pet = ['❌', '🐱', '🐶', '🤖', '🦜'][st.pet] || '❌';
+    document.getElementById('studioView').innerHTML = `${walls} ${poster} ${neon} ${pet !== '❌' ? pet : '🎙️'}`;
+  } catch(e) {}
+}
+
 function tap(e){
-  Core.setMoney(Core.getMoney() + 1);
-  Core.playSound('tap'); upd();
+  let m = Core.getTrendMultiplier();
+  Core.setMoney(Core.getMoney() + m); Core.setEnergy(Core.getEnergy() + 0.2 * m);
+  Core.playSound('tap'); Core.haptic('light'); upd();
+  let p = document.createElement('div'); p.className = 'pop-txt'; p.textContent = `+${m}x €`;
+  p.style.left = (e.clientX - 15) + 'px'; p.style.top = (e.clientY - 25) + 'px';
+  document.body.appendChild(p); setTimeout(() => p.remove(), 400);
 }
 
 function sellDonations(){
   let e = Core.getEnergy(); 
-  if(e < 1) return;
+  if(e < 1){ Core.playSound('error'); return; }
   Core.setMoney(Core.getMoney() + e * 2.5); Core.setEnergy(0);
-  Core.playSound('cash'); upd();
+  Core.playSound('cash'); Core.haptic('heavy'); upd();
 }
 
 function buy(i){
-  let u = ups[i], h = getH(), mon = Core.getMoney();
-  if(u.type === 'worker' && (h.tot - h.used) <= 0) return;
+  let u = ups[i], h = getH();
+  if(u.type === 'worker' && (h.tot - h.used) <= 0){ Core.playSound('error'); return; }
+  let mon = Core.getMoney();
   if(mon >= u.cost){
     Core.setMoney(mon - u.cost); u.count++; u.cost = Math.floor(u.cost * u.mult);
     localStorage.setItem("up_" + u.id, u.count);
-    Core.playSound('buy'); upd();
-  }
+    Core.playSound('buy'); Core.haptic('medium'); upd();
+  } else { Core.playSound('error'); }
 }
 
 function calc(){
-  let eur = 0, eng = 0, h = getH();
+  let eur = 0, eng = 0, h = getH(), tm = Core.getTrendMultiplier();
   ups.forEach(u => {
     if(u.type === 'worker'){ eur += u.inc * u.count; eng += u.eng * u.count; }
     else if(u.type === 'station'){
@@ -136,15 +157,20 @@ function calc(){
       eur += u.inc * u.count * eff; eng += u.eng * u.count * eff;
     }
   });
-  return {eur, eng};
+  eur += Core.getTotalCorporationIncome();
+  return {eur: eur * tm, eng: eng * tm};
 }
 
 function upd(){
-  let st = calc(), h = getH(), lang = window.Core ? Core.getLang() : 'ru', t = T[lang] || T.ru, mon = Core.getMoney(), eng = Core.getEnergy();
-  document.getElementById('mTxt').textContent = mon.toLocaleString('ru-RU',{maximumFractionDigits:2}) + " €";
+  let st = calc(), h = getH(), lang = Core.getLang(), t = T[lang] || T.ru, mon = Core.getMoney(), eng = Core.getEnergy();
+  document.getElementById('mTxt').textContent = mon.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
   document.getElementById('cTxt').textContent = `+${st.eur.toFixed(1)} €/s`;
   document.getElementById('eTxt').textContent = eng.toFixed(1) + "M";
   document.getElementById('hTxt').textContent = `ПК: ${h.used}/${h.tot}`;
+  
+  let tr = Core.getCurrentTrend(), left = Math.max(0, Math.ceil((tr.expiresAt - Date.now()) / 1000));
+  document.getElementById('trName').textContent = `${tr.icon} ${tr.name} (x${tr.mult})`;
+  document.getElementById('trTime').textContent = `${Math.floor(left/60)}:${('0'+(left%60)).slice(-2)}`;
 
   let html = "";
   ups.forEach((u, idx) => {
@@ -157,9 +183,16 @@ function upd(){
   });
   document.getElementById('uList').innerHTML = html;
 
-  let canAfford = ups.some(u => mon >= u.cost);
-  document.getElementById('sDot').style.display = canAfford ? 'block' : 'none';
-  if(window.Core) Core.applyTheme(Core.getTheme());
+  let canAffordAny = ups.some((u) => {
+    if(mon < u.cost) return false;
+    if(u.type === 'worker' && (h.tot - h.used) <= 0) return false;
+    return true;
+  });
+  let sDotEl = document.getElementById('sDot');
+  if(sDotEl) sDotEl.style.display = canAffordAny ? 'block' : 'none';
+  
+  Core.applyTheme(Core.getTheme());
+  updateStudioVisuals();
 }
 
 setInterval(()=>{
@@ -173,6 +206,8 @@ setInterval(()=>{
 
 document.addEventListener("DOMContentLoaded", () => {
   loc();
+  let st = calc(), off = Core.checkOfflineEarnings(st.eur, st.eng);
+  if(off){ setTimeout(()=>alert(`📈 Оффлайн-доход:\n💰 +${off.money.toFixed(2)} €\n🔴 +${off.energy.toFixed(1)}M`), 400); }
   upd();
 });
 </script>
