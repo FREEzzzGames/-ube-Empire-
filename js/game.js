@@ -195,6 +195,49 @@ body{
     background:linear-gradient(90deg,#58d9ff,#8d7cff);
 }
 
+.upgrade{
+    margin-top:15px;
+    padding:16px;
+    background:#151d31;
+    border:1px solid #344363;
+    border-radius:16px;
+    text-align:left;
+}
+
+.upgrade-title{
+    font-size:16px;
+    font-weight:900;
+}
+
+.upgrade-info{
+    margin-top:6px;
+    color:#8994ad;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.upgrade-button{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(
+        135deg,
+        #596fff,
+        #7956ff
+    );
+    color:#fff;
+    font-size:14px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.upgrade-button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
 .buttons{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -236,231 +279,113 @@ button{
     </div>
 
     <div class="balance">
-        <div class="label">Баланс</div>
-        <div class="money" id="money">0.00 €</div>
+
+        <div class="label">
+            Баланс
+        </div>
+
+        <div
+            class="money"
+            id="money"
+        >
+            0.00 €
+        </div>
+
     </div>
 
     <div class="stats">
 
         <div class="stat">
-            <div class="stat-title">ПРОСМОТРЫ</div>
-            <div class="stat-value" id="views">0</div>
+
+            <div class="stat-title">
+                ПРОСМОТРЫ
+            </div>
+
+            <div
+                class="stat-value"
+                id="views"
+            >
+                0
+            </div>
+
         </div>
 
         <div class="stat">
-            <div class="stat-title">ДОХОД / КЛИК</div>
-            <div class="stat-value">1.00 €</div>
+
+            <div class="stat-title">
+                ДОХОД / КЛИК
+            </div>
+
+            <div
+                class="stat-value"
+                id="clickIncome"
+            >
+                1.00 €
+            </div>
+
         </div>
 
     </div>
 
     <div class="card">
 
-        <div class="title">СТУДИЯ</div>
-
-        <div class="subtitle">
-            Нажимай и зарабатывай
+        <div class="title">
+            СТУДИЯ
         </div>
 
-        <div class="tap" id="tap">
+        <div class="subtitle">
+            Развивай канал и увеличивай доход
+        </div>
+
+        <div
+            class="tap"
+            id="tap"
+        >
 
             <div>
-                <div class="play">▶️</div>
-                <div class="tap-text">НАЖМИ</div>
+
+                <div class="play">
+                    ▶️
+                </div>
+
+                <div class="tap-text">
+                    НАЖМИ
+                </div>
+
             </div>
 
         </div>
 
-        <div class="message" id="message">
+        <div
+            class="message"
+            id="message"
+        >
             ИГРА ГОТОВА — НАЖМИ ▶
         </div>
 
         <div class="energy">
 
             <div class="energy-head">
-                <span>Энергия</span>
-                <span id="energyText">100 / 100</span>
+
+                <span>
+                    Энергия
+                </span>
+
+                <span id="energyText">
+                    100 / 100
+                </span>
+
             </div>
 
             <div class="energy-bar">
+
                 <div
                     class="energy-fill"
                     id="energy"
                 ></div>
+
             </div>
 
         </div>
 
-        <div class="buttons">
-
-            <button
-                class="bonus"
-                id="bonus"
-            >
-                🎁 БОНУС +100 €
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="footer">
-        Tube Empire • Connected Economy
-    </div>
-
-</div>
-
-<!-- Общая система Tube Empire -->
-
-<script src="js/state.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/telegram.js"></script>
-<script src="js/app.js"></script>
-<script src="js/economy.js"></script>
-
-<script>
-"use strict";
-
-const money =
-    document.getElementById("money");
-
-const views =
-    document.getElementById("views");
-
-const energy =
-    document.getElementById("energy");
-
-const energyText =
-    document.getElementById("energyText");
-
-const message =
-    document.getElementById("message");
-
-const tap =
-    document.getElementById("tap");
-
-const bonus =
-    document.getElementById("bonus");
-
-
-function render(){
-
-    const state =
-        GameState.getState();
-
-    const player =
-        state.player;
-
-    money.textContent =
-        Number(player.money).toLocaleString(
-            "de-DE",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        ) + " €";
-
-    views.textContent =
-        Number(
-            player.totalEarned || 0
-        ).toLocaleString("de-DE");
-
-    const currentEnergy =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                Number(player.energy) || 0
-            )
-        );
-
-    energy.style.width =
-        currentEnergy + "%";
-
-    energyText.textContent =
-        Math.floor(currentEnergy) +
-        " / 100";
-}
-
-
-function save(){
-
-    GameStorage.save(
-        GameState.getState()
-    );
-}
-
-
-function tapGame(){
-
-    const state =
-        GameState.getState();
-
-    if(state.player.energy < 1){
-
-        message.textContent =
-            "⚡ Нет энергии";
-
-        return;
-    }
-
-    GameEconomy.addMoney(1);
-
-    state.player.energy -= 1;
-
-    render();
-    save();
-
-    message.textContent =
-        "Заработано +1.00 €";
-}
-
-
-function getBonus(){
-
-    GameEconomy.addMoney(100);
-
-    render();
-    save();
-
-    message.textContent =
-        "🎁 Получен бонус +100 €";
-}
-
-
-tap.addEventListener(
-    "click",
-    tapGame
-);
-
-bonus.addEventListener(
-    "click",
-    getBonus
-);
-
-
-document.addEventListener(
-    "game:render",
-    render
-);
-
-
-/*
- * Запускаем общий игровой цикл.
- * Он отвечает за экономику,
- * сохранение и восстановление.
- */
-
-if(window.Game){
-
-    Game.start();
-
-}
-
-
-render();
-
-</script>
-
-</body>
-</html>
+        <
