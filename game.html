@@ -279,6 +279,7 @@ function buyUpgrade(index) {
 function calculateStats() {
   let totalEurSec = 0, totalEnergySec = 0, housing = getHousingStats();
   let trendMult = Core.getTrendMultiplier();
+  
   upgrades.forEach(up => {
     if (up.type === 'worker') {
       totalEurSec += up.incomeEur * up.count; totalEnergySec += up.energyMWh * up.count;
@@ -290,6 +291,11 @@ function calculateStats() {
       totalEnergySec += (up.energyMWh * up.count) * eff;
     }
   });
+
+  // Добавляем пассивный доход от корпоративных бизнесов холдинга
+  let corpIncome = Core.getTotalCorporationIncome();
+  totalEurSec += corpIncome;
+
   return { 
     totalEurSec: totalEurSec * trendMult, 
     totalEnergySec: totalEnergySec * trendMult 
@@ -310,7 +316,6 @@ function updateUI() {
   setTxt('energyTxt', energy.toFixed(1) + (lang === 'ru' ? "M" : (lang === 'de' ? " Mio" : "M")));
   setTxt('housingSubTxt', `PC: ${housing.usedSlots}/${housing.totalSlots}`);
 
-  // Обновление виджета трендов
   let trend = Core.getCurrentTrend();
   let timeLeft = Math.max(0, Math.ceil((trend.expiresAt - Date.now()) / 1000));
   let mins = Math.floor(timeLeft / 60);
