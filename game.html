@@ -352,7 +352,7 @@ function updateUI() {
   let listEl = document.getElementById('upgradesList');
   if(listEl) listEl.innerHTML = listHtml;
 
-  // MLBB Красная точка на кнопке магазина
+  // MLBB Красная точка на кнопке магазина и проверка доступных покупок
   const luxuryCosts = [1500, 7500, 25000, 85000, 250000, 750000, 2000000, 5500000, 14000000, 35000000, 85000000, 200000000, 450000000, 1000000000, 2200000000, 4800000000, 10000000000, 22000000000, 50000000000, 120000000000];
   let canBuyLuxury = luxuryCosts.some((cost, i) => localStorage.getItem(`lux_${i+1}`) !== "true" && money >= cost);
   let canBuyCorp = Core.getCorporationAssets().some(asset => !Core.isAssetOwned(asset.id) && money >= asset.cost);
@@ -377,8 +377,11 @@ setInterval(() => {
 
 document.addEventListener("DOMContentLoaded", () => {
   updateLanguageUI();
-  updateUI();
-});
-</script>
-</body>
-</html>
+  
+  // Расчет и показ оффлайн дохода
+  let stats = calculateStats();
+  let offline = Core.checkOfflineEarnings(stats.totalEurSec, stats.totalEnergySec);
+  if (offline) {
+    let hours = Math.floor(offline.seconds / 3600);
+    let mins = Math.floor((offline.seconds % 3600) / 60);
+    let timeSt
