@@ -1,10 +1,9 @@
-// core.js — Tube Empire Core (v5 with Offline Idle Earnings)
+// core.js — Tube Empire Core (v5.7 Production Ready)
 class GameCore {
   constructor() {
     this.initTelegram();
     this.applyTheme(this.getTheme());
     this.initTrendsSystem();
-    this.recordLastActiveTime();
   }
   initTelegram() {
     try {
@@ -25,9 +24,15 @@ class GameCore {
   setEnergy(val) { localStorage.setItem("zeitarbeitEnergy", Number(val) || 0); }
 
   getTheme() { return localStorage.getItem("freezzzTheme") || "dark"; }
-  setTheme(theme) { localStorage.setItem("freezzzTheme", theme); this.applyTheme(theme); }
+  setTheme(theme) { 
+    localStorage.setItem("freezzzTheme", theme); 
+    this.applyTheme(theme); 
+  }
   applyTheme(theme) { 
-    try { document.body.setAttribute('data-theme', theme); } catch(e){}
+    try { 
+      document.documentElement.setAttribute('data-theme', theme);
+      if (document.body) document.body.setAttribute('data-theme', theme); 
+    } catch(e){}
   }
   toggleTheme() {
     let cur = this.getTheme();
@@ -52,7 +57,7 @@ class GameCore {
     return state;
   }
 
-  playSound(freq = 520, type = 'square', duration = 0.08) {
+  playSound(type = 'click') {
     if (!this.getSound()) return;
     try {
       if (!this.audioCtx) {
@@ -64,11 +69,19 @@ class GameCore {
       }
       if (this.audioCtx) {
         let osc = this.audioCtx.createOscillator(), gain = this.audioCtx.createGain();
-        osc.type = type; osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+        let freq = 520, dur = 0.08, oscType = 'square';
+        
+        if (type === 'tap') { freq = 580; dur = 0.05; oscType = 'triangle'; }
+        else if (type === 'buy') { freq = 740; dur = 0.12; oscType = 'square'; }
+        else if (type === 'error') { freq = 140; dur = 0.18; oscType = 'sawtooth'; }
+        else if (type === 'cash') { freq = 880; dur = 0.2; oscType = 'square'; }
+        else if (type === 'modal') { freq = 440; dur = 0.08; oscType = 'sine'; }
+
+        osc.type = oscType; osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
         gain.gain.setValueAtTime(0.03, this.audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + duration);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + dur);
         osc.connect(gain); gain.connect(this.audioCtx.destination);
-        osc.start(); osc.stop(this.audioCtx.currentTime + duration);
+        osc.start(); osc.stop(this.audioCtx.currentTime + dur);
       }
     } catch(e) {}
   }
@@ -79,7 +92,6 @@ class GameCore {
     }
   }
 
-  // --- СИСТЕМА ТРЕНДОВ АЛГОРИТМОВ ---
   initTrendsSystem() {
     let trendData = JSON.parse(localStorage.getItem("tube_empire_trend") || "null");
     let now = Date.now();
@@ -91,12 +103,7 @@ class GameCore {
         { name: "💡 Tech Review & Setup", mult: 1.8, icon: "💎" }
       ];
       let selected = trends[Math.floor(Math.random() * trends.length)];
-      trendData = {
-        name: selected.name,
-        mult: selected.mult,
-        icon: selected.icon,
-        expiresAt: now + 180000 
-      };
+      trendData = { name: selected.name, mult: selected.mult, icon: selected.icon, expiresAt: now + 180000 };
       localStorage.setItem("tube_empire_trend", JSON.stringify(trendData));
     }
   }
@@ -112,25 +119,16 @@ class GameCore {
     return trend ? trend.mult : 1.0;
   }
 
-  // --- ОФФЛАЙН ДОХОД (IDLE) ---
-  recordLastActiveTime() {
-    localStorage.setItem("tube_empire_last_active", Date.now());
-  }
-
   checkOfflineEarnings(eurPerSec, energyPerSec) {
     let lastActive = Number(localStorage.getItem("tube_empire_last_active") || 0);
     let now = Date.now();
-    this.recordLastActiveTime(); // сразу обновляем таймер
+    localStorage.setItem("tube_empire_last_active", now);
 
     if (!lastActive) return null;
-
     let diffSeconds = Math.floor((now - lastActive) / 1000);
-    // Игнорируем если прошло меньше 30 секунд или больше 24 часов (86400 сек)
     if (diffSeconds < 30 || diffSeconds > 86400) return null;
 
-    // Ограничиваем максимальный офлайн-заработок 8 часами (28800 сек), чтобы стимулировать заходить
     let effectiveSeconds = Math.min(diffSeconds, 28800);
-
     let earnedMoney = effectiveSeconds * eurPerSec;
     let earnedEnergy = effectiveSeconds * energyPerSec;
 
@@ -139,14 +137,9 @@ class GameCore {
     this.setMoney(this.getMoney() + earnedMoney);
     this.setEnergy(this.getEnergy() + earnedEnergy);
 
-    return {
-      seconds: effectiveSeconds,
-      money: earnedMoney,
-      energy: earnedEnergy
-    };
+    return { seconds: effectiveSeconds, money: earnedMoney, energy: earnedEnergy };
   }
 
-  // --- КОРПОРАТИВНЫЕ АКТИВЫ ---
   getCorporationAssets() {
     return [
       { id: 'corp_merch', cost: 50000, incomePerSec: 15, icon: '👕', name: { ru: 'Мерч-магазин', de: 'Merch Shop', en: 'Merch Shop' } },
@@ -161,35 +154,17 @@ class GameCore {
     let assets = this.getCorporationAssets();
     let total = 0;
     assets.forEach(asset => {
-      if (localStorage.getItem(asset.id) === "true") {
-        total += asset.incomePerSec;
-      }
+      if (localStorage.getItem(asset.id) === "true") total += asset.incomePerSec;
     });
     return total;
   }
 
-  buyCorporationAsset(id) {
-    let assets = this.getCorporationAssets();
-    let asset = assets.find(a => a.id === id);
-    if (!asset || localStorage.getItem(id) === "true") return false;
-    let money = this.getMoney();
-    if (money >= asset.cost) {
-      money -= asset.cost;
-      this.setMoney(money);
-      localStorage.setItem(id, "true");
-      return true;
-    }
-    return false;
-  }
-
-  isAssetOwned(id) {
-    return localStorage.getItem(id) === "true";
-  }
+  isAssetOwned(id) { return localStorage.getItem(id) === "true"; }
 
   getAvatarString() {
     try {
       let s = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
-      if(!s) return "👦\n👤\n👕\n👖";
+      if(!s) return "👦 👤 👕 👖";
       let o = {
         gender: ['👦','👧'],
         head: ['👤','🧢','🎧','🕶️','👑'],
@@ -206,15 +181,17 @@ class GameCore {
     } catch(e) { return "👦 👤 👕 👖"; }
   }
 
-  getUserName(def = "TUBE EMPIRE") {
+  getUserName(def = "Блогер") {
     try {
       const tg = window.Telegram?.WebApp;
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        return tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || def;
+        let username = tg.initDataUnsafe.user.username;
+        let firstname = tg.initDataUnsafe.user.first_name;
+        if (username) return `@${username}`;
+        if (firstname) return firstname;
       }
     } catch(e){}
-    return def;
+    return localStorage.getItem("tube_empire_custom_name") || def;
   }
 }
 const Core = new GameCore();
-                                      
