@@ -55,8 +55,9 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .game-ui-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 10.5px; }
 .back-btn { background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff; padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px; }
 .shop-tabs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; flex-shrink: 0; }
-.shop-tab-btn { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px; font-size: 8.5px; color: var(--text-main); font-family: monospace; font-weight: bold; cursor: pointer; text-align: center; }
+.shop-tab-btn { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px; font-size: 8.5px; color: var(--text-main); font-family: monospace; font-weight: bold; cursor: pointer; text-align: center; position: relative; }
 .shop-tab-btn.active { background: var(--accent-col); border-color: var(--title-col); color: #fff; }
+.mlbb-dot { position: absolute; top: 3px; right: 5px; width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; box-shadow: 0 0 6px #ff3b30; display: none; }
 .collection-budget { background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 4px; text-align: center; width: 100%; flex-shrink: 0; }
 .luxury-grid { flex-grow: 1; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); gap: 4px; overflow-y: auto; padding: 2px 0; }
 .luxury-tile { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; cursor: pointer; position: relative; }
@@ -66,7 +67,6 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .luxury-tile.owned { border-color: var(--success-col); background: rgba(46, 204, 113, 0.2); }
 .luxury-tile.owned .tile-cost { color: var(--success-col); }
 
-/* Стили для вкладки Холдинг */
 .corp-list { flex-grow: 1; width: 100%; display: flex; flex-direction: column; gap: 5px; overflow-y: auto; padding: 2px 0; text-align: left; }
 .corp-card { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .corp-card.owned { border-color: var(--success-col); background: rgba(46, 204, 113, 0.15); }
@@ -90,8 +90,14 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
   </div>
 
   <div class="shop-tabs">
-    <button class="shop-tab-btn active" onclick="switchTab('luxury')" id="tabLuxury">💎 Предметы роскоши</button>
-    <button class="shop-tab-btn" onclick="switchTab('corp')" id="tabCorp">🏢 Корпорации</button>
+    <button class="shop-tab-btn active" onclick="switchTab('luxury')" id="tabLuxury">
+      💎 Предметы роскоши
+      <span class="mlbb-dot" id="dotLuxury"></span>
+    </button>
+    <button class="shop-tab-btn" onclick="switchTab('corp')" id="tabCorp">
+      🏢 Корпорации
+      <span class="mlbb-dot" id="dotCorp"></span>
+    </button>
   </div>
 
   <div class="collection-budget">
@@ -99,10 +105,7 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
     <div style="font-size: 14px; font-weight: bold; color: var(--title-col);" id="collectionMoneyVal">0.00 €</div>
   </div>
 
-  <!-- Вкладка Предметы роскоши -->
   <div class="luxury-grid" id="luxuryGrid" style="display: grid;"></div>
-
-  <!-- Вкладка Корпоративные бизнесы -->
   <div class="corp-list" id="corpList" style="display: none;"></div>
 </div>
 
@@ -274,7 +277,6 @@ function updateCollectionUI() {
   setTxt('tabCorp', t.tabCorp);
   setTxt('collectionMoneyVal', money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €");
 
-  // Отрисовка роскоши
   let gridHtml = "";
   luxuryItems.forEach((item, idx) => {
     let localized = t.items[idx], canBuy = money >= item.cost;
@@ -289,7 +291,6 @@ function updateCollectionUI() {
   let gridEl = document.getElementById('luxuryGrid');
   if(gridEl) gridEl.innerHTML = gridHtml;
 
-  // Отрисовка корпораций (холдинга)
   let corpAssets = Core.getCorporationAssets();
   let corpHtml = "";
   corpAssets.forEach(asset => {
@@ -314,6 +315,15 @@ function updateCollectionUI() {
   });
   let corpEl = document.getElementById('corpList');
   if(corpEl) corpEl.innerHTML = corpHtml;
+
+  // MLBB Красные точки уведомлений
+  let canBuyLuxury = luxuryItems.some(item => !item.owned && money >= item.cost);
+  let canBuyCorp = corpAssets.some(asset => !Core.isAssetOwned(asset.id) && money >= asset.cost);
+  
+  let dotLux = document.getElementById('dotLuxury');
+  let dotCorp = document.getElementById('dotCorp');
+  if(dotLux) dotLux.style.display = canBuyLuxury ? 'block' : 'none';
+  if(dotCorp) dotCorp.style.display = canBuyCorp ? 'block' : 'none';
 }
 
 document.addEventListener("DOMContentLoaded", () => {
