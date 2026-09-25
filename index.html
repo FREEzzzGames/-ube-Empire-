@@ -30,44 +30,60 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .top-bar{display:flex;justify-content:flex-end;gap:6px;}
 .top-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--txt);padding:4px 8px;border-radius:6px;font-size:9px;font-weight:600;cursor:pointer;}
 
-.logo-container{display:flex;flex-direction:column;align-items:center;gap:6px;margin:10px 0;}
+.logo-container{display:flex;flex-direction:column;align-items:center;gap:4px;margin:6px 0;}
 .logo-icon{
-  width:64px;height:64px;background:radial-gradient(circle at 35% 35%, #ff4d6d 0%, #d90429 55%, #800020 100%);
-  border:3px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:28px;
-  box-shadow:0 0 25px var(--acc-glow), 0 6px 15px rgba(0,0,0,0.6);
+  width:54px;height:54px;background:radial-gradient(circle at 35% 35%, #ff4d6d 0%, #d90429 55%, #800020 100%);
+  border:3px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:24px;
+  box-shadow:0 0 20px var(--acc-glow), 0 6px 15px rgba(0,0,0,0.6);
 }
-.game-title{font-size:22px;font-weight:900;color:var(--t-col);text-shadow:0 0 12px rgba(255,215,0,0.4);letter-spacing:1px;margin:0;}
-.game-subtitle{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin:0;}
+.game-title{font-size:20px;font-weight:900;color:var(--t-col);text-shadow:0 0 10px rgba(255,215,0,0.4);letter-spacing:1px;margin:0;}
+.game-subtitle{font-size:8px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin:0;}
 
-/* Карточка профиля / игрока */
 .profile-card{
   background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:12px;
-  padding:10px;display:flex;align-items:center;gap:10px;text-align:left;
+  padding:8px 10px;display:flex;align-items:center;gap:10px;text-align:left;
   box-shadow:inset 0 2px 5px rgba(0,0,0,0.5);
 }
 .avatar-box{
-  width:42px;height:42px;background:var(--btn);border:1px solid var(--b-col);border-radius:8px;
-  display:flex;justify-content:center;align-items:center;font-size:20px;flex-shrink:0;
+  width:38px;height:38px;background:var(--btn);border:1px solid var(--b-col);border-radius:8px;
+  display:flex;justify-content:center;align-items:center;font-size:18px;flex-shrink:0;
 }
 .profile-info{display:flex;flex-direction:column;gap:2px;overflow:hidden;}
-.profile-name{font-size:11px;font-weight:800;color:var(--t-col);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.profile-stats{font-size:8px;color:var(--sub);}
+.profile-name{font-size:10.5px;font-weight:800;color:var(--t-col);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.profile-stats{font-size:7.5px;color:var(--sub);}
 
-/* Меню навигации */
-.menu-nav{display:flex;flex-direction:column;gap:7px;margin:5px 0;}
+.menu-nav{display:flex;flex-direction:column;gap:6px;margin:4px 0;}
 .menu-btn{
   background:linear-gradient(145deg, #221016, #14080b);border:1px solid var(--b-col);border-radius:12px;
-  padding:11px 14px;color:var(--txt);font-size:12px;font-weight:800;text-decoration:none;
+  padding:9px 12px;color:var(--txt);font-size:11px;font-weight:800;text-decoration:none;
   display:flex;align-items:center;justify-content:space-between;cursor:pointer;
   box-shadow:0 4px 10px rgba(0,0,0,0.3);transition:all 0.15s ease;
 }
 .menu-btn:hover, .menu-btn:active{border-color:var(--acc);transform:scale(0.98);background:linear-gradient(145deg, #2d141c, #190a0f);}
 .menu-btn.primary{
   background:linear-gradient(135deg, #ff2a5f, #d90429);border-color:#ff7597;color:#fff;
-  box-shadow:0 0 20px rgba(255,42,95,0.4), 0 4px 12px rgba(0,0,0,0.4);font-size:13px;
+  box-shadow:0 0 20px rgba(255,42,95,0.4), 0 4px 12px rgba(0,0,0,0.4);font-size:12px;
 }
 
-.footer-info{font-size:7.5px;color:var(--sub);opacity:0.7;margin-top:5px;}
+/* Модальное окно перевода */
+.modal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;z-index:100;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity 0.2s ease;
+}
+.modal-overlay.active{opacity:1;pointer-events:auto;}
+.modal-content{
+  background:var(--p-bg);border:2px solid var(--t-col);border-radius:16px;padding:14px;
+  text-align:center;width:100%;max-width:300px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:0 0 25px rgba(255,215,0,0.3);
+}
+.modal-input{
+  width:100%;background:rgba(0,0,0,0.5);border:1px solid var(--b-col);border-radius:8px;
+  padding:8px;color:#fff;font-family:monospace;font-size:11px;outline:none;text-align:center;
+}
+.modal-input:focus{border-color:var(--t-col);}
+
+.footer-info{font-size:7px;color:var(--sub);opacity:0.7;}
 </style>
 </head>
 <body>
@@ -97,6 +113,10 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
       <span id="btnStudio">🔴 ВОЙТИ В СТУДИЮ</span>
       <span>▶</span>
     </a>
+    <div class="menu-btn" onclick="openTransferModal()">
+      <span id="btnTransfer">🤝 Перевод спонсору</span>
+      <span>💶</span>
+    </div>
     <a href="collection.html" class="menu-btn">
       <span id="btnShop">🛒 Магазин и Холдинг</span>
       <span>💎</span>
@@ -115,14 +135,29 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
     </a>
   </div>
 
-  <div class="footer-info">Tube Empire v5.2 • Telegram Mini App</div>
+  <div class="footer-info">Tube Empire v5.3 • Telegram Mini App</div>
+</div>
+
+<!-- Модальное окно перевода -->
+<div class="modal-overlay" id="transferModal" onclick="closeTransferModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div style="font-size:24px;">🤝</div>
+    <div style="font-size:12px;font-weight:800;color:var(--t-col);" id="modalTitle">ПЕРЕВОД СРЕДСТВ</div>
+    <div style="font-size:8px;color:var(--sub);" id="modalDesc">Максимум за раз: 1 000 000 €</div>
+    
+    <input type="text" id="friendName" class="modal-input" placeholder="Никнейм спонсора / друга (@username)">
+    <input type="number" id="transferAmount" class="modal-input" placeholder="Сумма в € (до 1 000 000)" max="1000000" min="1">
+    
+    <button class="menu-btn primary" style="justify-content:center;padding:8px;font-size:10px;" onclick="executeTransfer()" id="modalSendBtn">ОТПРАВИТЬ СРЕДСТВА</button>
+    <button class="top-btn" style="width:100%;padding:6px;background:rgba(255,255,255,0.05);" onclick="closeTransferModal()" id="modalCloseBtn">ЗАКРЫТЬ</button>
+  </div>
 </div>
 
 <script>
 const langMap = {
-  ru: { sub: "Idle Streamer Tycoon", studio: "🔴 ВОЙТИ В СТУДИЮ", shop: "🛒 Магазин и Холдинг", avatar: "🎨 Кастомизация & Студия", gallery: "🏆 Награды и Кнопки", rank: "📊 Таблица Лидеров", balance: "Баланс" },
-  de: { sub: "Idle Streamer Tycoon", studio: "🔴 INS STUDIO", shop: "🛒 Shop & Konzerne", avatar: "🎨 Anpassung & Studio", gallery: "🏆 Trophäen", rank: "📊 Bestenliste", balance: "Guthaben" },
-  en: { sub: "Idle Streamer Tycoon", studio: "🔴 ENTER STUDIO", shop: "🛒 Shop & Holdings", avatar: "🎨 Customization & Studio", gallery: "🏆 Awards & Buttons", rank: "📊 Leaderboard", balance: "Balance" }
+  ru: { sub: "Idle Streamer Tycoon", studio: "🔴 ВОЙТИ В СТУДИЮ", transfer: "🤝 Перевод спонсору", shop: "🛒 Магазин и Холдинг", avatar: "🎨 Кастомизация & Студия", gallery: "🏆 Награды и Кнопки", rank: "📊 Таблица Лидеров", balance: "Баланс", mTitle: "ПЕРЕВОД СРЕДСТВ", mDesc: "Максимум за раз: 1 000 000 €", pUser: "Никнейм спонсора / друга (@username)", pSum: "Сумма в € (до 1 000 000)", sBtn: "ОТПРАВИТЬ СРЕДСТВА", cBtn: "ЗАКРЫТЬ" },
+  de: { sub: "Idle Streamer Tycoon", studio: "🔴 INS STUDIO", transfer: "🤝 Sponsor-Überweisung", shop: "🛒 Shop & Konzerne", avatar: "🎨 Anpassung & Studio", gallery: "🏆 Trophäen", rank: "📊 Bestenliste", balance: "Guthaben", mTitle: "ÜBERWEISUNG", mDesc: "Maximal: 1.000.000 €", pUser: "Empfänger (@username)", pSum: "Betrag in €", sBtn: "GELD SENDEN", cBtn: "SCHLIESSEN" },
+  en: { sub: "Idle Streamer Tycoon", studio: "🔴 ENTER STUDIO", transfer: "🤝 Sponsor Transfer", shop: "🛒 Shop & Holdings", avatar: "🎨 Customization & Studio", gallery: "🏆 Awards & Buttons", rank: "📊 Leaderboard", balance: "Balance", mTitle: "FUNDS TRANSFER", mDesc: "Max per transfer: €1,000,000", pUser: "Friend / Sponsor (@username)", pSum: "Amount in €", sBtn: "SEND FUNDS", cBtn: "CLOSE" }
 };
 
 function updateUI() {
@@ -131,10 +166,18 @@ function updateUI() {
 
   document.getElementById('subTitle').textContent = t.sub;
   document.getElementById('btnStudio').textContent = t.studio;
+  document.getElementById('btnTransfer').textContent = t.transfer;
   document.getElementById('btnShop').textContent = t.shop;
   document.getElementById('btnAvatar').textContent = t.avatar;
   document.getElementById('btnGallery').textContent = t.gallery;
   document.getElementById('btnRank').textContent = t.rank;
+
+  document.getElementById('modalTitle').textContent = t.mTitle;
+  document.getElementById('modalDesc').textContent = t.mDesc;
+  document.getElementById('friendName').placeholder = t.pUser;
+  document.getElementById('transferAmount').placeholder = t.pSum;
+  document.getElementById('modalSendBtn').textContent = t.sBtn;
+  document.getElementById('modalCloseBtn').textContent = t.cBtn;
 
   document.getElementById('langBtn').textContent = lang === 'ru' ? '🇷🇺 RU' : (lang === 'de' ? '🇩🇪 DE' : '🇬🇧 EN');
   document.getElementById('soundBtn').textContent = Core.getSound() ? '🔊 ЗВУК' : '🔇 ВЫКЛ';
@@ -145,7 +188,6 @@ function updateUI() {
   let money = Core.getMoney();
   document.getElementById('userStats').textContent = `${t.balance}: ${money.toLocaleString('ru-RU', {minimumFractionDigits:2, maximumFractionDigits:2})} €`;
 
-  // Отображение аватара из кастомизации
   try {
     let s = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
     if(s) {
@@ -153,6 +195,48 @@ function updateUI() {
       document.getElementById('avatarDisplay').textContent = genders[s.gender] || '👦';
     }
   } catch(e) {}
+}
+
+function openTransferModal() {
+  document.getElementById('transferModal').classList.add('active');
+  Core.playSound(440, 'sine', 0.05);
+}
+
+function closeTransferModal() {
+  document.getElementById('transferModal').classList.remove('active');
+}
+
+function executeTransfer() {
+  let friend = document.getElementById('friendName').value.trim();
+  let amount = Number(document.getElementById('transferAmount').value);
+  let currentMoney = Core.getMoney();
+
+  if(!friend) {
+    alert("Введите никнейм получателя!");
+    return;
+  }
+  if(isNaN(amount) || amount <= 0) {
+    alert("Введите корректную сумму!");
+    return;
+  }
+  if(amount > 1000000) {
+    alert("Максимальная сумма разового перевода — 1 000 000 €!");
+    return;
+  }
+  if(currentMoney < amount) {
+    alert("Недостаточно средств на балансе!");
+    Core.playSound(150, 'sawtooth', 0.15);
+    return;
+  }
+
+  // Списываем деньги
+  Core.setMoney(currentMoney - amount);
+  Core.playSound(880, 'square', 0.2);
+  Core.haptic('heavy');
+
+  alert(`✅ Успешно отправлено ${amount.toLocaleString()} € для ${friend}!`);
+  closeTransferModal();
+  updateUI();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
