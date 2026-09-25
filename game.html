@@ -1,1072 +1,200 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
-
-<title>Tube Empire — Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tube Empire — Game</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     margin:0;
+    padding:0;
     width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#070305;
+    min-height:100%;
+    background:#090b12;
     color:#fff;
-    font-family:system-ui,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-    padding:4px;
+    min-height:100vh;
     display:flex;
     justify-content:center;
-    align-items:center;
 }
 
-.portal{
+.game{
     width:100%;
-    max-width:420px;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    padding:8px;
-
+    max-width:520px;
+    min-height:100vh;
+    padding:16px;
     background:
-        linear-gradient(
-            145deg,
-            #190c12,
-            #080407
-        );
-
-    border:2px solid rgba(255,50,80,.35);
-    border-radius:18px;
+        radial-gradient(circle at 50% 20%,#20284b 0,#101525 35%,#090b12 75%);
 }
 
 .header{
     display:flex;
-    gap:5px;
-    padding:6px;
-    border:1px solid rgba(255,50,80,.35);
-    border-radius:10px;
-    background:#16090e;
-}
-
-.header a{
-    flex:1;
-    text-align:center;
-    text-decoration:none;
-    color:#fff;
-    padding:7px 4px;
-    border-radius:7px;
-    background:#241018;
-    border:1px solid rgba(255,255,255,.12);
-    font-size:9px;
-    font-weight:800;
-}
-
-.header a:first-child{
-    background:#d90429;
-}
-
-.body{
-    flex:1;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    padding-top:8px;
-}
-
-.stats{
-    display:flex;
-    gap:6px;
-}
-
-.stat{
-    flex:1;
-    padding:8px;
-    text-align:center;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:10px;
-    background:rgba(255,255,255,.025);
-}
-
-.label{
-    color:#ff94a8;
-    font-size:8px;
-    font-weight:800;
-}
-
-.value{
-    color:#ffd700;
-    font-size:16px;
-    font-weight:900;
-    margin-top:3px;
-}
-
-.small{
-    color:#ff94a8;
-    font-size:8px;
-    margin-top:2px;
-}
-
-.trend{
-    display:flex;
+    align-items:center;
     justify-content:space-between;
-    padding:7px 10px;
-    border:1px dashed rgba(255,215,0,.3);
-    border-radius:9px;
-    background:rgba(255,215,0,.04);
-    font-size:9px;
+    margin-bottom:14px;
 }
 
-.studio{
-    height:75px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:2px solid rgba(255,50,80,.35);
-    border-radius:12px;
-    background:
-        radial-gradient(
-            circle,
-            #32101c,
-            #0b0407
-        );
-    font-size:28px;
-}
-
-.donation{
-    width:100%;
-    padding:8px;
-    border:1px solid #ffd700;
-    border-radius:8px;
-    background:#3a121d;
-    color:#ffd700;
-    font-size:9px;
+.logo{
+    font-size:22px;
     font-weight:900;
-}
-
-.tap-area{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:3px;
-}
-
-.tap-button{
-    width:82px;
-    height:82px;
-
-    border-radius:50%;
-    border:4px solid #fff;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #ff718b,
-            #ff174f 45%,
-            #72001e
-        );
-
-    box-shadow:
-        0 0 20px rgba(255,30,90,.6),
-        inset 0 0 15px rgba(255,255,255,.2);
-
-    color:#fff;
-    font-size:26px;
-    font-weight:900;
-
-    cursor:pointer;
-    touch-action:manipulation;
-    user-select:none;
-
-    transition:
-        transform .08s,
-        box-shadow .08s;
-}
-
-.tap-button:active{
-    transform:scale(.88);
-    box-shadow:
-        0 0 35px rgba(255,30,90,.9);
+    letter-spacing:.5px;
 }
 
 .status{
+    padding:7px 10px;
+    border-radius:10px;
+    background:#171c2c;
+    color:#8df5b0;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.balance{
+    background:linear-gradient(145deg,#171d32,#0d111d);
+    border:1px solid #303b60;
+    border-radius:18px;
+    padding:18px;
     text-align:center;
-    min-height:18px;
-    color:#72ffb0;
-    font-size:9px;
+    box-shadow:0 10px 30px #0008;
+}
+
+.balance-title{
+    color:#8993ad;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.money{
+    margin-top:5px;
+    font-size:38px;
+    font-weight:900;
+    color:#72f7a0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+
+.stat{
+    background:#111624;
+    border:1px solid #252e47;
+    border-radius:14px;
+    padding:13px;
+}
+
+.stat-label{
+    color:#78829b;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.stat-value{
+    margin-top:5px;
+    font-size:20px;
     font-weight:800;
 }
 
-.list{
-    flex:1;
-    min-height:0;
-    overflow-y:auto;
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+.game-card{
+    margin-top:14px;
+    background:#101522;
+    border:1px solid #29334f;
+    border-radius:22px;
+    padding:20px;
+    text-align:center;
 }
 
-.card{
+.game-title{
+    font-size:20px;
+    font-weight:900;
+}
+
+.game-subtitle{
+    margin-top:6px;
+    color:#858fa8;
+    font-size:13px;
+}
+
+.tap-area{
+    margin:25px auto 18px;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle,#242f59 0,#151d38 48%,#0d1221 70%);
+    border:4px solid #536aa8;
+    box-shadow:
+        0 0 25px #4668bd88,
+        inset 0 0 35px #000;
+    cursor:pointer;
+    user-select:none;
+    touch-action:manipulation;
+    transition:.08s;
+}
+
+.tap-area:active{
+    transform:scale(.94);
+    border-color:#7b9cff;
+    box-shadow:
+        0 0 45px #557cffaa,
+        inset 0 0 35px #000;
+}
+
+.tap-icon{
+    font-size:70px;
+}
+
+.tap-text{
+    margin-top:10px;
+    font-size:13px;
+    color:#aeb9d5;
+    font-weight:bold;
+}
+
+.energy{
+    margin-top:12px;
+}
+
+.energy-head{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-
-    padding:8px 10px;
-
-    border:1px solid rgba(255,50,80,.35);
-    border-radius:9px;
-
-    background:#180a10;
-
-    cursor:pointer;
+    color:#8b96ae;
+    font-size:12px;
+    margin-bottom:6px;
 }
 
-.card-name{
-    color:#ffd700;
-    font-size:9px;
-    font-weight:800;
+.energy-bar{
+    height:10px;
+    background:#080b12;
+    border-radius:20px;
+    overflow:hidden;
 }
 
-.card-desc{
-    color:#ff94a8;
-    font-size:7px;
-    margin-top:2px;
+.energy-fill{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,#58d9ff,#8d7cff);
+    border-radius:20px;
+    transition:.2s;
 }
 
-.card-count{
-    color:#fff;
-    background:#0006;
-    padding:4px 7px;
-    border-radius:6px;
-    font-size:10px;
-    font-weight:900;
-}
-
-.popup{
-    position:fixed;
-    z-index:9999;
-    pointer-events:none;
-
-    color:#ffd700;
-    font-size:14px;
-    font-weight:900;
-
-    animation:
-        popup .55s ease-out forwards;
-}
-
-@keyframes popup{
-
-    0%{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-
-    100%{
-        opacity:0;
-        transform:translateY(-35px) scale(1.15);
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="portal">
-
-    <div class="header">
-
-        <a href="index.html">
-            ⬅ МЕНЮ
-        </a>
-
-        <a href="collection.html">
-            🛒 МАГАЗИН
-        </a>
-
-        <a href="avatar.html">
-            🎨 СТУДИЯ
-        </a>
-
-    </div>
-
-
-    <div class="body">
-
-
-        <div class="stats">
-
-            <div class="stat">
-
-                <div class="label">
-                    БАЛАНС
-                </div>
-
-                <div
-                    class="value"
-                    id="money"
-                >
-                    1000.00 €
-                </div>
-
-                <div
-                    class="small"
-                    id="income"
-                >
-                    +0.0 €/с
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="label">
-                    ЭНЕРГИЯ
-                </div>
-
-                <div
-                    class="value"
-                    id="energy"
-                >
-                    100.0
-                </div>
-
-                <div
-                    class="small"
-                >
-                    Энергия
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="trend">
-
-            <span>
-                🔥 ТРЕНД
-            </span>
-
-            <span>
-                x1.00
-            </span>
-
-        </div>
-
-
-        <div class="studio">
-            🎙️ 💻 💡
-        </div>
-
-
-        <button
-            class="donation"
-            id="donationButton"
-            type="button"
-        >
-            🎁 ЗАБРАТЬ ДОХОД
-        </button>
-
-
-        <div class="tap-area">
-
-            <button
-                class="tap-button"
-                id="tapButton"
-                type="button"
-            >
-                ▶
-            </button>
-
-        </div>
-
-
-        <div
-            class="status"
-            id="status"
-        >
-            ИГРА ГОТОВА
-        </div>
-
-
-        <div
-            class="list"
-            id="upgradeList"
-        ></div>
-
-
-    </div>
-
-</div>
-
-
-<script>
-
-"use strict";
-
-
-/*
-==================================================
- TUBE EMPIRE
- ПРОСТАЯ РАБОЧАЯ СИСТЕМА
-==================================================
-*/
-
-
-const STORAGE_KEY =
-    "tube_empire_simple_game_v1";
-
-
-let game = {
-
-    money:1000,
-
-    energy:100,
-
-    income:0,
-
-    totalEarned:0,
-
-    totalSpent:0,
-
-    upgrades:{
-
-        desk:0,
-
-        office:0,
-
-        clipmaker:0,
-
-        camera:0
-
-    }
-
-};
-
-
-/*
-==================================================
- ЗАГРУЗКА
-==================================================
-*/
-
-function loadGame(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-
-        if(saved){
-
-            const parsed =
-                JSON.parse(saved);
-
-
-            if(
-                parsed &&
-                typeof parsed === "object"
-            ){
-
-                game = {
-                    ...game,
-                    ...parsed
-                };
-
-            }
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Ошибка загрузки:",
-            error
-        );
-
-    }
-
-}
-
-
-/*
-==================================================
- СОХРАНЕНИЕ
-==================================================
-*/
-
-function saveGame(){
-
-    try{
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(game)
-        );
-
-    }catch(error){
-
-        console.error(
-            "Ошибка сохранения:",
-            error
-        );
-
-    }
-
-}
-
-
-/*
-==================================================
- ФОРМАТ ДЕНЕГ
-==================================================
-*/
-
-function moneyText(value){
-
-    return Number(
-        value
-    ).toLocaleString(
-        "ru-RU",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    ) + " €";
-
-}
-
-
-/*
-==================================================
- ОБНОВЛЕНИЕ ЭКРАНА
-==================================================
-*/
-
-function render(){
-
-    document.getElementById(
-        "money"
-    ).textContent =
-        moneyText(
-            game.money
-        );
-
-
-    document.getElementById(
-        "energy"
-    ).textContent =
-        Number(
-            game.energy
-        ).toFixed(1);
-
-
-    document.getElementById(
-        "income"
-    ).textContent =
-        "+" +
-        Number(
-            game.income
-        ).toFixed(1) +
-        " €/с";
-
-
-    renderUpgrades();
-
-}
-
-
-/*
-==================================================
- УЛУЧШЕНИЯ
-==================================================
-*/
-
-const upgrades = [
-
-    {
-        id:"desk",
-        name:"💻 Стол монтажа",
-        description:"+1 €/с",
-        cost:100,
-        income:1
-    },
-
-    {
-        id:"office",
-        name:"🏢 Офис",
-        description:"+5 €/с",
-        cost:500,
-        income:5
-    },
-
-    {
-        id:"clipmaker",
-        name:"🧑‍💻 Клипмейкер",
-        description:"+15 €/с",
-        cost:1500,
-        income:15
-    },
-
-    {
-        id:"camera",
-        name:"🎥 Оператор",
-        description:"+50 €/с",
-        cost:5000,
-        income:50
-    }
-
-];
-
-
-function renderUpgrades(){
-
-    const container =
-        document.getElementById(
-            "upgradeList"
-        );
-
-
-    container.innerHTML = "";
-
-
-    upgrades.forEach(
-        item => {
-
-            const count =
-                Number(
-                    game.upgrades[
-                        item.id
-                    ] || 0
-                );
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "card";
-
-
-            card.innerHTML = `
-
-                <div>
-
-                    <div class="card-name">
-                        ${item.name}
-                    </div>
-
-                    <div class="card-desc">
-                        ${item.description}
-                        ·
-                        ${item.cost.toLocaleString("ru-RU")} €
-                    </div>
-
-                </div>
-
-                <div class="card-count">
-                    ${count}
-                </div>
-
-            `;
-
-
-            card.addEventListener(
-                "click",
-                function(){
-
-                    buyUpgrade(
-                        item
-                    );
-
-                }
-            );
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/*
-==================================================
- ПОКУПКА
-==================================================
-*/
-
-function buyUpgrade(item){
-
-    if(
-        game.money <
-        item.cost
-    ){
-
-        setStatus(
-            "❌ НЕДОСТАТОЧНО ДЕНЕГ"
-        );
-
-        return;
-
-    }
-
-
-    game.money -=
-        item.cost;
-
-
-    game.totalSpent +=
-        item.cost;
-
-
-    game.upgrades[
-        item.id
-    ] =
-        Number(
-            game.upgrades[
-                item.id
-            ] || 0
-        ) + 1;
-
-
-    game.income +=
-        item.income;
-
-
-    saveGame();
-
-    render();
-
-
-    setStatus(
-        "✅ УЛУЧШЕНИЕ КУПЛЕНО"
-    );
-
-}
-
-
-/*
-==================================================
- ГЛАВНАЯ КНОПКА
-==================================================
-*/
-
-function tapGame(event){
-
-    console.log(
-        "TAP WORKS"
-    );
-
-
-    /*
-     * ГЛАВНОЕ:
-     * деньги увеличиваются
-     * непосредственно здесь.
-     */
-
-    game.money =
-        Number(game.money) + 1;
-
-
-    game.totalEarned =
-        Number(game.totalEarned) + 1;
-
-
-    game.energy =
-        Math.max(
-            0,
-            Number(game.energy) - 0.1
-        );
-
-
-    saveGame();
-
-    render();
-
-
-    setStatus(
-        "✅ +1 €"
-    );
-
-
-    showPopup(
-        event,
-        "+1 €"
-    );
-
-}
-
-
-/*
-==================================================
- ДОХОД
-==================================================
-*/
-
-function claimIncome(){
-
-    const amount =
-        Number(game.energy) * 0.1;
-
-
-    if(amount <= 0){
-
-        setStatus(
-            "❌ НЕТ ЭНЕРГИИ"
-        );
-
-        return;
-
-    }
-
-
-    game.money +=
-        amount;
-
-
-    game.totalEarned +=
-        amount;
-
-
-    game.energy = 0;
-
-
-    saveGame();
-
-    render();
-
-
-    setStatus(
-        "✅ ДОХОД ПОЛУЧЕН"
-    );
-
-}
-
-
-/*
-==================================================
- ВСПЛЫВАЮЩИЙ +1 €
-==================================================
-*/
-
-function showPopup(
-    event,
-    text
-){
-
-    const popup =
-        document.createElement(
-            "div"
-        );
-
-
-    popup.className =
-        "popup";
-
-
-    popup.textContent =
-        text;
-
-
-    let x =
-        window.innerWidth / 2;
-
-
-    let y =
-        window.innerHeight / 2;
-
-
-    if(event){
-
-        x =
-            event.clientX;
-
-
-        y =
-            event.clientY;
-
-    }
-
-
-    popup.style.left =
-        (x - 15) + "px";
-
-
-    popup.style.top =
-        (y - 25) + "px";
-
-
-    document.body.appendChild(
-        popup
-    );
-
-
-    setTimeout(
-        function(){
-
-            popup.remove();
-
-        },
-        600
-    );
-
-}
-
-
-/*
-==================================================
- СТАТУС
-==================================================
-*/
-
-function setStatus(text){
-
-    document.getElementById(
-        "status"
-    ).textContent =
-        text;
-
-}
-
-
-/*
-==================================================
- СОБЫТИЯ КНОПОК
-==================================================
-*/
-
-const tapButton =
-    document.getElementById(
-        "tapButton"
-    );
-
-
-tapButton.addEventListener(
-    "click",
-    tapGame
-);
-
-
-tapButton.addEventListener(
-    "touchend",
-    function(event){
-
-        event.preventDefault();
-
-        tapGame(event);
-
-    },
-    {
-        passive:false
-    }
-);
-
-
-document
-    .getElementById(
-        "donationButton"
-    )
-    .addEventListener(
-        "click",
-        claimIncome
-    );
-
-
-/*
-==================================================
- АВТОДОХОД
-==================================================
-*/
-
-setInterval(
-    function(){
-
-        if(
-            game.income > 0
-        ){
-
-            const amount =
-                Number(
-                    game.income
-                ) / 10;
-
-
-            game.money +=
-                amount;
-
-
-            game.totalEarned +=
-                amount;
-
-
-            saveGame();
-
-            render();
-
-        }
-
-    },
-    100
-);
-
-
-/*
-==================================================
- СТАРТ
-==================================================
-*/
-
-loadGame();
-
-render();
-
-setStatus(
-    "ИГРА ГОТОВА — НАЖМИ ▶"
-);
-
-
-console.log(
-    "Tube Empire loaded"
-);
-
-
-console.log(
-    "Current money:",
-    game.money
-);
-
-</script>
-
-</body>
-</html>
+.message{
+    min-height:20px;
+    margin-top:10px;
+    color:#77eaff;
+    font-size
