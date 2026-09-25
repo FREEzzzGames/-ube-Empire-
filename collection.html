@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tube Empire — Магазин блогера</title>
+<title>Tube Empire — Магазин и Холдинг</title>
 <script src="core.js"></script>
 <style>
 :root, [data-theme="dark"] {
@@ -54,6 +54,9 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 }
 .game-ui-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 10.5px; }
 .back-btn { background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff; padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px; }
+.shop-tabs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; flex-shrink: 0; }
+.shop-tab-btn { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 5px; font-size: 8.5px; color: var(--text-main); font-family: monospace; font-weight: bold; cursor: pointer; text-align: center; }
+.shop-tab-btn.active { background: var(--accent-col); border-color: var(--title-col); color: #fff; }
 .collection-budget { background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 4px; text-align: center; width: 100%; flex-shrink: 0; }
 .luxury-grid { flex-grow: 1; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); gap: 4px; overflow-y: auto; padding: 2px 0; }
 .luxury-tile { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; cursor: pointer; position: relative; }
@@ -62,6 +65,17 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .tile-cost { font-size: 6.5px; color: var(--title-col); font-weight: bold; margin-top: 1px; }
 .luxury-tile.owned { border-color: var(--success-col); background: rgba(46, 204, 113, 0.2); }
 .luxury-tile.owned .tile-cost { color: var(--success-col); }
+
+/* Стили для вкладки Холдинг */
+.corp-list { flex-grow: 1; width: 100%; display: flex; flex-direction: column; gap: 5px; overflow-y: auto; padding: 2px 0; text-align: left; }
+.corp-card { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.corp-card.owned { border-color: var(--success-col); background: rgba(46, 204, 113, 0.15); }
+.corp-info { display: flex; flex-direction: column; gap: 2px; }
+.corp-name { font-size: 9.5px; font-weight: bold; color: var(--title-col); }
+.corp-desc { font-size: 7px; color: var(--text-sub); }
+.corp-buy-btn { background: linear-gradient(135deg, var(--title-col), #c09a00); border: none; border-radius: 6px; padding: 5px 10px; font-weight: bold; font-size: 8.5px; color: #000; cursor: pointer; font-family: monospace; }
+.corp-buy-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #555; color: #fff; }
+
 .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--portal-bg); border: 2px solid var(--title-col); border-radius: 12px; padding: 16px; text-align: center; width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 25px rgba(255,204,0,0.4); }
@@ -71,8 +85,13 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 
 <div class="portal">
   <div class="game-ui-header">
-    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ НАЗАД</a>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="shopTitle">💎 МАГАЗИН БЛОГЕРА</div>
+    <a href="game.html" class="back-btn" id="menuBtnTxt">⬅ СТУДИЯ</a>
+    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="shopTitle">💎 МАГАЗИН И БИЗНЕС</div>
+  </div>
+
+  <div class="shop-tabs">
+    <button class="shop-tab-btn active" onclick="switchTab('luxury')" id="tabLuxury">💎 Предметы роскоши</button>
+    <button class="shop-tab-btn" onclick="switchTab('corp')" id="tabCorp">🏢 Корпорации</button>
   </div>
 
   <div class="collection-budget">
@@ -80,7 +99,11 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
     <div style="font-size: 14px; font-weight: bold; color: var(--title-col);" id="collectionMoneyVal">0.00 €</div>
   </div>
 
-  <div class="luxury-grid" id="luxuryGrid"></div>
+  <!-- Вкладка Предметы роскоши -->
+  <div class="luxury-grid" id="luxuryGrid" style="display: grid;"></div>
+
+  <!-- Вкладка Корпоративные бизнесы -->
+  <div class="corp-list" id="corpList" style="display: none;"></div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
@@ -97,7 +120,8 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 <script>
 const langData = {
   ru: {
-    menu: "⬅ НАЗАД", shop: "💎 МАГАЗИН БЛОГЕРА", buy: "КУПИТЬ", owned: "✔ ЕСТЬ", close: "ЗАКРЫТЬ", budget: "Доступный баланс (€)",
+    menu: "⬅ СТУДИЯ", shop: "💎 МАГАЗИН И БИЗНЕС", buy: "КУПИТЬ", owned: "✔ ЕСТЬ", close: "ЗАКРЫТЬ", budget: "Доступный баланс (€)",
+    tabLux: "💎 Предметы роскоши", tabCorp: "🏢 Корпорации",
     items: [
       { name: "Кольцевая лампа", desc: "Базовый свет для влогов", icon: "💡" },
       { name: "Микрофон Shure", desc: "Студийный звук голоса", icon: "🎙️" },
@@ -122,7 +146,8 @@ const langData = {
     ]
   },
   de: {
-    menu: "⬅ ZURÜCK", shop: "💎 BLOGGER SHOP", buy: "KAUFEN", owned: "✔ BESITZ", close: "SCHLIESSEN", budget: "Guthaben (€)",
+    menu: "⬅ STUDIO", shop: "💎 SHOP & GESCHÄFT", buy: "KAUFEN", owned: "✔ BESITZ", close: "SCHLIESSEN", budget: "Guthaben (€)",
+    tabLux: "💎 Luxusgegenstände", tabCorp: "🏢 Konzerne",
     items: [
       { name: "Ringleuchte", desc: "Basis-Licht für Vlogs", icon: "💡" },
       { name: "Studio-Mikro", desc: "Perfekter Sound", icon: "🎙️" },
@@ -147,7 +172,8 @@ const langData = {
     ]
   },
   en: {
-    menu: "⬅ BACK", shop: "💎 BLOGGER SHOP", buy: "BUY", owned: "✔ OWNED", close: "CLOSE", budget: "Available Balance (€)",
+    menu: "⬅ STUDIO", shop: "💎 SHOP & BUSINESS", buy: "BUY", owned: "✔ OWNED", close: "CLOSE", budget: "Available Balance (€)",
+    tabLux: "💎 Luxury Items", tabCorp: "🏢 Corporations",
     items: [
       { name: "Ring Light", desc: "Basic vlogging light", icon: "💡" },
       { name: "Shure Mic", desc: "Studio voice sound", icon: "🎙️" },
@@ -180,6 +206,16 @@ let luxuryItems = Array.from({length: 20}, (_, i) => ({
 }));
 
 let selectedIndex = null;
+let currentTab = 'luxury';
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabLuxury').classList.toggle('active', tab === 'luxury');
+  document.getElementById('tabCorp').classList.toggle('active', tab === 'corp');
+  document.getElementById('luxuryGrid').style.display = tab === 'luxury' ? 'grid' : 'none';
+  document.getElementById('corpList').style.display = tab === 'corp' ? 'flex' : 'none';
+  updateCollectionUI();
+}
 
 function openModal(index) {
   selectedIndex = index;
@@ -210,8 +246,20 @@ function buyCurrentItem() {
   money -= item.cost; item.owned = true;
   Core.setMoney(money);
   localStorage.setItem(item.id, "true");
+  Core.playSound(880, 'square', 0.2);
+  Core.haptic('heavy');
   closeModal(); 
   updateCollectionUI();
+}
+
+function buyCorpAsset(id) {
+  if (Core.buyCorporationAsset(id)) {
+    Core.playSound(880, 'square', 0.25);
+    Core.haptic('heavy');
+    updateCollectionUI();
+  } else {
+    Core.playSound(150, 'sawtooth', 0.15);
+  }
 }
 
 function updateCollectionUI() {
@@ -222,8 +270,11 @@ function updateCollectionUI() {
   setTxt('menuBtnTxt', t.menu);
   setTxt('shopTitle', t.shop);
   setTxt('budgetTitle', t.budget);
+  setTxt('tabLuxury', t.tabLux);
+  setTxt('tabCorp', t.tabCorp);
   setTxt('collectionMoneyVal', money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €");
 
+  // Отрисовка роскоши
   let gridHtml = "";
   luxuryItems.forEach((item, idx) => {
     let localized = t.items[idx], canBuy = money >= item.cost;
@@ -237,6 +288,32 @@ function updateCollectionUI() {
   });
   let gridEl = document.getElementById('luxuryGrid');
   if(gridEl) gridEl.innerHTML = gridHtml;
+
+  // Отрисовка корпораций (холдинга)
+  let corpAssets = Core.getCorporationAssets();
+  let corpHtml = "";
+  corpAssets.forEach(asset => {
+    let isOwned = Core.isAssetOwned(asset.id);
+    let canBuy = money >= asset.cost;
+    let assetName = asset.name[lang] || asset.name.ru;
+    corpHtml += `
+      <div class="corp-card ${isOwned ? 'owned' : ''}">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="font-size:24px;">${asset.icon}</div>
+          <div class="corp-info">
+            <div class="corp-name">${assetName}</div>
+            <div class="corp-desc">Доход: +${asset.incomePerSec.toLocaleString()} €/сек</div>
+            <div style="font-size:7px; color:var(--accent-col); font-weight:bold;">Цена: ${asset.cost.toLocaleString()} €</div>
+          </div>
+        </div>
+        <button class="corp-buy-btn" ${isOwned || !canBuy ? 'disabled' : ''} onclick="buyCorpAsset('${asset.id}')">
+          ${isOwned ? t.owned : t.buy}
+        </button>
+      </div>
+    `;
+  });
+  let corpEl = document.getElementById('corpList');
+  if(corpEl) corpEl.innerHTML = corpHtml;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
