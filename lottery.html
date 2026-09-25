@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tube Empire — Лотерея</title>
+<script src="core.js"></script>
+<style>
+:root, [data-theme="dark"] {
+  --portal-bg: rgba(20, 10, 10, 0.96);
+  --border-col: rgba(255, 204, 0, 0.5);
+  --accent-col: #ffcc00;
+  --title-col: #ffcc00;
+  --btn-bg: rgba(40, 15, 15, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --text-main: #fff;
+  --text-sub: #ff8888;
+  --body-bg: #0a0505;
+}
+[data-theme="rose"] {
+  --portal-bg: rgba(30, 10, 25, 0.96);
+  --border-col: rgba(233, 30, 99, 0.6);
+  --accent-col: #ffeb3b;
+  --title-col: #ffeb3b;
+  --btn-bg: rgba(60, 15, 40, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --text-main: #fff;
+  --text-sub: #ff80ab;
+  --body-bg: #150510;
+}
+[data-theme="light"] {
+  --portal-bg: rgba(245, 247, 250, 0.96);
+  --border-col: rgba(230, 81, 0, 0.4);
+  --accent-col: #e65100;
+  --title-col: #e65100;
+  --btn-bg: rgba(255, 255, 255, 0.9);
+  --glass-bg: rgba(230, 235, 245, 0.85);
+  --text-main: #1a1a1a;
+  --text-sub: #555555;
+  --body-bg: #e0e4ec;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition:background 0.3s;}
+body{
+  padding:6px;display:flex;justify-content:center;align-items:center;
+  position: fixed; inset: 0;
+}
+.portal{
+  width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
+  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 8px; z-index: 10;
+  background: var(--portal-bg); border: 2.5px solid var(--border-col);
+  border-radius: 16px; box-shadow: 0 0 35px rgba(0, 0, 0, 0.2);
+  position: relative; overflow-y: auto;
+}
+
+.game-ui-header { 
+  display: flex; justify-content: space-between; align-items: center; 
+  padding: 5px 8px; background: var(--btn-bg); border: 1.5px solid var(--border-col); 
+  border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
+}
+.back-btn {
+  background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
+  padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
+}
+
+.lottery-container {
+  flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; margin: 4px 0;
+}
+
+.lottery-slot-box {
+  width: 130px; height: 130px; background: var(--glass-bg); border: 3px solid var(--title-col);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 55px;
+  box-shadow: 0 0 25px rgba(255,204,0,0.4); transition: transform 0.1s ease;
+}
+@keyframes spinAnim {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+.spinning { animation: spinAnim 0.4s infinite linear; }
+
+.lottery-info-card {
+  background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 9px;
+  padding: 8px; width: 100%; text-align: center;
+}
+.lottery-result-text { font-size: 11px; font-weight: bold; color: var(--title-col); min-height: 25px; margin-top: 4px; }
+
+.play-lottery-btn {
+  width: 100%; background: linear-gradient(135deg, var(--title-col), #c09a00); border: none;
+  border-radius: 8px; padding: 11px; font-weight: bold; font-size: 11.5px; color: #000; cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,204,0,0.4); font-family: monospace; flex-shrink: 0;
+}
+.play-lottery-btn:active { transform: scale(0.97); }
+.play-lottery-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="portal">
+  <div class="game-ui-header">
+    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
+    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="headerTitle">🎟️ ЛОТЕРЕЯ БЛОГЕРА</div>
+  </div>
+
+  <div class="lottery-container">
+    <div style="font-size: 9px; color: var(--text-sub);" id="subtitleTxt">Испытайте удачу и выиграйте главный куш!</div>
+    
+    <div class="lottery-slot-box" id="slotIcon">🎁</div>
+
+    <div class="lottery-info-card">
+      <div style="font-size: 8px; color: var(--text-sub); text-transform: uppercase;">Стоимость билета</div>
+      <div style="font-size: 14px; font-weight: bold; color: var(--title-col);" id="ticketCostTxt">1,000.00 €</div>
+      <div class="lottery-result-text" id="resultText">Сделайте ставку и запустите розыгрыш!</div>
+    </div>
+  </div>
+
+  <button class="play-lottery-btn" onclick="playLottery()" id="playBtnTxt">🎟️ КУПИТЬ БИЛЕТ И КРУТИТЬ</button>
+</div>
+
+<script>
+const langData = {
+  ru: {
+    menu: "⬅ МЕНЮ", title: "🎟️ ЛОТЕРЕЯ БЛОГЕРА",
+    sub: "Испытайте удачу и выиграйте главный куш!",
+    cost: "Стоимость билета", play: "🎟️ КУПИТЬ БИЛЕТ И КРУТИТЬ",
+    ready: "Сделайте ставку и запустите розыгрыш!",
+    notEnough: "❌ Недостаточно средств для покупки билета!",
+    winJackpot: "🎉 ДЖЕКПОТ! Вы выиграли 25,000 €!",
+    winMid: "✨ Отлично! Вы выиграли 2,500 €!",
+    winLow: "👍 Повезло! Возврат стоимости билета.",
+    lose: "😢 Увы, билет оказался несчастливым. Попробуйте еще!"
+  },
+  de: {
+    menu: "⬅ ZURÜCK", title: "🎟️ BLOGGER LOTTERIE",
+    sub: "Versuchen Sie Ihr Glück und gewinnen Sie den Jackpot!",
+    cost: "Ticketpreis", play: "🎟️ TICKET KAUFEN & DREHEN",
+    ready: "Machen Sie Ihren Einsatz und starten Sie!",
+    notEnough: "❌ Nicht genug Guthaben für ein Ticket!",
+    winJackpot: "🎉 JACKPOT! Sie haben 25.000 € gewonnen!",
+    winMid: "✨ Super! Sie haben 2.500 € gewonnen!",
+    winLow: "👍 Glück gehabt! Ticketpreis erstattet.",
+    lose: "😢 Leider verloren. Versuchen Sie es noch einmal!"
+  }
+};
+
+const ticketCost = 1000;
+let isSpinning = false;
+
+function updateUI() {
+  let lang = Core.getLang();
+  let t = langData[lang] || langData.ru;
+  document.getElementById('menuBtnTxt').textContent = t.menu;
+  document.getElementById('headerTitle').textContent = t.title;
+  document.getElementById('subtitleTxt').textContent = t.sub;
+  document.getElementById('ticketCostTxt').textContent = ticketCost.toLocaleString('ru-RU', {minimumFractionDigits: 2}) + " €";
+  document.getElementById('playBtnTxt').textContent = t.play;
+}
+
+function playLottery() {
+  if (isSpinning) return;
+  let money = Core.getMoney();
+  let lang = Core.getLang();
+  let t = langData[lang] || langData.ru;
+
+  if (money < ticketCost) {
+    document.getElementById('resultText').textContent = t.notEnough;
+    Core.playSound(150, 'sawtooth', 0.15);
+    return;
+  }
+
+  money -= ticketCost;
+  Core.setMoney(money);
+
+  isSpinning = true;
+  let slot = document.getElementById('slotIcon');
+  let resultBox = document.getElementById('resultText');
+  let btn = document.getElementById('playBtnTxt');
+  
+  slot.classList.add('spinning');
+  btn.disabled = true;
+  resultBox.textContent = "🎲 Розыгрыш идет...";
+  Core.playSound(400, 'square', 0.1);
+
+  const icons = ['🎁', '💎', '💰', '🔥', '⭐', '🚀'];
+  let counter = 0;
+  let interval = setInterval(() => {
+    slot.textContent = icons[Math.floor(Math.random() * icons.length)];
+    counter++;
+    if (counter > 12) {
+      clearInterval(interval);
+      slot.classList.remove('spinning');
+      
+      let roll = Math.random();
+      let winText = "";
+      let prizeIcon = "🎁";
+
+      if (roll < 0.05) {
+        money += 25000;
+        winText = t.winJackpot;
+        prizeIcon = "💎";
+        Core.playSound(880, 'square', 0.3);
+        Core.haptic('heavy');
+      } else if (roll < 0.20) {
+        money += 2500;
+        winText = t.winMid;
+        prizeIcon = "💰";
+        Core.playSound(720, 'square', 0.2);
+        Core.haptic('medium');
+      } else if (roll < 0.45) {
+        money += 1000;
+        winText = t.winLow;
+        prizeIcon = "⭐";
+        Core.playSound(600, 'triangle', 0.15);
+        Core.haptic('light');
+      } else {
+        winText = t.lose;
+        prizeIcon = "😢";
+        Core.playSound(150, 'sawtooth', 0.2);
+      }
+
+      Core.setMoney(money);
+      slot.textContent = prizeIcon;
+      resultBox.textContent = winText;
+      btn.disabled = false;
+      isSpinning = false;
+    }
+  }, 100);
+}
+
+updateUI();
+</script>
+</body>
+</html>
