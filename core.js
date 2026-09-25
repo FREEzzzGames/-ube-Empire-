@@ -1,4 +1,4 @@
-// core.js — Tube Empire Core
+// core.js — Tube Empire Core (Fixed Profile & Avatar)
 class GameCore {
   constructor() {
     this.initTelegram();
@@ -61,22 +61,27 @@ class GameCore {
     try { window.Telegram?.WebApp?.HapticFeedback?.impactOccurred(style); } catch(e){}
   }
 
+  // Надежное получение никнейма ( Telegram -> localStorage -> Дефолт )
   getUserName(def = "Блогер") {
     try {
       const tg = window.Telegram?.WebApp;
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        return tg.initDataUnsafe.user.username ? `@${tg.initDataUnsafe.user.username}` : (tg.initDataUnsafe.user.first_name || def);
+        let name = tg.initDataUnsafe.user.username ? `@${tg.initDataUnsafe.user.username}` : tg.initDataUnsafe.user.first_name;
+        if (name) return name;
       }
     } catch(e){}
-    return localStorage.getItem("tube_empire_custom_name") || def;
+    let saved = localStorage.getItem("tube_empire_custom_name");
+    if (saved) return saved;
+    return def;
   }
 
-  // Единое точное чтение аватара из конфига кастомизации студии
+  // Строгое чтение индекса аватара из актуального каталога кастомизации
   getAvatarString() {
     try {
       let cfg = JSON.parse(localStorage.getItem("tube_empire_studio_config") || '{"avatar":0}');
       const avatars = ['👦','👧','🧑‍💻','🧑‍🎤','🥷','🤖','🦊','🧛','👻','👽','🚀','👑','😇','🧠','🦁'];
-      return avatars[cfg.avatar || 0] || '👦';
+      let idx = Number(cfg.avatar);
+      return avatars[isNaN(idx) ? 0 : idx] || '👦';
     } catch(e) { return '👦'; }
   }
 
