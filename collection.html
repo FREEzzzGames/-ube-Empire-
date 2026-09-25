@@ -45,60 +45,26 @@
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition:background 0.3s;}
-body{
-  padding:4px;display:flex;justify-content:center;align-items:center;
-  position: fixed; inset: 0;
-}
+body{padding:4px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
 .portal{
   width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 6px; z-index: 10;
-  background: var(--portal-bg); border: 2px solid var(--border-col);
-  border-radius: 14px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  position: relative;
+  padding: 6px; z-index: 10; background: var(--portal-bg); border: 2px solid var(--border-col);
+  border-radius: 14px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.2); position: relative;
 }
-.game-ui-header { 
-  display: flex; justify-content: space-between; align-items: center; 
-  padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); 
-  border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 10.5px; 
-}
-.back-btn {
-  background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
-  padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
-}
-.collection-budget {
-  background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px;
-  padding: 4px; text-align: center; width: 100%; flex-shrink: 0;
-}
-.luxury-grid {
-  flex-grow: 1; width: 100%; display: grid; 
-  grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); 
-  gap: 4px; overflow-y: auto; padding: 2px 0;
-}
-.luxury-tile {
-  background: var(--btn-bg); border: 1px solid var(--border-col);
-  border-radius: 8px; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; padding: 2px; cursor: pointer; position: relative;
-  transition: transform 0.1s ease;
-}
-.luxury-tile:active { transform: scale(0.94); }
+.game-ui-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 10.5px; }
+.back-btn { background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff; padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px; }
+.collection-budget { background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 4px; text-align: center; width: 100%; flex-shrink: 0; }
+.luxury-grid { flex-grow: 1; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); gap: 4px; overflow-y: auto; padding: 2px 0; }
+.luxury-tile { background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; cursor: pointer; position: relative; }
 .tile-icon { font-size: 22px; margin-bottom: 1px; }
 .tile-name { font-size: 7px; color: var(--text-main); font-weight: bold; text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tile-cost { font-size: 6.5px; color: var(--title-col); font-weight: bold; margin-top: 1px; }
 .luxury-tile.owned { border-color: var(--success-col); background: rgba(46, 204, 113, 0.2); }
 .luxury-tile.owned .tile-cost { color: var(--success-col); }
-
-.modal-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
-  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px;
-  opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
-}
+.modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal-content {
-  background: var(--portal-bg); border: 2px solid var(--title-col); border-radius: 12px;
-  padding: 16px; text-align: center; width: 100%; max-width: 300px;
-  display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 25px rgba(255,204,0,0.4);
-}
+.modal-content { background: var(--portal-bg); border: 2px solid var(--title-col); border-radius: 12px; padding: 16px; text-align: center; width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 25px rgba(255,204,0,0.4); }
 </style>
 </head>
 <body>
@@ -110,7 +76,7 @@ body{
   </div>
 
   <div class="collection-budget">
-    <div style="font-size: 7px; color: var(--text-sub); text-transform: uppercase;">Доступный баланс (€)</div>
+    <div style="font-size: 7px; color: var(--text-sub); text-transform: uppercase;" id="budgetTitle">Доступный баланс (€)</div>
     <div style="font-size: 14px; font-weight: bold; color: var(--title-col);" id="collectionMoneyVal">0.00 €</div>
   </div>
 
@@ -124,14 +90,14 @@ body{
     <div id="modalDesc" style="font-size: 9px; color: var(--text-sub);">Описание</div>
     <div id="modalCost" style="font-size: 11px; color: var(--title-col); font-weight: bold;">0 €</div>
     <button class="back-btn" id="modalActionBtn" style="width:100%; padding:8px; background:linear-gradient(135deg,#ffcc00,#b38f00); color:#000; font-size:11px;" onclick="buyCurrentItem()">КУПИТЬ</button>
-    <button class="back-btn" style="width:100%; padding:6px; background:#333;" onclick="closeModal()">ЗАКРЫТЬ</button>
+    <button class="back-btn" id="modalCloseBtn" style="width:100%; padding:6px; background:#333;" onclick="closeModal()">ЗАКРЫТЬ</button>
   </div>
 </div>
 
 <script>
 const langData = {
   ru: {
-    menu: "⬅ НАЗАД", shop: "💎 МАГАЗИН БЛОГЕРА", buy: "КУПИТЬ", owned: "✔ ЕСТЬ",
+    menu: "⬅ НАЗАД", shop: "💎 МАГАЗИН БЛОГЕРА", buy: "КУПИТЬ", owned: "✔ ЕСТЬ", close: "ЗАКРЫТЬ", budget: "Доступный баланс (€)",
     items: [
       { name: "Кольцевая лампа", desc: "Базовый свет для влогов", icon: "💡" },
       { name: "Микрофон Shure", desc: "Студийный звук голоса", icon: "🎙️" },
@@ -156,7 +122,7 @@ const langData = {
     ]
   },
   de: {
-    menu: "⬅ ZURÜCK", shop: "💎 BLOGGER SHOP", buy: "KAUFEN", owned: "✔ BESITZ",
+    menu: "⬅ ZURÜCK", shop: "💎 BLOGGER SHOP", buy: "KAUFEN", owned: "✔ BESITZ", close: "SCHLIESSEN", budget: "Guthaben (€)",
     items: [
       { name: "Ringleuchte", desc: "Basis-Licht für Vlogs", icon: "💡" },
       { name: "Studio-Mikro", desc: "Perfekter Sound", icon: "🎙️" },
@@ -179,6 +145,31 @@ const langData = {
       { name: "YouTube Aktien", desc: "Einfluss auf den Algorithmus", icon: "📈" },
       { name: "Golden Play Button", desc: "Der Heilige Gral", icon: "🏆" }
     ]
+  },
+  en: {
+    menu: "⬅ BACK", shop: "💎 BLOGGER SHOP", buy: "BUY", owned: "✔ OWNED", close: "CLOSE", budget: "Available Balance (€)",
+    items: [
+      { name: "Ring Light", desc: "Basic vlogging light", icon: "💡" },
+      { name: "Shure Mic", desc: "Studio voice sound", icon: "🎙️" },
+      { name: "4K Camera", desc: "Crystal clear picture", icon: "📷" },
+      { name: "Stream PC", desc: "High-end gaming setup", icon: "🖥️" },
+      { name: "Creator Studio", desc: "Own workspace", icon: "🏢" },
+      { name: "Tesla Model S", desc: "Fast transport for vlogs", icon: "🏎️" },
+      { name: "Creator Yacht", desc: "Content right from the sea", icon: "🛥️" },
+      { name: "Penthouse", desc: "City skyline view", icon: "🌇" },
+      { name: "Private Jet", desc: "Flights to US collabs", icon: "✈️" },
+      { name: "Castle Studio", desc: "Epic shoots in Europe", icon: "🏰" },
+      { name: "Challenge Island", desc: "100 people on an island", icon: "🏝️" },
+      { name: "eSports Club", desc: "Own eSports team", icon: "🎮" },
+      { name: "Media Satellite", desc: "Space streaming link", icon: "🛰️" },
+      { name: "NFT Gallery", desc: "Digital art showcase", icon: "🖼️" },
+      { name: "Mega Yacht", desc: "Floating production base", icon: "🛳️" },
+      { name: "MCN Skyscraper", desc: "Media network HQ", icon: "🏙️" },
+      { name: "Space Ticket", desc: "Orbit livestream", icon: "🚀" },
+      { name: "Eco Resort", desc: "Post-production wellness", icon: "🏖️" },
+      { name: "YouTube Shares", desc: "Algorithm influence", icon: "📈" },
+      { name: "Golden Button", desc: "Ultimate creator glory", icon: "🏆" }
+    ]
   }
 };
 
@@ -192,16 +183,25 @@ let selectedIndex = null;
 
 function openModal(index) {
   selectedIndex = index;
-  let item = luxuryItems[index], lang = Core.getLang(), localized = langData[lang].items[index], t = langData[lang];
+  let item = luxuryItems[index], lang = Core.getLang(), t = langData[lang] || langData.ru, localized = t.items[index];
+  
   document.getElementById('modalIcon').textContent = localized.icon;
   document.getElementById('modalTitle').textContent = localized.name;
   document.getElementById('modalDesc').textContent = localized.desc;
   document.getElementById('modalCost').textContent = item.owned ? t.owned : `${item.cost.toLocaleString()} €`;
+  
   let btn = document.getElementById('modalActionBtn');
+  btn.textContent = t.buy;
   btn.style.display = item.owned ? 'none' : 'block';
+  document.getElementById('modalCloseBtn').textContent = t.close;
+  
   document.getElementById('modalOverlay').classList.add('active');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); selectedIndex = null; }
+
+function closeModal() { 
+  document.getElementById('modalOverlay').classList.remove('active'); 
+  selectedIndex = null; 
+}
 
 function buyCurrentItem() {
   if (selectedIndex === null) return;
@@ -210,14 +210,19 @@ function buyCurrentItem() {
   money -= item.cost; item.owned = true;
   Core.setMoney(money);
   localStorage.setItem(item.id, "true");
-  closeModal(); updateCollectionUI();
+  closeModal(); 
+  updateCollectionUI();
 }
 
 function updateCollectionUI() {
-  let lang = Core.getLang(), t = langData[lang], money = Core.getMoney();
-  document.getElementById('menuBtnTxt').textContent = t.menu;
-  document.getElementById('shopTitle').textContent = t.shop;
-  document.getElementById('collectionMoneyVal').textContent = money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
+  let lang = Core.getLang(), t = langData[lang] || langData.ru, money = Core.getMoney();
+  
+  const setTxt = (id, val) => { let el = document.getElementById(id); if(el) el.textContent = val; };
+
+  setTxt('menuBtnTxt', t.menu);
+  setTxt('shopTitle', t.shop);
+  setTxt('budgetTitle', t.budget);
+  setTxt('collectionMoneyVal', money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €");
 
   let gridHtml = "";
   luxuryItems.forEach((item, idx) => {
@@ -230,9 +235,13 @@ function updateCollectionUI() {
       </div>
     `;
   });
-  document.getElementById('luxuryGrid').innerHTML = gridHtml;
+  let gridEl = document.getElementById('luxuryGrid');
+  if(gridEl) gridEl.innerHTML = gridHtml;
 }
-updateCollectionUI();
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCollectionUI();
+});
 </script>
 </body>
 </html>
