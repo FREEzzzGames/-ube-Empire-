@@ -46,7 +46,7 @@ button{border:0;border-radius:8px;padding:8px;background:#252e48;color:#fff;font
 <div class="logo">🎬 TUBE EMPIRE</div>
 <div class="header-buttons">
 <button class="header-btn" onclick="goHome()">🏠 <span data-i18n="home">МЕНЮ</span></button>
-<button class="header-btn" onclick="changeLanguage()" id="langBtn">RU</button>
+
 </div>
 </div>
 
@@ -126,6 +126,7 @@ button{border:0;border-radius:8px;padding:8px;background:#252e48;color:#fff;font
 </div>
 </div>
 
+<script src="core.js"></script>
 <script src="js/state.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/economy.js"></script>
@@ -133,41 +134,25 @@ button{border:0;border-radius:8px;padding:8px;background:#252e48;color:#fff;font
 "use strict";
 
 const $=id=>document.getElementById(id);
-const LANGS=["ru","de","en"];
-
 const T={
 ru:{
 home:"МЕНЮ",balance:"БАЛАНС",views:"ПРОСМОТРЫ",subs:"ПОДПИСЧИКИ",studio:"СТУДИЯ",channel:"Канал",shop:"Магазин",profile:"Профиль",
-studioDesc:"Создай и опубликуй контент",gaming:"GAMING",vlog:"ВЛОГ",challenge:"ЧЕЛЛЕНДЖ",premium:"ПРЕМИУМ",gamingDesc:"Стабильный контент",vlogDesc:"Больше подписчиков",challengeDesc:"Высокий потенциал",premiumDesc:"Максимальный потенциал",publish:"ОПУБЛИКОВАТЬ",quick:"БЫСТРАЯ<br>ПУБЛИКАЦИЯ",chooseVideo:"Выбери тип видео",result:"📊 Результат появится после публикации",energy:"Энергия",save:"СОХРАНИТЬ",channelXP:"Опыт канала",earned:"ЗАРАБОТАНО",studioLevel:"СТУДИЯ",incomeSec:"Доход/сек",subIncome:"Подписчики",bonus:"Бонус",history:"ПОСЛЕДНИЕ ПУБЛИКАЦИИ",noPosts:"Публикаций пока нет",promote:"ПРОДВИНУТЬ КАНАЛ",shopDesc:"Оборудование для студии",light:"Студийный свет",mic:"Микрофон Pro",camera:"Камера 4K",pc:"Монтажная станция",perVideo:"к видео",playerXP:"Опыт игрока",achievements:"ДОСТИЖЕНИЯ",noEnergy:"⚡ Недостаточно энергии",noMoney:"💰 Недостаточно денег",published:"опубликован",none:"🔥 Бонусов нет",viral:"🔥 ВИРУС x2",seconds:"сек.",firstChannel:"Первый канал",firstChannelDesc:"Опубликовать первое видео",firstIncome:"Первый доход",firstIncomeDesc:"Заработать 100 €",views1k:"1K просмотров",views1kDesc:"Набрать 1 000 просмотров",subs100:"100 подписчиков",subs100Desc:"Набрать 100 подписчиков",level5:"Уровень 5",level5Desc:"Достичь 5 уровня",level10:"Уровень 10",level10Desc:"Достичь 10 уровня",viralAuthor:"Вирусный автор",viralAuthorDesc:"Получить вирусное видео",bigStudio:"Большая студия",bigStudioDesc:"Улучшить студию 5 раз"
+studioDesc:"Создай и опубликуй контент",gaming:"GAMING",vlog:"ВЛОГ",challenge:"ЧЕЛЛЕНДЖ",premium:"ПРЕМИУМ",gamingDesc:"Стабильный контент",vlogDesc:"Больше подписчиков",challengeDesc:"Высокий потенциал",premiumDesc:"Максимальный потенциал",publish:"ОПУБЛИКОВАТЬ",quick:"БЫСТРАЯ<br>ПУБЛИКАЦИЯ",chooseVideo:"Выбери тип видео",result:"📊 Результат появится после публикации",energy:"Энергия",save:"СОХРАНИТЬ",channelXP:"Опыт канала",earned:"ЗАРАБОТАНО",studioLevel:"СТУДИЯ",incomeSec:"Доход/сек",subIncome:"Подписчики",bonus:"Бонус",history:"ПОСЛЕДНИЕ ПУБЛИКАЦИИ",noPosts:"Публикаций пока нет",promote:"ПРОДВИНУТЬ КАНАЛ",shopDesc:"Оборудование для студии",light:"Студийный свет",mic:"Микрофон Pro",camera:"Камера 4K",pc:"Монтажная станция",perVideo:"к видео",playerXP:"Опыт игрока",achievements:"ДОСТИЖЕНИЯ",noEnergy:"⚡ Недостаточно энергии",noMoney:"💰 Недостаточно денег",published:"опубликован",none:"🔥 Бонусов нет",viral:"🔥 ВИРУС x2",seconds:"сек.",firstChannel:"Первый канал",firstChannelDesc:"Опубликовать первое видео",firstIncome:"Первый доход",firstIncomeDesc:"Заработать 100 €",views1k:"1K просмотров",views1kDesc:"Набрать 1 000 просмотров",subs100:"100 подписчиков",subs100Desc:"Набрать 100 подписчиков",level5:"Уровень 5",level5Desc:"Достичь 5 уровня",level10:"Уровень 10",level10Desc:"Достичь 10 уровня",viralAuthor:"Вирусный автор",viralAuthorDesc:"Получить вирусное видео",bigStudio:"Большая студия",bigStudioDesc:"Улучшить студию 5 раз",nextUpgrade:"Следующий:",levelWord:"УРОВЕНЬ",imperator:"ИМПЕРАТОР",mediaBoss:"МЕДИА-БОСС",pro:"ПРОФИ",creator:"СОЗДАТЕЛЬ",newbie:"НОВИЧОК",normal:"Обычный",success:"Успех",viralResult:"ВИРУС",legendary:"ЛЕГЕНДА",gamingName:"Gaming",vlogName:"Vlog",challengeName:"Челлендж",premiumName:"Премиум",noBonus:"🔥 Бонусов нет"
 },
 de:{
 home:"MENÜ",balance:"KONTOSTAND",views:"AUFRUFE",subs:"ABONNENTEN",studio:"STUDIO",channel:"Kanal",shop:"Shop",profile:"Profil",
-studioDesc:"Erstelle und veröffentliche Inhalte",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stabiler Content",vlogDesc:"Mehr Abonnenten",challengeDesc:"Hohes Potenzial",premiumDesc:"Maximales Potenzial",publish:"VERÖFFENTLICHEN",quick:"SCHNELLE<br>VERÖFFENTLICHUNG",chooseVideo:"Videotyp auswählen",result:"📊 Ergebnis erscheint nach der Veröffentlichung",energy:"Energie",save:"SPEICHERN",channelXP:"Kanal-XP",earned:"VERDIENT",studioLevel:"STUDIO",incomeSec:"Einkommen/Sek.",subIncome:"Abonnenten",bonus:"Bonus",history:"LETZTE VERÖFFENTLICHUNGEN",noPosts:"Noch keine Veröffentlichungen",promote:"KANAL BEWERBEN",shopDesc:"Ausrüstung für dein Studio",light:"Studiolicht",mic:"Pro-Mikrofon",camera:"4K-Kamera",pc:"Schnittstation",perVideo:"pro Video",playerXP:"Spieler-XP",achievements:"ERFOLGE",noEnergy:"⚡ Nicht genug Energie",noMoney:"💰 Nicht genug Geld",published:"veröffentlicht",none:"🔥 Keine Boni",viral:"🔥 VIRAL x2",seconds:"Sek.",firstChannel:"Erster Kanal",firstChannelDesc:"Erstes Video veröffentlichen",firstIncome:"Erstes Einkommen",firstIncomeDesc:"100 € verdienen",views1k:"1K Aufrufe",views1kDesc:"1.000 Aufrufe erreichen",subs100:"100 Abonnenten",subs100Desc:"100 Abonnenten erreichen",level5:"Level 5",level5Desc:"Level 5 erreichen",level10:"Level 10",level10Desc:"Level 10 erreichen",viralAuthor:"Viral-Autor",viralAuthorDesc:"Ein virales Video erhalten",bigStudio:"Großes Studio",bigStudioDesc:"Studio 5-mal verbessern"
+studioDesc:"Erstelle und veröffentliche Inhalte",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stabiler Content",vlogDesc:"Mehr Abonnenten",challengeDesc:"Hohes Potenzial",premiumDesc:"Maximales Potenzial",publish:"VERÖFFENTLICHEN",quick:"SCHNELLE<br>VERÖFFENTLICHUNG",chooseVideo:"Videotyp auswählen",result:"📊 Ergebnis erscheint nach der Veröffentlichung",energy:"Energie",save:"SPEICHERN",channelXP:"Kanal-XP",earned:"VERDIENT",studioLevel:"STUDIO",incomeSec:"Einkommen/Sek.",subIncome:"Abonnenten",bonus:"Bonus",history:"LETZTE VERÖFFENTLICHUNGEN",noPosts:"Noch keine Veröffentlichungen",promote:"KANAL BEWERBEN",shopDesc:"Ausrüstung für dein Studio",light:"Studiolicht",mic:"Pro-Mikrofon",camera:"4K-Kamera",pc:"Schnittstation",perVideo:"pro Video",playerXP:"Spieler-XP",achievements:"ERFOLGE",noEnergy:"⚡ Nicht genug Energie",noMoney:"💰 Nicht genug Geld",published:"veröffentlicht",none:"🔥 Keine Boni",viral:"🔥 VIRAL x2",seconds:"Sek.",firstChannel:"Erster Kanal",firstChannelDesc:"Erstes Video veröffentlichen",firstIncome:"Erstes Einkommen",firstIncomeDesc:"100 € verdienen",views1k:"1K Aufrufe",views1kDesc:"1.000 Aufrufe erreichen",subs100:"100 Abonnenten",subs100Desc:"100 Abonnenten erreichen",level5:"Level 5",level5Desc:"Level 5 erreichen",level10:"Level 10",level10Desc:"Level 10 erreichen",viralAuthor:"Viral-Autor",viralAuthorDesc:"Ein virales Video erhalten",bigStudio:"Großes Studio",bigStudioDesc:"Studio 5-mal verbessern",nextUpgrade:"Nächste:",levelWord:"LEVEL",imperator:"IMPERATOR",mediaBoss:"MEDIEN-BOSS",pro:"PROFI",creator:"CREATOR",newbie:"NEULING",normal:"Normal",success:"Erfolg",viralResult:"VIRAL",legendary:"LEGENDÄR",gamingName:"Gaming",vlogName:"Vlog",challengeName:"Challenge",premiumName:"Premium",noBonus:"🔥 Keine Boni"
 },
 en:{
 home:"MENU",balance:"BALANCE",views:"VIEWS",subs:"SUBSCRIBERS",studio:"STUDIO",channel:"Channel",shop:"Shop",profile:"Profile",
-studioDesc:"Create and publish content",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stable content",vlogDesc:"More subscribers",challengeDesc:"High potential",premiumDesc:"Maximum potential",publish:"PUBLISH",quick:"QUICK<br>PUBLICATION",chooseVideo:"Choose a video type",result:"📊 Result appears after publishing",energy:"Energy",save:"SAVE",channelXP:"Channel XP",earned:"EARNED",studioLevel:"STUDIO",incomeSec:"Income/sec",subIncome:"Subscribers",bonus:"Bonus",history:"LATEST PUBLICATIONS",noPosts:"No publications yet",promote:"PROMOTE CHANNEL",shopDesc:"Equipment for your studio",light:"Studio Light",mic:"Pro Microphone",camera:"4K Camera",pc:"Editing Station",perVideo:"per video",playerXP:"Player XP",achievements:"ACHIEVEMENTS",noEnergy:"⚡ Not enough energy",noMoney:"💰 Not enough money",published:"published",none:"🔥 No bonuses",viral:"🔥 VIRAL x2",seconds:"sec.",firstChannel:"First Channel",firstChannelDesc:"Publish your first video",firstIncome:"First Income",firstIncomeDesc:"Earn 100 €",views1k:"1K Views",views1kDesc:"Reach 1,000 views",subs100:"100 Subscribers",subs100Desc:"Reach 100 subscribers",level5:"Level 5",level5Desc:"Reach level 5",level10:"Level 10",level10Desc:"Reach level 10",viralAuthor:"Viral Author",viralAuthorDesc:"Get a viral video",bigStudio:"Big Studio",bigStudioDesc:"Upgrade studio 5 times"
+studioDesc:"Create and publish content",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stable content",vlogDesc:"More subscribers",challengeDesc:"High potential",premiumDesc:"Maximum potential",publish:"PUBLISH",quick:"QUICK<br>PUBLICATION",chooseVideo:"Choose a video type",result:"📊 Result appears after publishing",energy:"Energy",save:"SAVE",channelXP:"Channel XP",earned:"EARNED",studioLevel:"STUDIO",incomeSec:"Income/sec",subIncome:"Subscribers",bonus:"Bonus",history:"LATEST PUBLICATIONS",noPosts:"No publications yet",promote:"PROMOTE CHANNEL",shopDesc:"Equipment for your studio",light:"Studio Light",mic:"Pro Microphone",camera:"4K Camera",pc:"Editing Station",perVideo:"per video",playerXP:"Player XP",achievements:"ACHIEVEMENTS",noEnergy:"⚡ Not enough energy",noMoney:"💰 Not enough money",published:"published",none:"🔥 No bonuses",viral:"🔥 VIRAL x2",seconds:"sec.",firstChannel:"First Channel",firstChannelDesc:"Publish your first video",firstIncome:"First Income",firstIncomeDesc:"Earn 100 €",views1k:"1K Views",views1kDesc:"Reach 1,000 views",subs100:"100 Subscribers",subs100Desc:"Reach 100 subscribers",level5:"Level 5",level5Desc:"Reach level 5",level10:"Level 10",level10Desc:"Reach level 10",viralAuthor:"Viral Author",viralAuthorDesc:"Get a viral video",bigStudio:"Big Studio",bigStudioDesc:"Upgrade studio 5 times",nextUpgrade:"Next:",levelWord:"LEVEL",imperator:"EMPEROR",mediaBoss:"MEDIA BOSS",pro:"PRO",creator:"CREATOR",newbie:"NEWBIE",normal:"Normal",success:"Success",viralResult:"VIRAL",legendary:"LEGENDARY",gamingName:"Gaming",vlogName:"Vlog",challengeName:"Challenge",premiumName:"Premium",noBonus:"🔥 No bonuses"
 }
 };
 
-let currentLang=localStorage.getItem("tube_empire_lang")||"ru";
-if(!LANGS.includes(currentLang))currentLang="ru";
-
-function tr(key){return T[currentLang][key]??T.ru[key]??key}
-
-function applyLanguage(){
-document.documentElement.lang=currentLang;
-document.querySelectorAll("[data-i18n]").forEach(el=>el.innerHTML=tr(el.dataset.i18n));
-$("langBtn").textContent=currentLang.toUpperCase();
-}
-
-function changeLanguage(){
-let i=LANGS.indexOf(currentLang);
-currentLang=LANGS[(i+1)%LANGS.length];
-localStorage.setItem("tube_empire_lang",currentLang);
-applyLanguage();
-render();
-}
+let currentLang=Core.getLang();
+function syncLanguage(){currentLang=Core.getLang();document.documentElement.lang=currentLang;}
+function tr(key){syncLanguage();return T[currentLang]?.[key]??T.ru[key]??key;}
+function applyLanguage(){syncLanguage();document.querySelectorAll("[data-i18n]").forEach(el=>el.innerHTML=tr(el.dataset.i18n));}
 
 function goHome(){window.location.href="index.html"}
 
@@ -200,10 +185,10 @@ const equip=()=>Object.keys(items).reduce((a,k)=>a+(GameState.get("upgrades.shop
 const viral=()=>Number(GameState.get("channel.viralUntil",0))>Date.now()?2:1;
 const income=()=>subs()/1000*viral();
 
-const rank=l=>l>=20?"👑 "+(currentLang==="de"?"IMPERATOR":currentLang==="en"?"EMPEROR":"ИМПЕРАТОР"):
-l>=15?"💎 "+(currentLang==="de"?"MEDIEN-BOSS":currentLang==="en"?"MEDIA BOSS":"МЕДИА-БОСС"):
-l>=10?"🔥 "+(currentLang==="de"?"PROFI":currentLang==="en"?"PRO":"ПРОФИ"):
-l>=5?"🚀 CREATOR":"🌱 "+(currentLang==="de"?"NEULING":currentLang==="en"?"NEWBIE":"НОВИЧОК");
+const rank=l=>l>=20?"👑 "+tr("imperator"):
+l>=15?"💎 "+tr("mediaBoss"):
+l>=10?"🔥 "+tr("pro"):
+l>=5?"🚀 "+tr("creator"):"🌱 "+tr("newbie");
 
 function addStats(v,s){
 GameState.set("channel.views",views()+v);
@@ -221,10 +206,10 @@ s.player.energy-=v.energy;
 
 let r=Math.random();
 let m=r<.55?1:r<.85?1.5:r<.98?3:6;
-let label=r<.55?"📊 "+(currentLang==="de"?"Normal":currentLang==="en"?"Normal":"Обычный"):
-r<.85?"🔥 "+(currentLang==="de"?"Erfolg":currentLang==="en"?"Success":"Успех"):
-r<.98?"🚀 "+(currentLang==="de"?"VIRAL":currentLang==="en"?"VIRAL":"ВИРУС"):
-"💎 "+(currentLang==="de"?"LEGENDÄR":currentLang==="en"?"LEGENDARY":"ЛЕГЕНДА");
+let label=r<.55?"📊 "+tr("normal"):
+r<.85?"🔥 "+tr("success"):
+r<.98?"🚀 "+tr("viralResult"):
+"💎 "+tr("legendary");
 
 let L=level(),e=equip();
 let V=Math.floor((v.views+L*5+e*2)*m);
@@ -266,25 +251,25 @@ let a=[
 $("achievements").innerHTML=a.map(x=>`<div class="achievement ${x[2]?"done":"locked"}"><b>${x[0]}</b><span>${x[1]}</span>${x[2]?'<span class="check">✓</span>':''}</div>`).join("");
 }
 
-function render(){
+function render(){syncLanguage();
 let s=state(),L=level(),X=xp(),V=views(),S=subs();
 let E=Math.max(0,Math.min(100,s.player.energy||0));
 
 $("money").textContent=money(s.player.money);
-$("views").textContent=V.toLocaleString("de-DE");
-$("topSubs").textContent=S.toLocaleString("de-DE");
+$("views").textContent=V.toLocaleString(currentLang==="en"?"en-US":"de-DE");
+$("topSubs").textContent=S.toLocaleString(currentLang==="en"?"en-US":"de-DE");
 
 $("energy").style.width=E+"%";
 $("energyText").textContent=Math.floor(E)+" / 100";
 
 let c=100*2**(L-1);
-$("upgradeInfo").textContent="Lv."+L+" • +"+equip()+" € • "+(currentLang==="de"?"Nächste: ":"Следующий: ")+money(c);
+$("upgradeInfo").textContent="Lv."+L+" • +"+equip()+" € • "+tr("nextUpgrade")+" "+money(c);
 $("upgrade").textContent="🚀 "+money(c);
 $("upgrade").disabled=s.player.money<c;
 
 let CL=Math.floor(X/100)+1;
 $("channelName").textContent=(s.player.name||"TUBE")+" CHANNEL";
-$("channelLevel").textContent=(currentLang==="de"?"LEVEL ":"УРОВЕНЬ ")+CL;
+$("channelLevel").textContent=tr("levelWord")+" "+CL;
 $("channelRank").textContent=rank(CL);
 $("xpText").textContent=X%100+" / 100 XP";
 $("xp").style.width=X%100+"%";
@@ -301,7 +286,7 @@ let until=Number(GameState.get("channel.viralUntil",0));
 $("boostBox").textContent=until>Date.now()?tr("viral")+" • "+Math.ceil((until-Date.now())/1000)+" "+tr("seconds"):tr("none");
 
 $("profileName").textContent=s.player.name||"TUBE CREATOR";
-$("profileLevel").textContent=(currentLang==="de"?"LEVEL ":"УРОВЕНЬ ")+CL;
+$("profileLevel").textContent=tr("levelWord")+" "+CL;
 $("profileRank").textContent=rank(CL);
 $("profileXpText").textContent=X%100+" / 100 XP";
 $("profileXp").style.width=X%100+"%";
@@ -317,7 +302,7 @@ b.disabled=!!yes||s.player.money<items[k].price;
 });
 
 let h=GameState.get("channel.history",[])||[];
-$("historyList").innerHTML=h.length?h.map(x=>`<div class="history-item"><div class="history-icon">${x.icon}</div><div><div class="history-name">${x.label} • ${x.name}</div><div class="history-info">${x.views} 👀 • +${x.subs} 👥</div></div><div class="history-money">+${x.money} €</div></div>`).join(""):`<div class="empty">${tr("noPosts")}</div>`;
+$("historyList").innerHTML=h.length?h.map(x=>`<div class="history-item"><div class="history-icon">${x.icon}</div><div><div class="history-name">${x.label} • ${x.name==="Gaming"?tr("gamingName"):x.name==="Vlog"?tr("vlogName"):x.name==="Challenge"?tr("challengeName"):x.name==="Premium"?tr("premiumName"):x.name}</div><div class="history-info">${x.views} 👀 • +${x.subs} 👥</div></div><div class="history-money">+${x.money} €</div></div>`).join(""):`<div class="empty">${tr("noPosts")}</div>`;
 
 achievements();
 }
