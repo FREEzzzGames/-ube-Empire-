@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tube Empire — Главное меню</title>
+<script src="core.js"></script>
+<script src="economy.js"></script>
+<script src="game-logic.js"></script>
+<style>
+:root{
+ --bg:#05070b;--panel:#111820;--panel2:#19222c;--line:#3d4b57;
+ --red:#ff2638;--red2:#ff5967;--green:#39e879;--blue:#35b8ff;
+ --text:#f5f7fa;--muted:#8995a4;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
+body{display:flex;justify-content:center}
+button{font:inherit;color:inherit}
+.portal{
+ width:100%;max-width:620px;height:100dvh;position:relative;overflow:hidden;
+ padding:9px 10px 12px;display:flex;flex-direction:column;gap:7px;
+ background:
+ radial-gradient(ellipse at 50% -12%,#26323e 0,#0c1218 34%,transparent 62%),
+ linear-gradient(180deg,#090e14,#05070b);
+}
+.portal:before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;
+ background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);
+ background-size:34px 34px;
+}
+.top-controls{position:relative;z-index:4;display:flex;justify-content:flex-end;gap:5px;height:40px;flex:none}
+.top-btn{
+ min-width:74px;height:38px;padding:0 8px;border:1px solid #52606c;border-radius:5px;
+ background:linear-gradient(180deg,#202a34,#11171e);font-size:8px;font-weight:950;
+ box-shadow:inset 0 1px #fff2,0 5px 12px #0008;
+}
+.brand{
+ position:relative;z-index:2;height:100px;flex:none;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;text-align:center;
+}
+.brand-mark{
+ font-size:37px;line-height:34px;font-weight:1000;letter-spacing:-1px;
+ color:#f5f7fa;text-shadow:0 3px 0 #26313b,0 0 22px #ff26382a;
+}
+.brand-mark span{color:var(--red)}
+.brand-mark b{display:block;font-size:18px;letter-spacing:7px;color:#aeb8c2;margin-top:5px}
+.brand-sub{margin-top:7px;font-size:6px;letter-spacing:3px;color:#687582;font-weight:900}
+.account-chat{
+ position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:7px;height:82px;flex:none;
+}
+.account-card,.chat-card{
+ min-width:0;position:relative;display:flex;align-items:center;gap:8px;padding:8px 10px;
+ background:linear-gradient(145deg,#19232d,#10161c);border:1px solid #43515d;border-radius:5px;
+ box-shadow:inset 0 1px #fff2,0 7px 15px #0007;
+ overflow:hidden;
+}
+.account-card:before,.chat-card:before,.studio-main:before,.menu-tile:before,.leaderboard-main:before{
+ content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--red);box-shadow:0 0 10px #ff263844;
+}
+.account-avatar{
+ width:47px;height:47px;flex:none;display:flex;align-items:center;justify-content:center;
+ background:#f3f3f3;color:#222;border-radius:6px;font-size:25px;
+}
+.account-info{min-width:0}.account-name{font-size:11px;font-weight:950}.account-balance{font-size:10px;color:var(--green);font-weight:950;margin-top:3px}.account-level{font-size:6px;color:var(--muted);margin-top:3px}
+.chat-card{display:block;padding:10px 25px 8px 10px}.chat-title{font-size:8px;color:#ffd54a;font-weight:950;margin-bottom:5px}.chat-line{font-size:6.5px;color:#aab5c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:13px}
+.card-arrow{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:29px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #45525e;border-radius:4px;background:#131b23;font-size:25px;color:#dbe2e8}
+.studio-main,.leaderboard-main,.menu-tile{
+ position:relative;z-index:2;display:flex;align-items:center;gap:10px;text-align:left;
+ border:1px solid #45535f;border-radius:5px;background:linear-gradient(145deg,#1c2731,#10161d);
+ box-shadow:inset 0 1px #fff2,0 7px 15px #0007;
+}
+.studio-main{height:75px;flex:none;padding:9px 48px 9px 15px;background:linear-gradient(100deg,#31141a,#171e26 55%,#10161c);border-color:#ff263877}
+.studio-main:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,#ff263818,transparent 45%);pointer-events:none}
+.tile-icon{font-size:25px;flex:none;width:40px;text-align:center;filter:drop-shadow(0 0 6px #000)}
+.tile-copy{min-width:0}.tile-title{font-size:11px;font-weight:950;letter-spacing:.2px}.studio-main .tile-title{font-size:18px}.tile-desc{font-size:7px;color:#8995a4;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-grid{
+ position:relative;z-index:2;flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;
+ grid-template-rows:1fr 1fr;gap:7px;
+}
+.menu-tile{min-height:0;padding:9px 38px 9px 10px}
+.menu-tile .tile-icon{font-size:23px;width:34px}
+.menu-tile .card-arrow{width:24px;height:27px;font-size:21px;right:7px}
+.leaderboard-main{height:58px;flex:none;padding:8px 45px 8px 12px}
+.leaderboard-main .tile-icon{font-size:24px}
+.footer{position:relative;z-index:2;height:15px;flex:none;text-align:center;color:#687582;font-size:6px;padding-top:2px}
+@media(max-width:430px){
+ .portal{padding:7px 8px 8px;gap:6px}
+ .top-controls{height:36px}.top-btn{height:35px;min-width:68px;font-size:7px}
+ .brand{height:86px}.brand-mark{font-size:31px;line-height:29px}.brand-mark b{font-size:15px}
+ .account-chat{height:78px;gap:6px}.account-card,.chat-card{padding:7px}
+ .account-avatar{width:41px;height:41px;font-size:22px}
+ .studio-main{height:67px}.studio-main .tile-title{font-size:15px}
+ .menu-tile .tile-title{font-size:9px}.menu-tile .tile-desc{font-size:6px}
+ .tile-icon{font-size:21px}.leaderboard-main{height:53px}
+}
+@media(max-height:700px){
+ .brand{height:75px}.account-chat{height:70px}.studio-main{height:62px}.leaderboard-main{height:49px}
+}
+</style>
+</head>
+<body>
+<div class="portal">
+
+  <div class="top-controls">
+    <button class="top-btn" onclick="Core.toggleTheme();Core.applyTheme()">🎨 <span data-i18n="theme">THEMA</span></button>
+    <button class="top-btn" onclick="Core.toggleSound()">🔊 <span data-i18n="sound">TON</span></button>
+    <button class="top-btn" onclick="Core.toggleLang();updateUI()">🇩🇪 <span id="langCode">DE</span></button>
+  </div>
+
+  <div class="brand">
+    <div class="brand-mark">FREE<span>zzz</span><b>Games</b></div>
+    <div class="brand-sub">TUBE EMPIRE</div>
+  </div>
+
+  <div class="account-chat">
+    <div class="account-card">
+      <div class="account-avatar">👨</div>
+      <div class="account-info">
+        <div class="account-name" id="playerName">Blogger</div>
+        <div class="account-balance" id="playerBalance">0.00 €</div>
+        <div class="account-level">LV <b id="playerLevel">1</b></div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+
+    <div class="chat-card">
+      <div class="chat-title">💬 <span data-i18n="chatTitle">GLOBAL CHAT</span></div>
+      <div class="chat-line">Alex: Кто на каком тренде сейчас?</div>
+      <div class="chat-line">ARTB_Leader: Качайте холдинг!</div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+
+  <button class="studio-main" onclick="openGame()">
+    <div class="tile-icon">🎬</div>
+    <div class="tile-copy">
+      <div class="tile-title" data-i18n="studio">INS STUDIO</div>
+      <div class="tile-desc" data-i18n="studioDesc">Создавай и публикуй контент</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </button>
+
+  <div class="menu-grid">
+    <button class="menu-tile" onclick="openTransfer()">
+      <div class="tile-icon">🤝</div><div class="tile-copy"><div class="tile-title" data-i18n="transfer">Sponsor-Überweisung</div><div class="tile-desc">Бренды и спонсоры</div></div><div class="card-arrow">›</div>
+    </button>
+    <button class="menu-tile" onclick="openCollection()">
+      <div class="tile-icon">🛒</div><div class="tile-copy"><div class="tile-title" data-i18n="shop">Shop & Konzerne</div><div class="tile-desc">Оборудование и развитие</div></div><div class="card-arrow">›</div>
+    </button>
+    <button class="menu-tile" onclick="openAvatar()">
+      <div class="tile-icon">🎨</div><div class="tile-copy"><div class="tile-title" data-i18n="avatar">Anpassung & Studio</div><div class="tile-desc">Внешность и настройки</div></div><div class="card-arrow">›</div>
+    </button>
+    <button class="menu-tile" onclick="openGallery()">
+      <div class="tile-icon">🏆</div><div class="tile-copy"><div class="tile-title" data-i18n="gallery">Trophäen</div><div class="tile-desc">Достижения и награды</div></div><div class="card-arrow">›</div>
+    </button>
+  </div>
+
+  <button class="leaderboard-main" onclick="openLeaderboard()">
+    <div class="tile-icon">📊</div>
+    <div class="tile-copy"><div class="tile-title" data-i18n="rank">Bestenliste</div><div class="tile-desc">Рейтинг игроков</div></div>
+    <div class="card-arrow">›</div>
+  </button>
+
+  <div class="footer">Tube Empire v5.8 • Telegram Mini App</div>
+</div>
+
+<script>
+function openGame(){window.location.href="game.html"}
+function openTransfer(){window.location.href="transfer.html"}
+function openCollection(){window.location.href="collection.html"}
+function openAvatar(){window.location.href="avatar.html"}
+function openGallery(){window.location.href="gallery.html"}
+function openLeaderboard(){window.location.href="leaderboard.html"}
+</script>
+<script>
+const langMap = {
+  ru: {
+    sub:"Idle Streamer Tycoon", studio:"🔴 ВОЙТИ В СТУДИЮ", transfer:"🤝 Перевод спонсору",
+    shop:"🛒 Магазин и Холдинг", avatar:"🎨 Кастомизация & Студия", gallery:"🏆 Награды и Кнопки",
+    rank:"📊 Таблица Лидеров", balance:"Баланс", chatTitle:"💬 Глобальный чат (онлайн)",
+    theme:"🎨 ТЕМА", soundOn:"🔊 ЗВУК", soundOff:"🔇 ВЫКЛ", chatModal:"💬 ГЛОБАЛЬНЫЙ ЧАТ",
+    chatPlaceholder:"Сообщение...", close:"ЗАКРЫТЬ", transferTitle:"ПЕРЕВОД СРЕДСТВ",
+    sponsorPlaceholder:"Никнейм спонсора (@username)", amountPlaceholder:"Сумма в €",
+    send:"ОТПРАВИТЬ", transferError:"Ошибка перевода!", transferOk:"✅ Успешно отправлено {amount} €!"
+  },
+  de: {
+    sub:"Idle Streamer Tycoon", studio:"🔴 INS STUDIO", transfer:"🤝 Sponsor-Überweisung",
+    shop:"🛒 Shop & Konzerne", avatar:"🎨 Anpassung & Studio", gallery:"🏆 Trophäen",
+    rank:"📊 Bestenliste", balance:"Guthaben", chatTitle:"💬 Globaler Chat (Online)",
+    theme:"🎨 THEMA", soundOn:"🔊 TON", soundOff:"🔇 AUS", chatModal:"💬 GLOBALER CHAT",
+    chatPlaceholder:"Nachricht...", close:"SCHLIESSEN", transferTitle:"GELD ÜBERWEISEN",
+    sponsorPlaceholder:"Sponsor-Name (@username)", amountPlaceholder:"Betrag in €",
+    send:"SENDEN", transferError:"Überweisungsfehler!", transferOk:"✅ Erfolgreich gesendet: {amount} €!"
+  },
+  en: {
+    sub:"Idle Streamer Tycoon", studio:"🔴 ENTER STUDIO", transfer:"🤝 Sponsor Transfer",
+    shop:"🛒 Shop & Holdings", avatar:"🎨 Customization & Studio", gallery:"🏆 Awards & Buttons",
+    rank:"📊 Leaderboard", balance:"Balance", chatTitle:"💬 Global Chat (Online)",
+    theme:"🎨 THEME", soundOn:"🔊 SOUND", soundOff:"🔇 OFF", chatModal:"💬 GLOBAL CHAT",
+    chatPlaceholder:"Message...", close:"CLOSE", transferTitle:"TRANSFER FUNDS",
+    sponsorPlaceholder:"Sponsor username (@username)", amountPlaceholder:"Amount in €",
+    send:"SEND", transferError:"Transfer error!", transferOk:"✅ Successfully sent {amount} €!"
+  }
+};
+
+let chatMessagesData = [{user: "Alex", text: "Кто на каком тренде сейчас?"}, {user: "APTB_Leader", text: "Качайте холдинг!"}];
+
+function updateUI() {
+  let lang = Core.getLang(), t = langMap[lang] || langMap.ru;
+  document.getElementById('subTitle').textContent=t.sub;
+  document.getElementById('btnStudio').textContent=t.studio;
+  document.getElementById('btnTransfer').textContent=t.transfer;
+  document.getElementById('btnShop').textContent=t.shop;
+  document.getElementById('btnAvatar').textContent=t.avatar;
+  document.getElementById('btnGallery').textContent=t.gallery;
+  document.getElementById('btnRank').textContent=t.rank;
+  document.getElementById('chatHeaderTxt').textContent=t.chatTitle;
+  document.getElementById('langBtn').textContent=lang==='ru'?'🇷🇺 RU':(lang==='de'?'🇩🇪 DE':'🇬🇧 EN');
+  document.getElementById('themeBtn').textContent=t.theme;
+  document.getElementById('soundBtn').textContent=Core.getSound()?t.soundOn:t.soundOff;
+  document.getElementById('chatModalTitle').textContent=t.chatModal;
+  document.getElementById('chatInputMsg').placeholder=t.chatPlaceholder;
+  document.getElementById('chatCloseBtn').textContent=t.close;
+  document.getElementById('mTitle').textContent=t.transferTitle;
+  document.getElementById('friendName').placeholder=t.sponsorPlaceholder;
+  document.getElementById('transferAmount').placeholder=t.amountPlaceholder;
+  document.getElementById('mSend').textContent=t.send;
+  document.getElementById('mClose').textContent=t.close;
+  document.getElementById('userName').textContent=Core.getUserName(lang==='ru'?"Блогер":lang==='de'?"Blogger":"Creator");
+  document.getElementById('userStats').textContent=`${t.balance}: ${Core.getMoney().toLocaleString('ru-RU',{maximumFractionDigits:2})} €`;
+  document.getElementById('avatarDisplay').textContent=Core.getAvatarString();
+  Core.applyTheme(Core.getTheme());
+  renderChatFeeds();
+}
+
+function renderChatFeeds() {
+  let html = chatMessagesData.map(m => `<span><b>${m.user}:</b> ${m.text}</span>`).join('');
+  document.getElementById('chatWidgetFeed').innerHTML = html;
+  let f = document.getElementById('fullChatFeed'); if(f) f.innerHTML = html;
+}
+
+function openChatModal() { document.getElementById('chatModal').classList.add('active'); Core.playSound('modal'); }
+function closeChatModal() { document.getElementById('chatModal').classList.remove('active'); }
+function sendChatMessage() {
+  let inp = document.getElementById('chatInputMsg'), txt = inp.value.trim();
+  if(!txt) return;
+  chatMessagesData.push({user: Core.getUserName("Streamer"), text: txt});
+  inp.value = ""; Core.playSound('click'); renderChatFeeds();
+}
+
+function openTransferModal() { document.getElementById('transferModal').classList.add('active'); Core.playSound('modal'); }
+function closeTransferModal() { document.getElementById('transferModal').classList.remove('active'); }
+function executeTransfer() {
+  let amt = Number(document.getElementById('transferAmount').value), mon = Core.getMoney();
+  if(isNaN(amt) || amt <= 0 || mon < amt) { let t=langMap[Core.getLang()]||langMap.ru; alert(t.transferError); Core.playSound('error'); return; }
+  Core.setMoney(mon - amt); Core.playSound('cash'); Core.haptic('heavy');
+  let t=langMap[Core.getLang()]||langMap.ru; alert(t.transferOk.replace("{amount}",amt.toLocaleString()));
+  closeTransferModal(); updateUI();
+}
+
+document.addEventListener("DOMContentLoaded", () => updateUI());
+</script>
+</body>
+</html>
