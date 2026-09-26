@@ -9,24 +9,24 @@
 html,body{margin:0;background:#080b12;color:#fff;font-family:Arial}
 body{display:flex;justify-content:center}
 .game{width:100%;max-width:520px;min-height:100vh;padding:14px 14px 82px;background:radial-gradient(circle at 50% 0,#303b70,#141a2d 45%,#080b12 88%)}
-.header,.energy-head,.shop-item,.statline{display:flex;justify-content:space-between;align-items:center}
+.header,.energy-head,.shop-item{display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:20px;font-weight:900}.online{padding:6px 9px;border-radius:9px;background:#17251d;color:#72f7a0;font-size:11px;font-weight:bold}
-.balance,.stat,.card,.panel,.shop-item{border:1px solid #35415f;background:#111726;border-radius:17px}
+.balance,.stat,.card,.panel,.shop-item,.channel-stat,.profile-stat{border:1px solid #35415f;background:#111726;border-radius:17px}
 .balance{text-align:center;padding:17px;margin-top:12px}.label,.stat-title{color:#8994ad;font-size:11px}.money{color:#72f7a0;font-size:36px;font-weight:900;margin-top:4px}
 .stats,.channel-stats,.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.stat{padding:13px;border-radius:13px}.stat-value{font-size:19px;font-weight:bold;margin-top:4px}
-.page{display:none}.page.active{display:block}.card,.panel{margin-top:12px;padding:18px}.title,.panel-title{font-size:22px;font-weight:900}.subtitle,.panel-text{color:#8994ad;font-size:12px;margin-top:5px}
+.page{display:none}.page.active{display:block}.card,.panel{margin-top:12px;padding:18px}.title{font-size:22px;font-weight:900}.subtitle,.panel-text{color:#8994ad;font-size:12px;margin-top:5px}
 .tap{width:205px;height:205px;margin:24px auto 17px;border:5px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#344579,#182341 55%,#0c1120);box-shadow:0 0 35px #526fc088;text-align:center}.tap:active{transform:scale(.94)}
 .play{font-size:62px}.tap-text{font-size:12px;font-weight:bold}.message{min-height:20px;color:#77eaff;font-size:12px;font-weight:bold;text-align:center}
 .energy{margin-top:14px}.energy-head{color:#8b96ae;font-size:11px;margin-bottom:6px}.energy-bar,.progress-bar{height:9px;background:#080b12;border-radius:9px;overflow:hidden}.energy-fill,.progress-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
 .upgrade{margin-top:16px;padding:16px;border:2px solid #596fff;border-radius:17px;background:#192342}.upgrade-title{font-size:17px;font-weight:900}.upgrade-info{color:#aab4cc;font-size:12px;line-height:1.6;margin-top:7px}
 button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;font-weight:bold}.upgrade-button{width:100%;margin-top:12px;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:15px}.upgrade-button:disabled{background:#3a4052;color:#858da0}
 .buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.buttons button{width:100%}.bonus{background:#5d55d9}
-.channel-head{display:flex;align-items:center;gap:13px}.avatar{width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:30px}.channel-name{font-size:19px;font-weight:900}.channel-level{color:#8994ad;font-size:11px;margin-top:4px}.progress{margin-top:18px}
-.channel-stat{padding:13px;border:1px solid #303b57;border-radius:13px;background:#151b2a}.channel-stat small{color:#78839d;font-size:10px}.channel-stat b{display:block;margin-top:5px;font-size:17px}.channel-action{width:100%;margin-top:14px}
+.channel-head,.profile-head{display:flex;align-items:center;gap:13px}.avatar,.profile-avatar{width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:30px}.profile-avatar{width:72px;height:72px}.channel-name,.profile-name{font-size:19px;font-weight:900}.profile-name{font-size:20px}.channel-level,.profile-level{color:#8994ad;font-size:11px;margin-top:4px}.progress{margin-top:18px}
+.channel-stat,.profile-stat{padding:13px;border-radius:13px;background:#151b2a}.channel-stat small,.profile-stat small{color:#78839d;font-size:10px}.channel-stat b,.profile-stat b{display:block;margin-top:5px;font-size:17px}
+.channel-action{width:100%;margin-top:14px}
 .shop-item{padding:14px;margin-top:10px;gap:10px}.shop-info{flex:1}.shop-name{font-weight:900;font-size:14px}.shop-desc{color:#8994ad;font-size:10px;margin-top:4px}.shop-item button{min-width:100px;background:#5d55d9}.shop-item button:disabled{background:#3a4052;color:#858da0}
-.profile-head{display:flex;align-items:center;gap:14px}.profile-avatar{width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:35px}.profile-name{font-size:20px;font-weight:900}.profile-level{color:#8994ad;font-size:11px;margin-top:5px}
-.profile-stat{padding:14px;border:1px solid #303b57;border-radius:13px;background:#151b2a}.profile-stat small{color:#78839d;font-size:10px}.profile-stat b{display:block;margin-top:5px;font-size:17px}
 .achievement{margin-top:10px;padding:13px;border-radius:13px;background:#151b2a;border:1px solid #303b57}.achievement b{font-size:13px}.achievement span{display:block;color:#8994ad;font-size:10px;margin-top:4px}
+.growth{margin-top:14px;padding:14px;border-radius:14px;background:#192342;border:1px solid #5269b8}.growth-title{font-weight:900}.growth-text{font-size:11px;color:#aab4cc;margin-top:5px;line-height:1.5}
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:#080b12f5;border-top:1px solid #303b57}.nav{padding:8px 2px;background:transparent;color:#68738b;font-size:10px}.nav.active{background:#1b2440;color:#fff}.nav i{display:block;font-style:normal;font-size:19px;margin-bottom:2px}
 </style>
 </head>
@@ -46,19 +46,19 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 
 <div class="stats">
 <div class="stat"><div class="stat-title">ПРОСМОТРЫ</div><div class="stat-value" id="views">0</div></div>
-<div class="stat"><div class="stat-title">ДОХОД / КЛИК</div><div class="stat-value" id="income">1.00 €</div></div>
+<div class="stat"><div class="stat-title">ПОДПИСЧИКИ</div><div class="stat-value" id="topSubs">0</div></div>
 </div>
 
 <div class="page active" id="studio">
 <div class="card">
 <div class="title">СТУДИЯ</div>
-<div class="subtitle">Нажимай и развивай канал</div>
+<div class="subtitle">Создавай контент и развивай канал</div>
 
 <div class="tap" id="tap">
-<div><div class="play">▶️</div><div class="tap-text">НАЖМИ</div></div>
+<div><div class="play">▶️</div><div class="tap-text">СОЗДАТЬ ВИДЕО</div></div>
 </div>
 
-<div class="message" id="message">ИГРА ГОТОВА — НАЖМИ ▶</div>
+<div class="message" id="message">ИГРА ГОТОВА — СОЗДАЙ ВИДЕО</div>
 
 <div class="energy">
 <div class="energy-head"><span>Энергия</span><span id="energyText">100 / 100</span></div>
@@ -83,27 +83,32 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <div class="channel-head">
 <div class="avatar">▶</div>
 <div>
-<div class="channel-name" id="channelName">TUBE EMPIRE</div>
+<div class="channel-name" id="channelName">TUBE CHANNEL</div>
 <div class="channel-level" id="channelLevel">УРОВЕНЬ 1</div>
 </div>
 </div>
 
 <div class="progress">
 <div class="energy-head">
-<span>Прогресс канала</span>
+<span>Опыт канала</span>
 <span id="xpText">0 / 100 XP</span>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="xp"></div></div>
 </div>
 
 <div class="channel-stats">
-<div class="channel-stat"><small>ПОДПИСЧИКИ</small><b id="subs">0</b></div>
-<div class="channel-stat"><small>ПРОСМОТРЫ</small><b id="channelViews">0</b></div>
-<div class="channel-stat"><small>ЗАРАБОТАНО</small><b id="earned">0 €</b></div>
-<div class="channel-stat"><small>СТУДИЯ</small><b id="studioLevel">1</b></div>
+<div class="channel-stat"><small>👥 ПОДПИСЧИКИ</small><b id="subs">0</b></div>
+<div class="channel-stat"><small>👀 ПРОСМОТРЫ</small><b id="channelViews">0</b></div>
+<div class="channel-stat"><small>💰 ЗАРАБОТАНО</small><b id="earned">0 €</b></div>
+<div class="channel-stat"><small>🏢 СТУДИЯ</small><b id="studioLevel">1</b></div>
 </div>
 
-<button class="channel-action" id="channelAction">📺 РАЗВИВАТЬ КАНАЛ</button>
+<div class="growth">
+<div class="growth-title">📈 РОСТ КАНАЛА</div>
+<div class="growth-text" id="growthText">Создавай видео, чтобы получать просмотры и новых подписчиков.</div>
+</div>
+
+<button class="channel-action" id="channelAction">📺 ПРОДВИНУТЬ КАНАЛ</button>
 </div>
 </div>
 
@@ -113,22 +118,22 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <div class="subtitle">Улучшай производство контента</div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">💡 Студийный свет</div><div class="shop-desc">+1 € к доходу за клик</div></div>
+<div class="shop-info"><div class="shop-name">💡 Студийный свет</div><div class="shop-desc">+1 € к доходу за видео</div></div>
 <button id="light"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">🎙️ Микрофон Pro</div><div class="shop-desc">+2 € к доходу за клик</div></div>
+<div class="shop-info"><div class="shop-name">🎙️ Микрофон Pro</div><div class="shop-desc">+2 € к доходу за видео</div></div>
 <button id="mic"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">📷 Камера 4K</div><div class="shop-desc">+5 € к доходу за клик</div></div>
+<div class="shop-info"><div class="shop-name">📷 Камера 4K</div><div class="shop-desc">+5 € к доходу за видео</div></div>
 <button id="camera"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">🖥️ Монтажная станция</div><div class="shop-desc">+10 € к доходу за клик</div></div>
+<div class="shop-info"><div class="shop-name">🖥️ Монтажная станция</div><div class="shop-desc">+10 € к доходу за видео</div></div>
 <button id="pc"></button>
 </div>
 </div>
@@ -227,22 +232,45 @@ function income(){
 return level()+bonusIncome();
 }
 
+function channelLevel(){
+return Math.floor((Number(GameState.get("channel.xp",0))||0)/100)+1;
+}
+
+function subscribers(){
+return Number(GameState.get("channel.subscribers",0))||0;
+}
+
+function views(){
+return Number(GameState.get("channel.views",0))||0;
+}
+
+function addChannelStats(v){
+const xp=Number(GameState.get("channel.xp",0))||0;
+GameState.set("channel.views",views()+v);
+GameState.set("channel.subscribers",subscribers()+Math.max(1,Math.floor(v/10)));
+GameState.set("channel.xp",xp+v);
+}
+
 function render(){
 const s=state();
 const l=level();
 const e=Math.max(0,Math.min(100,Number(s.player.energy)||0));
-const x=Math.floor(s.player.totalEarned||0);
-const playerLevel=Math.floor(x/100)+1;
+const earned=Math.floor(s.player.totalEarned||0);
+const cl=channelLevel();
+const xp=Number(GameState.get("channel.xp",0))||0;
+const v=views();
+const sub=subscribers();
 
 $("money").textContent=money(s.player.money);
-$("views").textContent=x.toLocaleString("de-DE");
-$("income").textContent=money(income());
+$("views").textContent=v.toLocaleString("de-DE");
+$("topSubs").textContent=sub.toLocaleString("de-DE");
+
 $("energy").style.width=e+"%";
 $("energyText").textContent=Math.floor(e)+" / 100";
 
 $("upgradeInfo").innerHTML=
 "Текущий уровень: <b>"+l+"</b><br>"+
-"Доход за клик: <b>"+money(income())+"</b><br>"+
+"Доход за видео: <b>"+money(income())+"</b><br>"+
 "Следующий уровень: <b>"+money(100*Math.pow(2,l-1))+"</b>";
 
 const cost=100*Math.pow(2,l-1);
@@ -250,21 +278,25 @@ $("upgrade").textContent="🚀 УЛУЧШИТЬ ЗА "+money(cost);
 $("upgrade").disabled=s.player.money<cost;
 
 $("channelName").textContent=(s.player.name||"TUBE")+" CHANNEL";
-$("channelLevel").textContent="УРОВЕНЬ "+playerLevel;
-$("xpText").textContent=(x%100)+" / 100 XP";
-$("xp").style.width=(x%100)+"%";
-$("subs").textContent=(x*2).toLocaleString("de-DE");
-$("channelViews").textContent=x.toLocaleString("de-DE");
-$("earned").textContent=money(s.player.totalEarned||0);
+$("channelLevel").textContent="УРОВЕНЬ "+cl;
+$("xpText").textContent=(xp%100)+" / 100 XP";
+$("xp").style.width=(xp%100)+"%";
+$("subs").textContent=sub.toLocaleString("de-DE");
+$("channelViews").textContent=v.toLocaleString("de-DE");
+$("earned").textContent=money(earned);
 $("studioLevel").textContent=l;
 
-$("profileName").textContent=(s.player.name||"TUBE CREATOR");
-$("profileLevel").textContent="УРОВЕНЬ "+playerLevel;
-$("profileXpText").textContent=(x%100)+" / 100 XP";
-$("profileXp").style.width=(x%100)+"%";
-$("pEarned").textContent=money(s.player.totalEarned||0);
-$("pViews").textContent=x.toLocaleString("de-DE");
-$("pSubs").textContent=(x*2).toLocaleString("de-DE");
+$("growthText").textContent=
+"За каждое видео: +"+income()+" просмотров. "+
+"Новые подписчики: примерно "+Math.max(1,Math.floor(income()/10))+".";
+
+$("profileName").textContent=s.player.name||"TUBE CREATOR";
+$("profileLevel").textContent="УРОВЕНЬ "+cl;
+$("profileXpText").textContent=(xp%100)+" / 100 XP";
+$("profileXp").style.width=(xp%100)+"%";
+$("pEarned").textContent=money(earned);
+$("pViews").textContent=v.toLocaleString("de-DE");
+$("pSubs").textContent=sub.toLocaleString("de-DE");
 $("pStudio").textContent=l;
 
 Object.keys(items).forEach(k=>{
@@ -277,23 +309,34 @@ b.disabled=!!bought||s.player.money<items[k].price;
 
 $("tap").onclick=()=>{
 const s=state();
+
 if(s.player.energy<1){
 $("message").textContent="⚡ Нет энергии";
 return;
 }
-GameEconomy.addMoney(income());
+
+const gain=income();
+
+GameEconomy.addMoney(gain);
 s.player.energy--;
-$("message").textContent="Заработано +"+money(income());
+
+addChannelStats(gain);
+
+$("message").textContent=
+"🎬 Видео опубликовано! +"+gain+" просмотров";
+
 render();
 save();
 };
 
 $("upgrade").onclick=()=>{
 const c=100*Math.pow(2,level()-1);
+
 if(!GameEconomy.spendMoney(c)){
 $("message").textContent="💰 Недостаточно денег";
 return;
 }
+
 GameState.set("upgrades.studio",level()+1);
 $("message").textContent="🚀 Студия улучшена!";
 render();
@@ -313,13 +356,22 @@ $("message").textContent="💾 Игра сохранена";
 };
 
 $("channelAction").onclick=()=>{
-if(state().player.energy<5){
+const s=state();
+
+if(s.player.energy<5){
 $("message").textContent="⚡ Нужно 5 энергии";
 return;
 }
-GameEconomy.addMoney(25);
-state().player.energy-=5;
-$("message").textContent="📺 Канал получил +25 €";
+
+s.player.energy-=5;
+
+const boost=level()*25;
+GameEconomy.addMoney(boost);
+addChannelStats(boost);
+
+$("message").textContent=
+"📺 Продвижение дало +"+boost+" просмотров";
+
 render();
 save();
 };
@@ -327,7 +379,9 @@ save();
 Object.keys(items).forEach(k=>{
 $(k).onclick=()=>{
 if(!GameEconomy.spendMoney(items[k].price))return;
+
 GameState.set("upgrades.shop_"+k,1);
+
 $("message").textContent="🛒 Покупка установлена!";
 render();
 save();
@@ -338,8 +392,10 @@ document.querySelectorAll(".nav").forEach(b=>{
 b.onclick=()=>{
 document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));
 b.classList.add("active");
+
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 $(b.dataset.page).classList.add("active");
+
 render();
 };
 });
