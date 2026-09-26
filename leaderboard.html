@@ -60,13 +60,18 @@ body{padding:6px;display:flex;justify-content:center;align-items:center;position
 .leader-card.player-row { background: var(--glass-bg); border: 2px solid var(--title-col); box-shadow: 0 0 12px rgba(255,204,0,0.3); }
 .rank-1 { color: var(--gold); } .rank-2 { color: var(--silver); } .rank-3 { color: var(--bronze); }
 </style>
+<link rel="stylesheet" href="css/tube-theme.css">
 </head>
 <body>
 
 <div class="portal">
   <div class="game-ui-header">
-    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 9px;" id="headerTitle">🏆 ТОП КАНАЛОВ</div>
+  <div class="internal-nav">
+    <button class="back-btn" onclick="history.back()" aria-label="Назад">‹</button>
+    <a href="index.html" class="page-menu-btn" aria-label="Меню">⌂</a>
+  </div>
+  <div id="headerTitle">🏆 ТОП КАНАЛОВ</div>
+</div>
   </div>
 
   <div class="festive-title-box">

@@ -80,13 +80,18 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--portal-bg); border: 2px solid var(--title-col); border-radius: 12px; padding: 16px; text-align: center; width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 25px rgba(255,204,0,0.4); }
 </style>
+<link rel="stylesheet" href="css/tube-theme.css">
 </head>
 <body>
 
 <div class="portal">
   <div class="game-ui-header">
-    <a href="game.html" class="back-btn" id="menuBtnTxt">⬅ СТУДИЯ</a>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="shopTitle">💎 МАГАЗИН И БИЗНЕС</div>
+  <div class="internal-nav">
+    <button class="back-btn" onclick="history.back()" aria-label="Назад">‹</button>
+    <a href="index.html" class="page-menu-btn" aria-label="Меню">⌂</a>
+  </div>
+  <div id="shopTitle">💎 МАГАЗИН И БИЗНЕС</div>
+</div>
   </div>
 
   <div class="shop-tabs">

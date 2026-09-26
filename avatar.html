@@ -69,13 +69,18 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 
 .save-btn { width: 100%; background: linear-gradient(135deg, var(--title-col), #c09a00); border: none; border-radius: 6px; padding: 8px; font-weight: bold; font-size: 10px; color: #000; cursor: pointer; font-family: monospace; flex-shrink: 0; margin-top: 2px; }
 </style>
+<link rel="stylesheet" href="css/tube-theme.css">
 </head>
 <body>
 
 <div class="portal">
   <div class="game-ui-header">
-    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="headerTitle">🎨 КАСТОМИЗАЦИЯ</div>
+  <div class="internal-nav">
+    <button class="back-btn" onclick="history.back()" aria-label="Назад">‹</button>
+    <a href="index.html" class="page-menu-btn" aria-label="Меню">⌂</a>
+  </div>
+  <div id="headerTitle">🎨 КАСТОМИЗАЦИЯ</div>
+</div>
   </div>
 
   <div class="tabs">
