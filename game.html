@@ -9,14 +9,15 @@
 html,body{margin:0;background:#080b12;color:#fff;font-family:Arial}
 body{display:flex;justify-content:center}
 .game{width:100%;max-width:520px;min-height:100vh;padding:14px 14px 82px;background:radial-gradient(circle at 50% 0,#303b70,#141a2d 45%,#080b12 88%)}
-.header,.energy-head,.shop-item{display:flex;justify-content:space-between;align-items:center}
+.header,.energy-head,.video{display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:20px;font-weight:900}.online{padding:6px 9px;border-radius:9px;background:#17251d;color:#72f7a0;font-size:11px;font-weight:bold}
-.balance,.stat,.card,.panel,.shop-item,.channel-stat,.profile-stat{border:1px solid #35415f;background:#111726;border-radius:17px}
+.balance,.stat,.card,.video,.shop-item,.channel-stat,.profile-stat{border:1px solid #35415f;background:#111726;border-radius:17px}
 .balance{text-align:center;padding:17px;margin-top:12px}.label,.stat-title{color:#8994ad;font-size:11px}.money{color:#72f7a0;font-size:36px;font-weight:900;margin-top:4px}
 .stats,.channel-stats,.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.stat{padding:13px;border-radius:13px}.stat-value{font-size:19px;font-weight:bold;margin-top:4px}
-.page{display:none}.page.active{display:block}.card,.panel{margin-top:12px;padding:18px}.title{font-size:22px;font-weight:900}.subtitle,.panel-text{color:#8994ad;font-size:12px;margin-top:5px}
-.tap{width:205px;height:205px;margin:24px auto 17px;border:5px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#344579,#182341 55%,#0c1120);box-shadow:0 0 35px #526fc088;text-align:center}.tap:active{transform:scale(.94)}
-.play{font-size:62px}.tap-text{font-size:12px;font-weight:bold}.message{min-height:20px;color:#77eaff;font-size:12px;font-weight:bold;text-align:center}
+.page{display:none}.page.active{display:block}.card{margin-top:12px;padding:18px}.title{font-size:22px;font-weight:900}.subtitle{color:#8994ad;font-size:12px;margin-top:5px}
+.video-list{margin-top:15px}.video{padding:13px;margin-top:9px;gap:10px}.video-info{flex:1}.video-name{font-size:14px;font-weight:900}.video-desc{font-size:10px;color:#8994ad;margin-top:4px;line-height:1.4}.video button{min-width:105px;background:#5d55d9}.video button:disabled{background:#3a4052;color:#858da0}
+.tap{width:190px;height:190px;margin:20px auto 15px;border:5px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#344579,#182341 55%,#0c1120);box-shadow:0 0 35px #526fc088;text-align:center}.tap:active{transform:scale(.94)}
+.play{font-size:58px}.tap-text{font-size:11px;font-weight:bold}.message{min-height:20px;color:#77eaff;font-size:12px;font-weight:bold;text-align:center}
 .energy{margin-top:14px}.energy-head{color:#8b96ae;font-size:11px;margin-bottom:6px}.energy-bar,.progress-bar{height:9px;background:#080b12;border-radius:9px;overflow:hidden}.energy-fill,.progress-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
 .upgrade{margin-top:16px;padding:16px;border:2px solid #596fff;border-radius:17px;background:#192342}.upgrade-title{font-size:17px;font-weight:900}.upgrade-info{color:#aab4cc;font-size:12px;line-height:1.6;margin-top:7px}
 button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;font-weight:bold}.upgrade-button{width:100%;margin-top:12px;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:15px}.upgrade-button:disabled{background:#3a4052;color:#858da0}
@@ -24,7 +25,7 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 .channel-head,.profile-head{display:flex;align-items:center;gap:13px}.avatar,.profile-avatar{width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:30px}.profile-avatar{width:72px;height:72px}.channel-name,.profile-name{font-size:19px;font-weight:900}.profile-name{font-size:20px}.channel-level,.profile-level{color:#8994ad;font-size:11px;margin-top:4px}.progress{margin-top:18px}
 .channel-stat,.profile-stat{padding:13px;border-radius:13px;background:#151b2a}.channel-stat small,.profile-stat small{color:#78839d;font-size:10px}.channel-stat b,.profile-stat b{display:block;margin-top:5px;font-size:17px}
 .channel-action{width:100%;margin-top:14px}
-.shop-item{padding:14px;margin-top:10px;gap:10px}.shop-info{flex:1}.shop-name{font-weight:900;font-size:14px}.shop-desc{color:#8994ad;font-size:10px;margin-top:4px}.shop-item button{min-width:100px;background:#5d55d9}.shop-item button:disabled{background:#3a4052;color:#858da0}
+.shop-item{display:flex;justify-content:space-between;align-items:center;padding:14px;margin-top:10px;gap:10px}.shop-info{flex:1}.shop-name{font-weight:900;font-size:14px}.shop-desc{color:#8994ad;font-size:10px;margin-top:4px}.shop-item button{min-width:100px;background:#5d55d9}.shop-item button:disabled{background:#3a4052;color:#858da0}
 .achievement{margin-top:10px;padding:13px;border-radius:13px;background:#151b2a;border:1px solid #303b57}.achievement b{font-size:13px}.achievement span{display:block;color:#8994ad;font-size:10px;margin-top:4px}
 .growth{margin-top:14px;padding:14px;border-radius:14px;background:#192342;border:1px solid #5269b8}.growth-title{font-weight:900}.growth-text{font-size:11px;color:#aab4cc;margin-top:5px;line-height:1.5}
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:#080b12f5;border-top:1px solid #303b57}.nav{padding:8px 2px;background:transparent;color:#68738b;font-size:10px}.nav.active{background:#1b2440;color:#fff}.nav i{display:block;font-style:normal;font-size:19px;margin-bottom:2px}
@@ -51,18 +52,63 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 
 <div class="page active" id="studio">
 <div class="card">
-<div class="title">СТУДИЯ</div>
-<div class="subtitle">Создавай контент и развивай канал</div>
 
-<div class="tap" id="tap">
-<div><div class="play">▶️</div><div class="tap-text">СОЗДАТЬ ВИДЕО</div></div>
+<div class="title">🎬 СТУДИЯ</div>
+<div class="subtitle">Выбери формат и опубликуй видео</div>
+
+<div class="video-list">
+
+<div class="video">
+<div class="video-info">
+<div class="video-name">🎮 GAMING</div>
+<div class="video-desc">Стабильный контент.<br>Низкая стоимость.</div>
+</div>
+<button onclick="publish('gaming')">ОПУБЛИКОВАТЬ</button>
 </div>
 
-<div class="message" id="message">ИГРА ГОТОВА — СОЗДАЙ ВИДЕО</div>
+<div class="video">
+<div class="video-info">
+<div class="video-name">🎬 ВЛОГ</div>
+<div class="video-desc">Больше подписчиков.<br>Средняя стоимость.</div>
+</div>
+<button onclick="publish('vlog')">ОПУБЛИКОВАТЬ</button>
+</div>
+
+<div class="video">
+<div class="video-info">
+<div class="video-name">🔥 ЧЕЛЛЕНДЖ</div>
+<div class="video-desc">Высокий потенциал.<br>Больше энергии.</div>
+</div>
+<button onclick="publish('challenge')">ОПУБЛИКОВАТЬ</button>
+</div>
+
+<div class="video">
+<div class="video-info">
+<div class="video-name">💎 ПРЕМИУМ</div>
+<div class="video-desc">Дорогой контент.<br>Очень высокий доход.</div>
+</div>
+<button onclick="publish('premium')">ОПУБЛИКОВАТЬ</button>
+</div>
+
+</div>
+
+<div class="tap" id="tap">
+<div>
+<div class="play">▶️</div>
+<div class="tap-text">БЫСТРАЯ ПУБЛИКАЦИЯ</div>
+</div>
+</div>
+
+<div class="message" id="message">Выбери тип видео</div>
 
 <div class="energy">
-<div class="energy-head"><span>Энергия</span><span id="energyText">100 / 100</span></div>
-<div class="energy-bar"><div class="energy-fill" id="energy"></div></div>
+<div class="energy-head">
+<span>Энергия</span>
+<span id="energyText">100 / 100</span>
+</div>
+<div class="energy-bar">
+<div class="energy-fill" id="energy"></div>
+</div>
 </div>
 
 <div class="upgrade">
@@ -75,11 +121,13 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <button class="bonus" id="bonus">🎁 БОНУС +100 €</button>
 <button id="save">💾 СОХРАНИТЬ</button>
 </div>
+
 </div>
 </div>
 
 <div class="page" id="channel">
 <div class="card">
+
 <div class="channel-head">
 <div class="avatar">▶</div>
 <div>
@@ -93,7 +141,9 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <span>Опыт канала</span>
 <span id="xpText">0 / 100 XP</span>
 </div>
-<div class="progress-bar"><div class="progress-fill" id="xp"></div></div>
+<div class="progress-bar">
+<div class="progress-fill" id="xp"></div>
+</div>
 </div>
 
 <div class="channel-stats">
@@ -105,37 +155,52 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 
 <div class="growth">
 <div class="growth-title">📈 РОСТ КАНАЛА</div>
-<div class="growth-text" id="growthText">Создавай видео, чтобы получать просмотры и новых подписчиков.</div>
+<div class="growth-text" id="growthText"></div>
 </div>
 
 <button class="channel-action" id="channelAction">📺 ПРОДВИНУТЬ КАНАЛ</button>
+
 </div>
 </div>
 
 <div class="page" id="shop">
 <div class="card">
+
 <div class="title">🛒 МАГАЗИН</div>
 <div class="subtitle">Улучшай производство контента</div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">💡 Студийный свет</div><div class="shop-desc">+1 € к доходу за видео</div></div>
+<div class="shop-info">
+<div class="shop-name">💡 Студийный свет</div>
+<div class="shop-desc">+1 € к доходу</div>
+</div>
 <button id="light"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">🎙️ Микрофон Pro</div><div class="shop-desc">+2 € к доходу за видео</div></div>
+<div class="shop-info">
+<div class="shop-name">🎙️ Микрофон Pro</div>
+<div class="shop-desc">+2 € к доходу</div>
+</div>
 <button id="mic"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">📷 Камера 4K</div><div class="shop-desc">+5 € к доходу за видео</div></div>
+<div class="shop-info">
+<div class="shop-name">📷 Камера 4K</div>
+<div class="shop-desc">+5 € к доходу</div>
+</div>
 <button id="camera"></button>
 </div>
 
 <div class="shop-item">
-<div class="shop-info"><div class="shop-name">🖥️ Монтажная станция</div><div class="shop-desc">+10 € к доходу за видео</div></div>
+<div class="shop-info">
+<div class="shop-name">🖥️ Монтажная станция</div>
+<div class="shop-desc">+10 € к доходу</div>
+</div>
 <button id="pc"></button>
 </div>
+
 </div>
 </div>
 
@@ -155,7 +220,9 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <span>Опыт игрока</span>
 <span id="profileXpText">0 / 100 XP</span>
 </div>
-<div class="progress-bar"><div class="progress-fill" id="profileXp"></div></div>
+<div class="progress-bar">
+<div class="progress-fill" id="profileXp"></div>
+</div>
 </div>
 
 <div class="profile-stats">
@@ -220,6 +287,13 @@ camera:{price:4000,power:5},
 pc:{price:10000,power:10}
 };
 
+const videos={
+gaming:{name:"Gaming",cost:0,views:20,subs:2,energy:1,money:1},
+vlog:{name:"Влог",cost:10,views:35,subs:5,energy:2,money:3},
+challenge:{name:"Челлендж",cost:30,views:70,subs:10,energy:4,money:8},
+premium:{name:"Премиум",cost:100,views:180,subs:30,energy:7,money:25}
+};
+
 function bonusIncome(){
 let b=0;
 Object.keys(items).forEach(k=>{
@@ -244,11 +318,42 @@ function views(){
 return Number(GameState.get("channel.views",0))||0;
 }
 
-function addChannelStats(v){
+function addChannelStats(v,s){
 const xp=Number(GameState.get("channel.xp",0))||0;
 GameState.set("channel.views",views()+v);
-GameState.set("channel.subscribers",subscribers()+Math.max(1,Math.floor(v/10)));
+GameState.set("channel.subscribers",subscribers()+s);
 GameState.set("channel.xp",xp+v);
+}
+
+function publish(type){
+const s=state();
+const v=videos[type];
+
+if(s.player.energy<v.energy){
+$("message").textContent="⚡ Недостаточно энергии";
+return;
+}
+
+if(v.cost>0&&!GameEconomy.spendMoney(v.cost)){
+$("message").textContent="💰 Недостаточно денег";
+return;
+}
+
+s.player.energy-=v.energy;
+
+const studioBonus=level();
+const finalViews=v.views+studioBonus*5;
+const finalSubs=v.subs+Math.max(0,Math.floor(studioBonus/2));
+const finalMoney=v.money+bonusIncome();
+
+GameEconomy.addMoney(finalMoney);
+addChannelStats(finalViews,finalSubs);
+
+$("message").textContent=
+"🎬 "+v.name+" опубликован: +"+finalViews+" просмотров, +"+finalSubs+" подписчиков";
+
+render();
+save();
 }
 
 function render(){
@@ -269,8 +374,8 @@ $("energy").style.width=e+"%";
 $("energyText").textContent=Math.floor(e)+" / 100";
 
 $("upgradeInfo").innerHTML=
-"Текущий уровень: <b>"+l+"</b><br>"+
-"Доход за видео: <b>"+money(income())+"</b><br>"+
+"Уровень студии: <b>"+l+"</b><br>"+
+"Бонус оборудования: <b>+"+bonusIncome()+" €</b><br>"+
 "Следующий уровень: <b>"+money(100*Math.pow(2,l-1))+"</b>";
 
 const cost=100*Math.pow(2,l-1);
@@ -287,8 +392,9 @@ $("earned").textContent=money(earned);
 $("studioLevel").textContent=l;
 
 $("growthText").textContent=
-"За каждое видео: +"+income()+" просмотров. "+
-"Новые подписчики: примерно "+Math.max(1,Math.floor(income()/10))+".";
+"Уровень "+cl+". "+
+"Каждое видео приносит просмотры и подписчиков. "+
+"Улучшай студию для лучших результатов.";
 
 $("profileName").textContent=s.player.name||"TUBE CREATOR";
 $("profileLevel").textContent="УРОВЕНЬ "+cl;
@@ -308,25 +414,7 @@ b.disabled=!!bought||s.player.money<items[k].price;
 }
 
 $("tap").onclick=()=>{
-const s=state();
-
-if(s.player.energy<1){
-$("message").textContent="⚡ Нет энергии";
-return;
-}
-
-const gain=income();
-
-GameEconomy.addMoney(gain);
-s.player.energy--;
-
-addChannelStats(gain);
-
-$("message").textContent=
-"🎬 Видео опубликовано! +"+gain+" просмотров";
-
-render();
-save();
+publish("gaming");
 };
 
 $("upgrade").onclick=()=>{
@@ -366,11 +454,13 @@ return;
 s.player.energy-=5;
 
 const boost=level()*25;
-GameEconomy.addMoney(boost);
-addChannelStats(boost);
+const subBoost=Math.max(1,Math.floor(boost/8));
+
+GameEconomy.addMoney(level()*5);
+addChannelStats(boost,subBoost);
 
 $("message").textContent=
-"📺 Продвижение дало +"+boost+" просмотров";
+"📺 Продвижение: +"+boost+" просмотров, +"+subBoost+" подписчиков";
 
 render();
 save();
