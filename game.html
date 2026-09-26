@@ -17,7 +17,7 @@ body{display:flex;justify-content:center}
 .page{display:none}.page.active{display:block}.card{margin-top:12px;padding:18px}.title{font-size:22px;font-weight:900}.subtitle{color:#8994ad;font-size:12px;margin-top:5px}
 .video-list{margin-top:15px}.video{padding:13px;margin-top:9px;gap:10px}.video-info{flex:1}.video-name{font-size:14px;font-weight:900}.video-desc{font-size:10px;color:#8994ad;margin-top:4px;line-height:1.4}.video button{min-width:105px;background:#5d55d9}.video button:disabled{background:#3a4052;color:#858da0}
 .tap{width:190px;height:190px;margin:20px auto 15px;border:5px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#344579,#182341 55%,#0c1120);box-shadow:0 0 35px #526fc088;text-align:center}.tap:active{transform:scale(.94)}
-.play{font-size:58px}.tap-text{font-size:11px;font-weight:bold}.message{min-height:20px;color:#77eaff;font-size:12px;font-weight:bold;text-align:center}
+.play{font-size:58px}.tap-text{font-size:11px;font-weight:bold}.message{min-height:38px;color:#77eaff;font-size:12px;font-weight:bold;text-align:center;line-height:1.5}
 .energy{margin-top:14px}.energy-head{color:#8b96ae;font-size:11px;margin-bottom:6px}.energy-bar,.progress-bar{height:9px;background:#080b12;border-radius:9px;overflow:hidden}.energy-fill,.progress-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
 .upgrade{margin-top:16px;padding:16px;border:2px solid #596fff;border-radius:17px;background:#192342}.upgrade-title{font-size:17px;font-weight:900}.upgrade-info{color:#aab4cc;font-size:12px;line-height:1.6;margin-top:7px}
 button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;font-weight:bold}.upgrade-button{width:100%;margin-top:12px;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:15px}.upgrade-button:disabled{background:#3a4052;color:#858da0}
@@ -28,6 +28,7 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 .shop-item{display:flex;justify-content:space-between;align-items:center;padding:14px;margin-top:10px;gap:10px}.shop-info{flex:1}.shop-name{font-weight:900;font-size:14px}.shop-desc{color:#8994ad;font-size:10px;margin-top:4px}.shop-item button{min-width:100px;background:#5d55d9}.shop-item button:disabled{background:#3a4052;color:#858da0}
 .achievement{margin-top:10px;padding:13px;border-radius:13px;background:#151b2a;border:1px solid #303b57}.achievement b{font-size:13px}.achievement span{display:block;color:#8994ad;font-size:10px;margin-top:4px}
 .growth{margin-top:14px;padding:14px;border-radius:14px;background:#192342;border:1px solid #5269b8}.growth-title{font-weight:900}.growth-text{font-size:11px;color:#aab4cc;margin-top:5px;line-height:1.5}
+.result{margin-top:12px;padding:12px;border-radius:13px;background:#151b2a;border:1px solid #303b57;text-align:center;font-weight:bold;font-size:13px}
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:#080b12f5;border-top:1px solid #303b57}.nav{padding:8px 2px;background:transparent;color:#68738b;font-size:10px}.nav.active{background:#1b2440;color:#fff}.nav i{display:block;font-style:normal;font-size:19px;margin-bottom:2px}
 </style>
 </head>
@@ -85,7 +86,7 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 <div class="video">
 <div class="video-info">
 <div class="video-name">💎 ПРЕМИУМ</div>
-<div class="video-desc">Дорогой контент.<br>Очень высокий доход.</div>
+<div class="video-desc">Дорогой контент.<br>Очень высокий потенциал.</div>
 </div>
 <button onclick="publish('premium')">ОПУБЛИКОВАТЬ</button>
 </div>
@@ -100,6 +101,7 @@ button{border:0;border-radius:12px;padding:13px;color:#fff;background:#252e48;fo
 </div>
 
 <div class="message" id="message">Выбери тип видео</div>
+<div class="result" id="result">📊 Результат появится после публикации</div>
 
 <div class="energy">
 <div class="energy-head">
@@ -302,10 +304,6 @@ if(GameState.get("upgrades.shop_"+k,0))b+=items[k].power;
 return b;
 }
 
-function income(){
-return level()+bonusIncome();
-}
-
 function channelLevel(){
 return Math.floor((Number(GameState.get("channel.xp",0))||0)/100)+1;
 }
@@ -341,16 +339,43 @@ return;
 
 s.player.energy-=v.energy;
 
-const studioBonus=level();
-const finalViews=v.views+studioBonus*5;
-const finalSubs=v.subs+Math.max(0,Math.floor(studioBonus/2));
-const finalMoney=v.money+bonusIncome();
+const studio=level();
+const equipment=bonusIncome();
+
+const roll=Math.random();
+let quality;
+let multiplier;
+let label;
+
+if(roll<0.55){
+quality="ОБЫЧНО";
+multiplier=1;
+label="📊 Обычный результат";
+}else if(roll<0.85){
+quality="УСПЕХ";
+multiplier=1.5;
+label="🔥 Успешное видео!";
+}else if(roll<0.98){
+quality="ВИРУСНО";
+multiplier=3;
+label="🚀 ВИРУСНОЕ ВИДЕО!";
+}else{
+quality="ЛЕГЕНДА";
+multiplier=6;
+label="💎 ЛЕГЕНДАРНЫЙ УСПЕХ!";
+}
+
+const baseViews=v.views+studio*5+equipment*2;
+const finalViews=Math.floor(baseViews*multiplier);
+const finalSubs=Math.max(1,Math.floor((v.subs+studio+equipment)*multiplier));
+const finalMoney=Math.max(1,Math.floor((v.money+equipment)*multiplier));
 
 GameEconomy.addMoney(finalMoney);
 addChannelStats(finalViews,finalSubs);
 
-$("message").textContent=
-"🎬 "+v.name+" опубликован: +"+finalViews+" просмотров, +"+finalSubs+" подписчиков";
+$("message").textContent="🎬 "+v.name+" опубликован!";
+$("result").textContent=
+label+" • "+finalViews+" просмотров • +"+finalSubs+" подписчиков • +"+finalMoney+" €";
 
 render();
 save();
@@ -375,7 +400,7 @@ $("energyText").textContent=Math.floor(e)+" / 100";
 
 $("upgradeInfo").innerHTML=
 "Уровень студии: <b>"+l+"</b><br>"+
-"Бонус оборудования: <b>+"+bonusIncome()+" €</b><br>"+
+"Бонус оборудования: <b>+"+bonusIncome()+"</b><br>"+
 "Следующий уровень: <b>"+money(100*Math.pow(2,l-1))+"</b>";
 
 const cost=100*Math.pow(2,l-1);
@@ -392,9 +417,7 @@ $("earned").textContent=money(earned);
 $("studioLevel").textContent=l;
 
 $("growthText").textContent=
-"Уровень "+cl+". "+
-"Каждое видео приносит просмотры и подписчиков. "+
-"Улучшай студию для лучших результатов.";
+"Уровень "+cl+". Чем выше студия и оборудование, тем сильнее результат видео.";
 
 $("profileName").textContent=s.player.name||"TUBE CREATOR";
 $("profileLevel").textContent="УРОВЕНЬ "+cl;
