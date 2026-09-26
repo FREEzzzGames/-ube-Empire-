@@ -1,258 +1,1231 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tube Empire — Главное меню</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tube Empire</title>
+
 <script src="core.js"></script>
 <script src="economy.js"></script>
 <script src="game-logic.js"></script>
+
 <style>
 :root{
-  --bg:#070305;
-  --p-bg:linear-gradient(135deg, rgba(25,12,18,0.95), rgba(10,5,8,0.98));
-  --b-col:rgba(255,50,80,0.35);
-  --acc:#ff2a5f;
-  --acc-glow:rgba(255,42,95,0.6);
-  --t-col:#ffd700;
-  --btn:linear-gradient(145deg, #221016, #14080b);
-  --txt:#fff;
-  --sub:#ff94a8;
+  --bg:#020617;
+  --bg2:#07152b;
+  --panel:#081a31;
+  --panel2:#0b2039;
+  --line:#12395b;
+  --cyan:#19d9ff;
+  --cyan2:#62ecff;
+  --blue:#1677ff;
+  --yellow:#ffd83d;
+  --yellow2:#ffb900;
+  --white:#f5fbff;
+  --text:#d7e8f5;
+  --muted:#7292aa;
+  --green:#39e58c;
+  --shadow:rgba(0,210,255,.18);
 }
-[data-theme="rose"]{
-  --bg:#1a0812;
-  --p-bg:linear-gradient(135deg, rgba(40,15,30,0.95), rgba(20,8,15,0.98));
-  --b-col:rgba(255,100,150,0.4);
-  --acc:#ff477e;
-  --t-col:#ffdd33;
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
-[data-theme="light"]{
-  --bg:#f0f2f5;
-  --p-bg:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,242,245,0.98));
-  --b-col:rgba(200,50,80,0.25);
-  --acc:#d90429;
-  --t-col:#b8860b;
-  --btn:linear-gradient(145deg, #ffffff, #e6e8eb);
-  --txt:#1a1a1a;
-  --sub:#666666;
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0%,#0c2848 0%,#020617 48%,#01040b 100%);
+  color:var(--white);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;}
-body{padding:4px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
+
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:7px;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background-image:
+    linear-gradient(rgba(25,217,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(25,217,255,.05) 1px,transparent 1px);
+  background-size:28px 28px;
+}
 
 .portal{
-  width:100%;height:100%;max-width:420px;max-height:100vh;
-  display:flex;flex-direction:column;justify-content:space-between;
-  padding:10px;background:var(--p-bg);border:2px solid var(--b-col);
-  border-radius:18px;box-shadow:0 0 30px rgba(255,42,95,0.15), inset 0 0 20px rgba(0,0,0,0.3);
-  position:relative;backdrop-filter:blur(10px);text-align:center;
+  width:100%;
+  max-width:500px;
+  height:100%;
+  max-height:900px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:9px;
+  overflow:hidden;
+
+  background:
+    linear-gradient(180deg,rgba(8,28,50,.98),rgba(2,11,24,.99));
+
+  border:1px solid #17466d;
+  border-radius:18px;
+
+  box-shadow:
+    0 0 35px rgba(0,160,255,.12),
+    inset 0 0 35px rgba(0,0,0,.45);
 }
 
-.top-bar{display:flex;justify-content:flex-end;gap:5px;}
-.top-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--txt);padding:3px 7px;border-radius:6px;font-size:8px;font-weight:600;cursor:pointer;}
+/* TOP */
 
-.logo-container{display:flex;flex-direction:column;align-items:center;gap:2px;margin:2px 0;}
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  flex-shrink:0;
+}
+
+.online{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:8px;
+  color:var(--muted);
+}
+
+.online-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+}
+
+.top-actions{
+  display:flex;
+  gap:5px;
+}
+
+.top-btn{
+  border:1px solid #1a4d70;
+  background:#07182c;
+  color:var(--text);
+  border-radius:7px;
+  padding:5px 7px;
+  font-size:8px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.top-btn:active{
+  transform:scale(.95);
+}
+
+/* LOGO */
+
+.logo-container{
+  text-align:center;
+  flex-shrink:0;
+  padding:1px 0;
+}
+
 .logo-icon{
-  width:42px;height:42px;background:radial-gradient(circle at 35% 35%, #ff4d6d 0%, #d90429 55%, #800020 100%);
-  border:2px solid #fff;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:18px;
-  box-shadow:0 0 15px var(--acc-glow), 0 4px 10px rgba(0,0,0,0.3);
+  width:46px;
+  height:46px;
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:13px;
+  border:2px solid var(--cyan);
+
+  background:
+    radial-gradient(circle at 35% 30%,#42eaff,#0878b9 50%,#03172d 100%);
+
+  font-size:22px;
+
+  box-shadow:
+    0 0 12px rgba(25,217,255,.65),
+    inset 0 0 12px rgba(255,255,255,.1);
 }
-.game-title{font-size:16px;font-weight:900;color:var(--t-col);text-shadow:0 0 8px rgba(255,215,0,0.3);letter-spacing:1px;margin:0;}
-.game-subtitle{font-size:7px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin:0;}
+
+.game-title{
+  margin:2px 0 0;
+  font-size:20px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:2px;
+  color:var(--yellow);
+  text-shadow:0 0 12px rgba(255,216,61,.3);
+}
+
+.game-subtitle{
+  margin:3px 0 0;
+  font-size:7px;
+  color:var(--cyan2);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+/* PROFILE */
 
 .profile-card{
-  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:8px;
-  padding:5px 8px;display:flex;align-items:center;gap:8px;text-align:left;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,0.2);
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:9px;
+
+  padding:8px;
+
+  border:1px solid #17476c;
+  border-radius:11px;
+
+  background:
+    linear-gradient(135deg,#0b213a,#061426);
+
+  box-shadow:
+    inset 0 0 14px rgba(0,0,0,.35);
 }
+
 .avatar-box{
-  width:34px;height:34px;background:var(--btn);border:1px solid var(--b-col);border-radius:6px;
-  display:flex;justify-content:center;align-items:center;font-size:16px;flex-shrink:0;overflow:hidden;
+  width:45px;
+  height:45px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  border:2px solid var(--cyan);
+
+  background:#061426;
+  font-size:23px;
+
+  box-shadow:0 0 12px rgba(25,217,255,.25);
 }
-.profile-info{display:flex;flex-direction:column;gap:1px;overflow:hidden;}
-.profile-name{font-size:9.5px;font-weight:800;color:var(--t-col);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.profile-stats{font-size:6.5px;color:var(--sub);}
+
+.profile-info{
+  min-width:0;
+  flex:1;
+}
+
+.profile-name{
+  font-size:13px;
+  font-weight:900;
+  color:var(--yellow);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.profile-label{
+  font-size:7px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.profile-stats{
+  margin-top:2px;
+  font-size:10px;
+  color:var(--white);
+  font-weight:700;
+}
+
+/* BALANCE */
+
+.balance-card{
+  flex-shrink:0;
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  border:1px solid #17476c;
+  border-radius:10px;
+
+  background:#061426;
+  overflow:hidden;
+}
+
+.balance-item{
+  padding:7px 8px;
+  text-align:left;
+}
+
+.balance-item + .balance-item{
+  border-left:1px solid #163957;
+}
+
+.balance-label{
+  font-size:7px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+
+.balance-value{
+  margin-top:1px;
+  font-size:13px;
+  font-weight:900;
+  color:var(--yellow);
+}
+
+/* CHAT */
 
 .chat-widget{
-  background:rgba(255,255,255,0.03);border:1px solid var(--b-col);border-radius:8px;
-  padding:5px 8px;text-align:left;display:flex;flex-direction:column;gap:2px;max-height:55px;overflow:hidden;
-  cursor:pointer;transition:border-color 0.15s;
-}
-.chat-widget:hover{border-color:var(--acc);}
-.chat-title{font-size:7px;color:var(--t-col);font-weight:700;text-transform:uppercase;display:flex;justify-content:space-between;}
-.chat-messages{font-size:7.5px;color:var(--sub);display:flex;flex-direction:column;gap:1px;overflow-y:auto;}
+  flex-shrink:0;
 
-.menu-nav{display:flex;flex-direction:column;gap:4px;margin:2px 0;}
+  padding:7px 9px;
+
+  border:1px solid #14527a;
+  border-radius:10px;
+
+  background:
+    linear-gradient(135deg,#081d34,#051225);
+
+  cursor:pointer;
+}
+
+.chat-widget:active{
+  transform:scale(.985);
+}
+
+.chat-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  font-size:8px;
+  font-weight:900;
+  color:var(--cyan2);
+}
+
+.chat-badge{
+  min-width:18px;
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  background:var(--yellow);
+  color:#111;
+  font-size:8px;
+  font-weight:950;
+}
+
+.chat-messages{
+  margin-top:4px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+
+  max-height:29px;
+  overflow:hidden;
+
+  font-size:7.5px;
+  color:#9db6c8;
+}
+
+.chat-messages b{
+  color:var(--yellow);
+}
+
+/* MAIN MENU */
+
+.menu-title{
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  color:var(--cyan2);
+  font-size:8px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+}
+
+.menu-title:before,
+.menu-title:after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:#164766;
+}
+
+.menu-nav{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  flex:1;
+  min-height:0;
+  justify-content:center;
+}
+
 .menu-btn{
-  background:var(--btn);border:1px solid var(--b-col);border-radius:8px;
-  padding:7px 10px;color:var(--txt);font-size:10px;font-weight:800;text-decoration:none;
-  display:flex;align-items:center;justify-content:space-between;cursor:pointer;
-  box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:transform 0.1s ease;
+  width:100%;
+  min-height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+
+  padding:8px 11px;
+
+  border:1px solid #16496b;
+  border-radius:10px;
+
+  background:
+    linear-gradient(135deg,#0b2038,#061426);
+
+  color:var(--white);
+  text-decoration:none;
+
+  font-size:10px;
+  font-weight:850;
+
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.25),
+    inset 0 1px rgba(255,255,255,.025);
+
+  cursor:pointer;
+
+  transition:
+    transform .1s,
+    border-color .1s,
+    background .1s;
 }
-.menu-btn:active{transform:scale(0.97);}
+
+.menu-btn:active{
+  transform:scale(.975);
+}
+
+.menu-btn:hover{
+  border-color:#2183b5;
+}
+
+.menu-left{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+
+.menu-icon{
+  width:28px;
+  height:28px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:8px;
+
+  background:#09243d;
+  border:1px solid #165479;
+
+  font-size:15px;
+}
+
+.menu-text{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:1px;
+  min-width:0;
+}
+
+.menu-main{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.menu-desc{
+  font-size:6.5px;
+  color:var(--muted);
+  font-weight:600;
+}
+
+.menu-arrow{
+  color:var(--cyan);
+  font-size:15px;
+}
+
 .menu-btn.primary{
-  background:linear-gradient(135deg, #ff2a5f, #d90429);border-color:#ff7597;color:#fff;
-  box-shadow:0 0 15px rgba(255,42,95,0.3);font-size:11px;
+  min-height:49px;
+
+  background:
+    linear-gradient(135deg,#ffe75b,#ffbd16 55%,#f39a00);
+
+  border-color:#ffe878;
+
+  color:#10151a;
+
+  box-shadow:
+    0 0 18px rgba(255,195,30,.22),
+    inset 0 1px rgba(255,255,255,.6);
 }
+
+.menu-btn.primary .menu-icon{
+  background:rgba(255,255,255,.22);
+  border-color:rgba(0,0,0,.15);
+}
+
+.menu-btn.primary .menu-desc{
+  color:#594600;
+}
+
+.menu-btn.primary .menu-arrow{
+  color:#111;
+}
+
+/* FOOTER */
+
+.footer-info{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  justify-content:center;
+
+  color:#46647a;
+  font-size:6px;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.footer-info:before,
+.footer-info:after{
+  content:"";
+  width:25px;
+  height:1px;
+  background:#12334c;
+}
+
+/* MODALS */
 
 .modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
-  display:flex;align-items:center;justify-content:center;z-index:100;padding:16px;
-  opacity:0;pointer-events:none;transition:opacity 0.2s ease;
+  position:absolute;
+  inset:0;
+  z-index:100;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:14px;
+
+  background:rgba(0,5,12,.88);
+  backdrop-filter:blur(8px);
+
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
 }
-.modal-overlay.active{opacity:1;pointer-events:auto;}
+
+.modal-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
 .modal-content{
-  background:var(--p-bg);border:2px solid var(--t-col);border-radius:16px;padding:14px;
-  text-align:center;width:100%;max-width:300px;display:flex;flex-direction:column;gap:8px;
-  box-shadow:0 0 25px rgba(255,215,0,0.3);
+  width:100%;
+  max-width:330px;
+
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  padding:15px;
+
+  border:1px solid var(--cyan);
+  border-radius:15px;
+
+  background:
+    linear-gradient(145deg,#0b223c,#041020);
+
+  box-shadow:
+    0 0 30px rgba(25,217,255,.2);
 }
+
 .modal-input{
-  width:100%;background:rgba(0,0,0,0.5);border:1px solid var(--b-col);border-radius:8px;
-  padding:8px;color:#fff;font-family:monospace;font-size:11px;outline:none;text-align:center;
+  width:100%;
+
+  padding:9px;
+
+  border:1px solid #185074;
+  border-radius:8px;
+
+  background:#020c19;
+  color:white;
+
+  font-size:11px;
+  outline:none;
 }
-.footer-info{font-size:6.5px;color:var(--sub);opacity:0.7;}
+
+.modal-input:focus{
+  border-color:var(--cyan);
+}
+
+.modal-title{
+  text-align:center;
+  color:var(--yellow);
+  font-size:12px;
+  font-weight:900;
+}
+
+.modal-close{
+  width:100%;
+  padding:7px;
+
+  border:1px solid #244c68;
+  border-radius:8px;
+
+  background:#07182b;
+  color:#a9c2d2;
+
+  font-size:8px;
+  font-weight:800;
+}
+
+/* SHORT PHONES */
+
+@media(max-height:650px){
+  .portal{
+    gap:5px;
+    padding:7px;
+  }
+
+  .logo-icon{
+    width:38px;
+    height:38px;
+    font-size:18px;
+  }
+
+  .game-title{
+    font-size:17px;
+  }
+
+  .profile-card{
+    padding:6px;
+  }
+
+  .avatar-box{
+    width:38px;
+    height:38px;
+    font-size:19px;
+  }
+
+  .balance-item{
+    padding:5px 7px;
+  }
+
+  .menu-btn{
+    min-height:36px;
+    padding:6px 9px;
+  }
+
+  .menu-btn.primary{
+    min-height:42px;
+  }
+
+  .menu-icon{
+    width:24px;
+    height:24px;
+    font-size:13px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="portal">
+
+  <!-- TOP -->
   <div class="top-bar">
-    <button class="top-btn" onclick="Core.toggleTheme();updateUI();Core.playSound('modal');" id="themeBtn">🎨 ТЕМА</button>
-    <button class="top-btn" onclick="Core.toggleSound();updateUI();Core.playSound('modal');" id="soundBtn">🔊 ЗВУК</button>
-    <button class="top-btn" onclick="Core.toggleLang();updateUI();Core.playSound('modal');" id="langBtn">🇷🇺 RU</button>
+
+    <div class="online">
+      <span class="online-dot"></span>
+      <span>ONLINE</span>
+    </div>
+
+    <div class="top-actions">
+      <button class="top-btn"
+        onclick="Core.toggleTheme();updateUI();Core.playSound('modal')"
+        id="themeBtn">
+        🌙 DARK
+      </button>
+
+      <button class="top-btn"
+        onclick="Core.toggleSound();updateUI();Core.playSound('modal')"
+        id="soundBtn">
+        🔊 SOUND
+      </button>
+
+      <button class="top-btn"
+        onclick="Core.toggleLang();updateUI();Core.playSound('modal')"
+        id="langBtn">
+        🇷🇺 RU
+      </button>
+    </div>
+
   </div>
 
+
+  <!-- LOGO -->
   <div class="logo-container">
+
     <div class="logo-icon">📺</div>
+
     <h1 class="game-title">TUBE EMPIRE</h1>
-    <p class="game-subtitle" id="subTitle">Idle Streamer Tycoon</p>
+
+    <p class="game-subtitle" id="subTitle">
+      Idle Streamer Tycoon
+    </p>
+
   </div>
 
+
+  <!-- PROFILE -->
   <div class="profile-card">
+
     <div class="avatar-box" id="avatarDisplay">👦</div>
+
     <div class="profile-info">
-      <div class="profile-name" id="userName">Блогер</div>
-      <div class="profile-stats" id="userStats">Баланс: 0.00 €</div>
+
+      <div class="profile-label" id="profileLabel">
+        CHANNEL
+      </div>
+
+      <div class="profile-name" id="userName">
+        Блогер
+      </div>
+
+      <div class="profile-stats" id="userStats">
+        Баланс: 0.00 €
+      </div>
+
     </div>
+
   </div>
 
+
+  <!-- BALANCE -->
+  <div class="balance-card">
+
+    <div class="balance-item">
+
+      <div class="balance-label" id="balanceLabel">
+        💰 BALANCE
+      </div>
+
+      <div class="balance-value" id="balanceValue">
+        0.00 €
+      </div>
+
+    </div>
+
+    <div class="balance-item">
+
+      <div class="balance-label" id="statusLabel">
+        ⚡ STATUS
+      </div>
+
+      <div class="balance-value" id="statusValue">
+        ONLINE
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHAT -->
   <div class="chat-widget" onclick="openChatModal()">
-    <div class="chat-title"><span id="chatHeaderTxt">💬 Глобальный чат (онлайн)</span><span>💬</span></div>
+
+    <div class="chat-title">
+
+      <span id="chatHeaderTxt">
+        💬 Global Chat
+      </span>
+
+      <span class="chat-badge">3</span>
+
+    </div>
+
     <div class="chat-messages" id="chatWidgetFeed">
-      <span><b>Alex:</b> Кто на каком тренде сейчас?</span>
-      <span><b>APTB_Leader:</b> Качайте холдинг!</span>
+
+      <span>
+        <b>Alex:</b> Кто на каком тренде сейчас?
+      </span>
+
+      <span>
+        <b>APTB_Leader:</b> Качайте холдинг!
+      </span>
+
     </div>
+
   </div>
 
+
+  <!-- MENU TITLE -->
+  <div class="menu-title" id="menuTitle">
+    MAIN MENU
+  </div>
+
+
+  <!-- MENU -->
   <div class="menu-nav">
-    <a href="game.html" class="menu-btn primary" onclick="Core.playSound('click')">
-      <span id="btnStudio">🔴 ВОЙТИ В СТУДИЮ</span>
-      <span>▶</span>
+
+    <a href="game.html"
+       class="menu-btn primary"
+       onclick="Core.playSound('click')">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">🔴</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnStudio">
+            ВОЙТИ В СТУДИЮ
+          </span>
+
+          <span class="menu-desc" id="studioDesc">
+            Создавай видео и развивай канал
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </a>
-    <div class="menu-btn" onclick="openTransferModal()">
-      <span id="btnTransfer">🤝 Перевод спонсору</span>
-      <span>💶</span>
+
+
+    <div class="menu-btn"
+         onclick="openTransferModal()">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">🤝</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnTransfer">
+            Перевод спонсору
+          </span>
+
+          <span class="menu-desc" id="transferDesc">
+            Управление переводами
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </div>
-    <a href="collection.html" class="menu-btn" onclick="Core.playSound('click')">
-      <span id="btnShop">🛒 Магазин и Холдинг</span>
-      <span>💎</span>
+
+
+    <a href="collection.html"
+       class="menu-btn"
+       onclick="Core.playSound('click')">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">💎</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnShop">
+            Магазин и Холдинг
+          </span>
+
+          <span class="menu-desc" id="shopDesc">
+            Оборудование и активы
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </a>
-    <a href="avatar.html" class="menu-btn" onclick="Core.playSound('click')">
-      <span id="btnAvatar">🎨 Кастомизация & Студия</span>
-      <span>👤</span>
+
+
+    <a href="avatar.html"
+       class="menu-btn"
+       onclick="Core.playSound('click')">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">👤</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnAvatar">
+            Кастомизация
+          </span>
+
+          <span class="menu-desc" id="avatarDesc">
+            Профиль и внешний вид
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </a>
-    <a href="gallery.html" class="menu-btn" onclick="Core.playSound('click')">
-      <span id="btnGallery">🏆 Награды и Кнопки</span>
-      <span>⭐</span>
+
+
+    <a href="gallery.html"
+       class="menu-btn"
+       onclick="Core.playSound('click')">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">🏆</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnGallery">
+            Награды
+          </span>
+
+          <span class="menu-desc" id="galleryDesc">
+            Коллекция достижений
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </a>
-    <a href="leaderboard.html" class="menu-btn" onclick="Core.playSound('click')">
-      <span id="btnRank">📊 Таблица Лидеров</span>
-      <span>🌐</span>
+
+
+    <a href="leaderboard.html"
+       class="menu-btn"
+       onclick="Core.playSound('click')">
+
+      <span class="menu-left">
+
+        <span class="menu-icon">📊</span>
+
+        <span class="menu-text">
+
+          <span class="menu-main" id="btnRank">
+            Таблица лидеров
+          </span>
+
+          <span class="menu-desc" id="rankDesc">
+            Сравнивай свой канал
+          </span>
+
+        </span>
+
+      </span>
+
+      <span class="menu-arrow">›</span>
+
     </a>
+
   </div>
 
-  <div class="footer-info">Tube Empire v5.8 • Telegram Mini App</div>
+
+  <!-- FOOTER -->
+  <div class="footer-info">
+    Tube Empire Corporation • v1.0
+  </div>
+
 </div>
 
-<!-- Модальные окна -->
-<div class="modal-overlay" id="chatModal" onclick="closeChatModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div style="font-size:12px;font-weight:800;color:var(--t-col);">💬 ГЛОБАЛЬНЫЙ ЧАТ</div>
-    <div id="fullChatFeed" style="background:rgba(0,0,0,0.4);border:1px solid var(--b-col);border-radius:8px;padding:6px;height:120px;overflow-y:auto;text-align:left;font-size:8px;color:var(--sub);"></div>
-    <div style="display:flex;gap:4px;">
-      <input type="text" id="chatInputMsg" class="modal-input" placeholder="Сообщение...">
-      <button class="menu-btn primary" style="padding:6px 10px;" onclick="sendChatMessage()">💬</button>
+
+<!-- CHAT MODAL -->
+
+<div class="modal-overlay"
+     id="chatModal"
+     onclick="closeChatModal()">
+
+  <div class="modal-content"
+       onclick="event.stopPropagation()">
+
+    <div class="modal-title">
+      💬 <span id="chatModalTitle">ГЛОБАЛЬНЫЙ ЧАТ</span>
     </div>
-    <button class="top-btn" style="width:100%;padding:6px;" onclick="closeChatModal()">ЗАКРЫТЬ</button>
+
+    <div id="fullChatFeed"
+         style="
+         background:#020c19;
+         border:1px solid #164565;
+         border-radius:9px;
+         padding:7px;
+         height:120px;
+         overflow-y:auto;
+         text-align:left;
+         font-size:8px;
+         color:#9bb5c7;
+         ">
+    </div>
+
+    <div style="display:flex;gap:5px;">
+
+      <input
+        type="text"
+        id="chatInputMsg"
+        class="modal-input"
+        placeholder="Сообщение...">
+
+      <button
+        class="menu-btn primary"
+        style="width:auto;min-height:auto;padding:6px 12px;"
+        onclick="sendChatMessage()">
+        💬
+      </button>
+
+    </div>
+
+    <button
+      class="modal-close"
+      onclick="closeChatModal()"
+      id="chatClose">
+      ЗАКРЫТЬ
+    </button>
+
   </div>
+
 </div>
 
-<div class="modal-overlay" id="transferModal" onclick="closeTransferModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div style="font-size:20px;">🤝</div>
-    <div style="font-size:11px;font-weight:800;color:var(--t-col);" id="mTitle">ПЕРЕВОД СРЕДСТВ</div>
-    <input type="text" id="friendName" class="modal-input" placeholder="Никнейм спонсора (@username)">
-    <input type="number" id="transferAmount" class="modal-input" placeholder="Сумма в €">
-    <button class="menu-btn primary" style="justify-content:center;padding:7px;" onclick="executeTransfer()" id="mSend">ОТПРАВИТЬ</button>
-    <button class="top-btn" style="width:100%;padding:5px;" onclick="closeTransferModal()" id="mClose">ЗАКРЫТЬ</button>
+
+<!-- TRANSFER MODAL -->
+
+<div class="modal-overlay"
+     id="transferModal"
+     onclick="closeTransferModal()">
+
+  <div class="modal-content"
+       onclick="event.stopPropagation()">
+
+    <div style="font-size:25px;text-align:center">
+      🤝
+    </div>
+
+    <div class="modal-title" id="mTitle">
+      ПЕРЕВОД СРЕДСТВ
+    </div>
+
+    <input
+      type="text"
+      id="friendName"
+      class="modal-input"
+      placeholder="Никнейм спонсора (@username)">
+
+    <input
+      type="number"
+      id="transferAmount"
+      class="modal-input"
+      placeholder="Сумма в €">
+
+    <button
+      class="menu-btn primary"
+      style="justify-content:center"
+      onclick="executeTransfer()"
+      id="mSend">
+      ОТПРАВИТЬ
+    </button>
+
+    <button
+      class="modal-close"
+      onclick="closeTransferModal()"
+      id="mClose">
+      ЗАКРЫТЬ
+    </button>
+
   </div>
+
 </div>
+
 
 <script>
+
 const langMap = {
-  ru: { sub: "Idle Streamer Tycoon", studio: "🔴 ВОЙТИ В СТУДИЮ", transfer: "🤝 Перевод спонсору", shop: "🛒 Магазин и Холдинг", avatar: "🎨 Кастомизация & Студия", gallery: "🏆 Награды и Кнопки", rank: "📊 Таблица Лидеров", balance: "Баланс", chatTitle: "💬 Глобальный чат (онлайн)" },
-  de: { sub: "Idle Streamer Tycoon", studio: "🔴 INS STUDIO", transfer: "🤝 Sponsor-Überweisung", shop: "🛒 Shop & Konzerne", avatar: "🎨 Anpassung & Studio", gallery: "🏆 Trophäen", rank: "📊 Bestenliste", balance: "Guthaben", chatTitle: "💬 Globaler Chat (Online)" },
-  en: { sub: "Idle Streamer Tycoon", studio: "🔴 ENTER STUDIO", transfer: "🤝 Sponsor Transfer", shop: "🛒 Shop & Holdings", avatar: "🎨 Customization & Studio", gallery: "🏆 Awards & Buttons", rank: "📊 Leaderboard", balance: "Balance", chatTitle: "💬 Global Chat (Online)" }
+
+  ru:{
+    sub:"Idle Streamer Tycoon",
+    profile:"КАНАЛ",
+    balance:"БАЛАНС",
+    status:"СТАТУС",
+    online:"ОНЛАЙН",
+    menu:"ГЛАВНОЕ МЕНЮ",
+
+    studio:"ВОЙТИ В СТУДИЮ",
+    studioDesc:"Создавай видео и развивай канал",
+
+    transfer:"Перевод спонсору",
+    transferDesc:"Управление переводами",
+
+    shop:"Магазин и Холдинг",
+    shopDesc:"Оборудование и активы",
+
+    avatar:"Кастомизация",
+    avatarDesc:"Профиль и внешний вид",
+
+    gallery:"Награды",
+    galleryDesc:"Коллекция достижений",
+
+    rank:"Таблица лидеров",
+    rankDesc:"Сравнивай свой канал",
+
+    chat:"💬 Глобальный чат",
+    chatModal:"ГЛОБАЛЬНЫЙ ЧАТ",
+    close:"ЗАКРЫТЬ",
+
+    transferTitle:"ПЕРЕВОД СРЕДСТВ",
+    username:"Никнейм спонсора (@username)",
+    amount:"Сумма в €",
+    send:"ОТПРАВИТЬ",
+
+    sound:"🔊 ЗВУК",
+    soundOff:"🔇 ВЫКЛ",
+    theme:"🌙 ТЕМА"
+  },
+
+  de:{
+    sub:"Idle Streamer Tycoon",
+    profile:"KANAL",
+    balance:"GUTHABEN",
+    status:"STATUS",
+    online:"ONLINE",
+    menu:"HAUPTMENÜ",
+
+    studio:"INS STUDIO",
+    studioDesc:"Videos erstellen und Kanal entwickeln",
+
+    transfer:"Sponsor-Überweisung",
+    transferDesc:"Überweisungen verwalten",
+
+    shop:"SHOP & KONZERNE",
+    shopDesc:"Equipment und Vermögenswerte",
+
+    avatar:"ANPASSUNG",
+    avatarDesc:"Profil und Aussehen",
+
+    gallery:"AUSZEICHNUNGEN",
+    galleryDesc:"Deine Erfolge",
+
+    rank:"BESTENLISTE",
+    rankDesc:"Vergleiche deinen Kanal",
+
+    chat:"💬 GLOBALER CHAT",
+    chatModal:"GLOBALER CHAT",
+    close:"SCHLIESSEN",
+
+    transferTitle:"GELD ÜBERWEISEN",
+    username:"Sponsor-Name (@username)",
+    amount:"Betrag in €",
+    send:"SENDEN",
+
+    sound:"🔊 TON",
+    soundOff:"🔇 AUS",
+    theme:"🌙 THEMA"
+  },
+
+  en:{
+    sub:"Idle Streamer Tycoon",
+    profile:"CHANNEL",
+    balance:"BALANCE",
+    status:"STATUS",
+    online:"ONLINE",
+    menu:"MAIN MENU",
+
+    studio:"ENTER STUDIO",
+    studioDesc:"Create videos and grow your channel",
+
+    transfer:"SPONSOR TRANSFER",
+    transferDesc:"Manage your transfers",
+
+    shop:"SHOP & HOLDINGS",
+    shopDesc:"Equipment and assets",
+
+    avatar:"CUSTOMIZATION",
+    avatarDesc:"Profile and appearance",
+
+    gallery:"AWARDS",
+    galleryDesc:"Your achievements",
+
+    rank:"LEADERBOARD",
+    rankDesc:"Compare your channel",
+
+    chat:"💬 GLOBAL CHAT",
+    chatModal:"GLOBAL CHAT",
+    close:"CLOSE",
+
+    transferTitle:"MONEY TRANSFER",
+    username:"Sponsor username (@username)",
+    amount:"Amount in €",
+    send:"SEND",
+
+    sound:"🔊 SOUND",
+    soundOff:"🔇 OFF",
+    theme:"🌙 THEME"
+  }
+
 };
 
-let chatMessagesData = [{user: "Alex", text: "Кто на каком тренде сейчас?"}, {user: "APTB_Leader", text: "Качайте холдинг!"}];
 
-function updateUI() {
-  let lang = Core.getLang(), t = langMap[lang] || langMap.ru;
-  document.getElementById('subTitle').textContent = t.sub;
-  document.getElementById('btnStudio').textContent = t.studio;
-  document.getElementById('btnTransfer').textContent = t.transfer;
-  document.getElementById('btnShop').textContent = t.shop;
-  document.getElementById('btnAvatar').textContent = t.avatar;
-  document.getElementById('btnGallery').textContent = t.gallery;
-  document.getElementById('btnRank').textContent = t.rank;
-  document.getElementById('chatHeaderTxt').textContent = t.chatTitle;
+let chatMessagesData=[
+  {
+    user:"Alex",
+    text:"Кто на каком тренде сейчас?"
+  },
+  {
+    user:"APTB_Leader",
+    text:"Качайте холдинг!"
+  }
+];
 
-  document.getElementById('langBtn').textContent = lang === 'ru' ? '🇷🇺 RU' : (lang === 'de' ? '🇩🇪 DE' : '🇬🇧 EN');
-  document.getElementById('soundBtn').textContent = Core.getSound() ? '🔊 ЗВУК' : '🔇 ВЫКЛ';
 
-  document.getElementById('userName').textContent = Core.getUserName("Блогер");
-  document.getElementById('userStats').textContent = `${t.balance}: ${Core.getMoney().toLocaleString('ru-RU', {maximumFractionDigits:2})} €`;
-  document.getElementById('avatarDisplay').textContent = Core.getAvatarString();
+function updateUI(){
 
-  Core.applyTheme(Core.getTheme());
-  renderChatFeeds();
-}
+  let lang=Core.getLang();
+  let t=langMap[lang]||langMap.ru;
 
-function renderChatFeeds() {
-  let html = chatMessagesData.map(m => `<span><b>${m.user}:</b> ${m.text}</span>`).join('');
-  document.getElementById('chatWidgetFeed').innerHTML = html;
-  let f = document.getElementById('fullChatFeed'); if(f) f.innerHTML = html;
-}
+  document.documentElement.lang=lang;
 
-function openChatModal() { document.getElementById('chatModal').classList.add('active'); Core.playSound('modal'); }
-function closeChatModal() { document.getElementById('chatModal').classList.remove('active'); }
-function sendChatMessage() {
-  let inp = document.getElementById('chatInputMsg'), txt = inp.value.trim();
-  if(!txt) return;
-  chatMessagesData.push({user: Core.getUserName("Streamer"), text: txt});
-  inp.value = ""; Core.playSound('click'); renderChatFeeds();
-}
 
-function openTransferModal() { document.getElementById('transferModal').classList.add('active'); Core.playSound('modal'); }
-function closeTransferModal() { document.getElementById('transferModal').classList.remove('active'); }
-function executeTransfer() {
-  let amt = Number(document.getElementById('transferAmount').value), mon = Core.getMoney();
-  if(isNaN(amt) || amt <= 0 || mon < amt) { alert("Ошибка перевода!"); Core.playSound('error'); return; }
-  Core.setMoney(mon - amt); Core.playSound('cash'); Core.haptic('heavy');
-  alert(`✅ Успешно отправлено ${amt.toLocaleString()} €!`);
-  closeTransferModal(); updateUI();
-}
+  document.getElementById("subTitle").textContent=t.sub;
 
-document.addEventListener("DOMContentLoaded", () => updateUI());
-</script>
-</body>
-</html>
+  document.getElementById("profileLabel").textContent=t.profile;
+
+  document.getElementById("balanceLabel").textContent="💰 "+t.balance;
+
+  document.getElementById("statusLabel").textContent="⚡ "+t.status;
+
+  document.getElementById("statusValue").textContent=
