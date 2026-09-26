@@ -124,7 +124,7 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 const langData = {
   ru: {
     menu: "⬅ СТУДИЯ", shop: "💎 МАГАЗИН И БИЗНЕС", buy: "КУПИТЬ", owned: "✔ ЕСТЬ", close: "ЗАКРЫТЬ", budget: "Доступный баланс (€)",
-    tabLux: "💎 Предметы роскоши", tabCorp: "🏢 Корпорации",
+    tabLux: "💎 Предметы роскоши", tabCorp: "🏢 Корпорации", income:"Доход", price:"Цена", perSec:"/сек",
     items: [
       { name: "Кольцевая лампа", desc: "Базовый свет для влогов", icon: "💡" },
       { name: "Микрофон Shure", desc: "Студийный звук голоса", icon: "🎙️" },
@@ -150,7 +150,7 @@ const langData = {
   },
   de: {
     menu: "⬅ STUDIO", shop: "💎 SHOP & GESCHÄFT", buy: "KAUFEN", owned: "✔ BESITZ", close: "SCHLIESSEN", budget: "Guthaben (€)",
-    tabLux: "💎 Luxusgegenstände", tabCorp: "🏢 Konzerne",
+    tabLux: "💎 Luxusgegenstände", tabCorp: "🏢 Konzerne", income:"Einkommen", price:"Preis", perSec:"/Sek.",
     items: [
       { name: "Ringleuchte", desc: "Basis-Licht für Vlogs", icon: "💡" },
       { name: "Studio-Mikro", desc: "Perfekter Sound", icon: "🎙️" },
@@ -176,7 +176,7 @@ const langData = {
   },
   en: {
     menu: "⬅ STUDIO", shop: "💎 SHOP & BUSINESS", buy: "BUY", owned: "✔ OWNED", close: "CLOSE", budget: "Available Balance (€)",
-    tabLux: "💎 Luxury Items", tabCorp: "🏢 Corporations",
+    tabLux: "💎 Luxury Items", tabCorp: "🏢 Corporations", income:"Income", price:"Price", perSec:"/sec",
     items: [
       { name: "Ring Light", desc: "Basic vlogging light", icon: "💡" },
       { name: "Shure Mic", desc: "Studio voice sound", icon: "🎙️" },
@@ -303,8 +303,8 @@ function updateCollectionUI() {
           <div style="font-size:24px;">${asset.icon}</div>
           <div class="corp-info">
             <div class="corp-name">${assetName}</div>
-            <div class="corp-desc">Доход: +${asset.incomePerSec.toLocaleString()} €/сек</div>
-            <div style="font-size:7px; color:var(--accent-col); font-weight:bold;">Цена: ${asset.cost.toLocaleString()} €</div>
+            <div class="corp-desc">${t.income}: +${asset.incomePerSec.toLocaleString()} €${t.perSec}</div>
+            <div style="font-size:7px; color:var(--accent-col); font-weight:bold;">${t.price}: ${asset.cost.toLocaleString()} €</div>
           </div>
         </div>
         <button class="corp-buy-btn" ${isOwned || !canBuy ? 'disabled' : ''} onclick="buyCorpAsset('${asset.id}')">

@@ -172,6 +172,12 @@ body{padding:4px;display:flex;justify-content:center;align-items:center;position
 </div>
 
 <script>
+const langData = {
+  ru:{menu:"⬅ МЕНЮ",title:"🎨 КАСТОМИЗАЦИЯ",avatarTab:"👤 Аватар блогера",studioTab:"🏢 Студия / Интерьер",preview:"Предпросмотр",gender:"Пол",head:"Голова / Убор",torso:"Одежда (Торс)",legs:"Низ",acc:"Аксессуар",walls:"Обои / Стены",neon:"Неоновая подсветка",poster:"Постер на стену",pet:"Питомец в кадре",save:"💾 СОХРАНИТЬ ИЗМЕНЕНИЯ",saved:"✨ Изменения сохранены!"},
+  de:{menu:"⬅ MENÜ",title:"🎨 ANPASSUNG",avatarTab:"👤 Creator-Avatar",studioTab:"🏢 Studio / Interieur",preview:"Vorschau",gender:"Geschlecht",head:"Kopf / Kopfbedeckung",torso:"Kleidung (Oberkörper)",legs:"Unterkörper",acc:"Accessoire",walls:"Wände / Tapete",neon:"Neonbeleuchtung",poster:"Wandposter",pet:"Haustier im Bild",save:"💾 ÄNDERUNGEN SPEICHERN",saved:"✨ Änderungen gespeichert!"},
+  en:{menu:"⬅ MENU",title:"🎨 CUSTOMIZATION",avatarTab:"👤 Creator Avatar",studioTab:"🏢 Studio / Interior",preview:"Preview",gender:"Gender",head:"Head / Headwear",torso:"Clothing (Torso)",legs:"Bottom",acc:"Accessory",walls:"Walls / Wallpaper",neon:"Neon Lighting",poster:"Wall Poster",pet:"Pet on Camera",save:"💾 SAVE CHANGES",saved:"✨ Changes saved!"}
+};
+
 const avatarOptions = {
   gender: ['👦','👧'],
   head: ['👤','🧢','🎧','🕶️','👑'],
@@ -218,17 +224,32 @@ function changeStudio(type, dir) {
 }
 
 function updateUI() {
-  document.getElementById('valGender').textContent = avatarOptions.gender[currentAvatar.gender];
-  document.getElementById('valHead').textContent = avatarOptions.head[currentAvatar.head];
-  document.getElementById('valTorso').textContent = avatarOptions.torso[currentAvatar.torso];
-  document.getElementById('valLegs').textContent = avatarOptions.legs[currentAvatar.legs];
-  document.getElementById('valAcc').textContent = avatarOptions.accessory[currentAvatar.accessory];
-
-  document.getElementById('valWalls').textContent = studioOptions.walls[currentStudio.walls];
-  document.getElementById('valNeon').textContent = studioOptions.neon[currentStudio.neon];
-  document.getElementById('valPoster').textContent = studioOptions.poster[currentStudio.poster];
-  document.getElementById('valPet').textContent = studioOptions.pet[currentStudio.pet];
-
+  const lang=Core.getLang(), t=langData[lang]||langData.ru;
+  document.documentElement.lang=lang;
+  document.getElementById('menuBtnTxt').textContent=t.menu;
+  document.getElementById('headerTitle').textContent=t.title;
+  document.getElementById('tabAvatar').textContent=t.avatarTab;
+  document.getElementById('tabStudio').textContent=t.studioTab;
+  document.getElementById('previewDesc').textContent=t.preview;
+  document.getElementById('lblGender').textContent=t.gender;
+  document.getElementById('lblHead').textContent=t.head;
+  document.getElementById('lblTorso').textContent=t.torso;
+  document.getElementById('lblLegs').textContent=t.legs;
+  document.getElementById('lblAcc').textContent=t.acc;
+  document.getElementById('lblWall').textContent=t.walls;
+  document.getElementById('lblNeon').textContent=t.neon;
+  document.getElementById('lblPoster').textContent=t.poster;
+  document.getElementById('lblPet').textContent=t.pet;
+  document.getElementById('saveBtnTxt').textContent=t.save;
+  document.getElementById('valGender').textContent=avatarOptions.gender[currentAvatar.gender];
+  document.getElementById('valHead').textContent=avatarOptions.head[currentAvatar.head];
+  document.getElementById('valTorso').textContent=avatarOptions.torso[currentAvatar.torso];
+  document.getElementById('valLegs').textContent=avatarOptions.legs[currentAvatar.legs];
+  document.getElementById('valAcc').textContent=avatarOptions.accessory[currentAvatar.accessory];
+  document.getElementById('valWalls').textContent=studioOptions.walls[currentStudio.walls];
+  document.getElementById('valNeon').textContent=studioOptions.neon[currentStudio.neon];
+  document.getElementById('valPoster').textContent=studioOptions.poster[currentStudio.poster];
+  document.getElementById('valPet').textContent=studioOptions.pet[currentStudio.pet];
   updatePreview();
 }
 
@@ -258,7 +279,7 @@ function saveConfig() {
   localStorage.setItem("tube_empire_studio_config", JSON.stringify(currentStudio));
   Core.playSound(880, 'square', 0.15);
   Core.haptic('medium');
-  alert("✨ Изменения сохранены!");
+  alert((langData[Core.getLang()]||langData.ru).saved);
   window.location.href = "index.html";
 }
 
