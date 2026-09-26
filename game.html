@@ -9,243 +9,173 @@
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080b12;color:#fff;font:12px Arial}
 body{display:flex;justify-content:center}
 .game{width:100%;max-width:520px;height:100dvh;padding:8px 9px 64px;overflow:hidden;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 0,#303b70,#080b12 78%)}
-
-.header{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between}
+.header{height:34px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:5px}
 .logo{font-size:18px;font-weight:900}.online{font-size:8px;color:#72f7a0;background:#17251d;padding:5px 8px;border-radius:8px}
-
+.header-buttons{display:flex;gap:4px}.header-btn{padding:6px 7px;font-size:7px;background:#252e48;border:1px solid #35415f}
 .balance{height:76px;flex:none;margin:6px 0;padding:7px;text-align:center;background:#111726;border:1px solid #35415f;border-radius:14px}
 .label{font-size:8px;color:#8994ad}.money{font-size:28px;font-weight:900;color:#72f7a0;margin-top:2px}
 .stats{height:58px;flex:none;display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .stat{padding:8px;background:#111726;border:1px solid #35415f;border-radius:11px}.stat-title{font-size:8px;color:#8994ad}.stat-value{font-size:17px;font-weight:bold;margin-top:4px}
-
 .page{display:none;flex:1;min-height:0;overflow:hidden}.page.active{display:flex;flex-direction:column}
 .card{margin-top:7px;padding:10px;background:#111726;border:1px solid #35415f;border-radius:14px;min-height:0}
 .title{font-size:17px;font-weight:900}.subtitle{font-size:8px;color:#8994ad;margin-top:2px}
-
-.video-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.video{padding:7px;background:#151b2a;border:1px solid #35415f;border-radius:10px}
+.video-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.video{padding:7px;background:#151b2a;border:1px solid #35415f;border-radius:10px}
 .video-name{font-size:10px;font-weight:bold}.video-desc{font-size:7px;color:#8994ad;margin-top:2px}
-button{border:0;border-radius:8px;padding:8px;background:#252e48;color:#fff;font-weight:bold}
-.video button{width:100%;margin-top:6px;padding:7px;font-size:7px}
-
+button{border:0;border-radius:8px;padding:8px;background:#252e48;color:#fff;font-weight:bold}button:disabled{opacity:.4}.video button{width:100%;margin-top:6px;padding:7px;font-size:7px}
 .tap{width:108px;height:108px;margin:9px auto 4px;border:4px solid #6178c0;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,#344579,#182341);box-shadow:0 0 25px #526fc088}
-.play{font-size:32px}.tap-text{font-size:8px;font-weight:bold}
-.message{height:22px;text-align:center;color:#77eaff;font-size:8px}.result{height:36px;padding:7px;text-align:center;background:#151b2a;border-radius:8px;font-size:7px}
-.energy{margin-top:7px}.energy-head{display:flex;justify-content:space-between;color:#8994ad;font-size:7px;margin-bottom:3px}
-.energy-bar,.progress-bar{height:6px;background:#080b12;border-radius:6px;overflow:hidden}.energy-fill,.progress-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
-
-.upgrade{display:flex;gap:7px;align-items:center;margin-top:7px;padding:7px;background:#192342;border:1px solid #596fff;border-radius:9px}
-.upgrade-info{flex:1;font-size:7px;color:#aab4cc}.upgrade-title{font-size:9px;font-weight:bold}.upgrade-button{font-size:7px;padding:7px}
+.play{font-size:32px}.tap-text{font-size:8px;font-weight:bold}.message{height:22px;text-align:center;color:#77eaff;font-size:8px}.result{height:36px;padding:7px;text-align:center;background:#151b2a;border-radius:8px;font-size:7px}
+.energy{margin-top:7px}.energy-head{display:flex;justify-content:space-between;color:#8994ad;font-size:7px;margin-bottom:3px}.energy-bar,.progress-bar{height:6px;background:#080b12;border-radius:6px;overflow:hidden}.energy-fill,.progress-fill{height:100%;background:linear-gradient(90deg,#58d9ff,#8d7cff)}
+.upgrade{display:flex;gap:7px;align-items:center;margin-top:7px;padding:7px;background:#192342;border:1px solid #596fff;border-radius:9px}.upgrade-info{flex:1;font-size:7px;color:#aab4cc}.upgrade-title{font-size:9px;font-weight:bold}.upgrade-button{font-size:7px;padding:7px}
 .buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.bonus{background:#5d55d9}
-
-.channel-head,.profile-head{display:flex;align-items:center;gap:9px}
-.avatar,.profile-avatar{width:48px;height:48px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:22px}
-.channel-name,.profile-name{font-size:15px;font-weight:900}.channel-level,.profile-level{font-size:8px;color:#8994ad;margin-top:2px}
-.level-badge{display:inline-block;margin-top:4px;padding:3px 6px;border-radius:5px;background:#252e48;color:#8ddcff;font-size:7px;font-weight:bold}
-.progress{margin-top:8px}.channel-stats,.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
-.channel-stat,.profile-stat{padding:7px;background:#151b2a;border:1px solid #303b57;border-radius:9px}
-.channel-stat small,.profile-stat small{font-size:6px;color:#78839d}.channel-stat b,.profile-stat b{display:block;font-size:12px;margin-top:3px}
-.income-box,.boost,.achievement{margin-top:6px;padding:7px;background:#151b2a;border:1px solid #303b57;border-radius:8px;font-size:7px}
-.income-row{display:flex;justify-content:space-between;margin:3px}.income-value{color:#72f7a0}
-.history-title{font-size:10px;font-weight:bold;margin:7px 0 4px}.history-list{display:grid;gap:4px}
-.history-item{display:grid;grid-template-columns:25px 1fr auto;align-items:center;gap:5px;padding:5px;background:#151b2a;border:1px solid #303b57;border-radius:7px}
-.history-icon{font-size:14px}.history-name{font-size:7px;font-weight:bold}.history-info{font-size:6px;color:#8994ad}.history-money{font-size:7px;color:#72f7a0}
+.channel-head,.profile-head{display:flex;align-items:center;gap:9px}.avatar,.profile-avatar{width:48px;height:48px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6b7cff,#854dff);font-size:22px}
+.channel-name,.profile-name{font-size:15px;font-weight:900}.channel-level,.profile-level{font-size:8px;color:#8994ad;margin-top:2px}.level-badge{display:inline-block;margin-top:4px;padding:3px 6px;border-radius:5px;background:#252e48;color:#8ddcff;font-size:7px;font-weight:bold}
+.progress{margin-top:8px}.channel-stats,.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.channel-stat,.profile-stat{padding:7px;background:#151b2a;border:1px solid #303b57;border-radius:9px}
+.channel-stat small,.profile-stat small{font-size:6px;color:#78839d}.channel-stat b,.profile-stat b{display:block;font-size:12px;margin-top:3px}.income-box,.boost,.achievement{margin-top:6px;padding:7px;background:#151b2a;border:1px solid #303b57;border-radius:8px;font-size:7px}
+.income-row{display:flex;justify-content:space-between;margin:3px}.income-value{color:#72f7a0}.history-title{font-size:10px;font-weight:bold;margin:7px 0 4px}.history-list{display:grid;gap:4px}
+.history-item{display:grid;grid-template-columns:25px 1fr auto;align-items:center;gap:5px;padding:5px;background:#151b2a;border:1px solid #303b57;border-radius:7px}.history-icon{font-size:14px}.history-name{font-size:7px;font-weight:bold}.history-info{font-size:6px;color:#8994ad}.history-money{font-size:7px;color:#72f7a0}
 .empty{text-align:center;color:#8994ad;padding:8px;font-size:7px}.channel-action{width:100%;margin-top:6px;padding:8px;font-size:7px}
-
-.shop-item{display:flex;justify-content:space-between;align-items:center;gap:7px;padding:8px;margin-top:6px;background:#151b2a;border:1px solid #35415f;border-radius:9px}
-.shop-info{flex:1}.shop-name{font-size:9px;font-weight:bold}.shop-desc{font-size:7px;color:#8994ad;margin-top:2px}.shop-item button{font-size:7px;padding:7px;min-width:68px}
-
+.shop-item{display:flex;justify-content:space-between;align-items:center;gap:7px;padding:8px;margin-top:6px;background:#151b2a;border:1px solid #35415f;border-radius:9px}.shop-info{flex:1}.shop-name{font-size:9px;font-weight:bold}.shop-desc{font-size:7px;color:#8994ad;margin-top:2px}.shop-item button{font-size:7px;padding:7px;min-width:68px}
 .achievement{position:relative}.achievement.locked{opacity:.45}.achievement.done{border-color:#72f7a0}.achievement b{font-size:8px}.achievement span{display:block;color:#8994ad;font-size:6px;margin-top:2px}.achievement .check{position:absolute;right:7px;top:6px;color:#72f7a0;font-size:11px}
-
-.bottom-nav{position:absolute;bottom:0;left:0;width:100%;height:60px;padding:5px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#080b12f5;border-top:1px solid #303b57}
-.nav{padding:3px;font-size:7px;background:transparent;color:#68738b}.nav.active{background:#1b2440;color:#fff}.nav i{display:block;font-style:normal;font-size:18px;margin-bottom:2px}
+.bottom-nav{position:absolute;bottom:0;left:0;width:100%;height:60px;padding:5px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#080b12f5;border-top:1px solid #303b57}.nav{padding:3px;font-size:7px;background:transparent;color:#68738b}.nav.active{background:#1b2440;color:#fff}.nav i{display:block;font-style:normal;font-size:18px;margin-bottom:2px}
+@media(max-height:650px){.tap{width:90px;height:90px;margin-top:5px}.play{font-size:26px}}
 </style>
 </head>
-
 <body>
 <div class="game">
-
 <div class="header">
 <div class="logo">🎬 TUBE EMPIRE</div>
-<div class="online">ONLINE</div>
+<div class="header-buttons">
+<button class="header-btn" onclick="goHome()">🏠 <span data-i18n="home">МЕНЮ</span></button>
+<button class="header-btn" onclick="changeLanguage()" id="langBtn">RU</button>
+</div>
 </div>
 
-<div class="balance">
-<div class="label">БАЛАНС</div>
-<div class="money" id="money">0.00 €</div>
-</div>
+<div class="balance"><div class="label" data-i18n="balance">БАЛАНС</div><div class="money" id="money">0.00 €</div></div>
 
 <div class="stats">
-<div class="stat"><div class="stat-title">ПРОСМОТРЫ</div><div class="stat-value" id="views">0</div></div>
-<div class="stat"><div class="stat-title">ПОДПИСЧИКИ</div><div class="stat-value" id="topSubs">0</div></div>
+<div class="stat"><div class="stat-title" data-i18n="views">ПРОСМОТРЫ</div><div class="stat-value" id="views">0</div></div>
+<div class="stat"><div class="stat-title" data-i18n="subs">ПОДПИСЧИКИ</div><div class="stat-value" id="topSubs">0</div></div>
 </div>
 
-<div class="page active" id="studio">
-<div class="card">
-
-<div class="title">🎬 СТУДИЯ</div>
-<div class="subtitle">Создай и опубликуй контент</div>
-
+<div class="page active" id="studio"><div class="card">
+<div class="title">🎬 <span data-i18n="studio">СТУДИЯ</span></div>
+<div class="subtitle" data-i18n="studioDesc">Создай и опубликуй контент</div>
 <div class="video-list">
 
-<div class="video">
-<div class="video-name">🎮 GAMING</div>
-<div class="video-desc">Стабильный контент</div>
-<button onclick="publish('gaming')">ОПУБЛИКОВАТЬ</button>
-</div>
-
-<div class="video">
-<div class="video-name">🎬 ВЛОГ</div>
-<div class="video-desc">Больше подписчиков</div>
-<button onclick="publish('vlog')">ОПУБЛИКОВАТЬ</button>
-</div>
-
-<div class="video">
-<div class="video-name">🔥 ЧЕЛЛЕНДЖ</div>
-<div class="video-desc">Высокий потенциал</div>
-<button onclick="publish('challenge')">ОПУБЛИКОВАТЬ</button>
-</div>
-
-<div class="video">
-<div class="video-name">💎 ПРЕМИУМ</div>
-<div class="video-desc">Максимальный потенциал</div>
-<button onclick="publish('premium')">ОПУБЛИКОВАТЬ</button>
-</div>
+<div class="video"><div class="video-name">🎮 <span data-i18n="gaming">GAMING</span></div><div class="video-desc" data-i18n="gamingDesc">Стабильный контент</div><button onclick="publish('gaming')" data-i18n="publish">ОПУБЛИКОВАТЬ</button></div>
+<div class="video"><div class="video-name">🎬 <span data-i18n="vlog">ВЛОГ</span></div><div class="video-desc" data-i18n="vlogDesc">Больше подписчиков</div><button onclick="publish('vlog')" data-i18n="publish">ОПУБЛИКОВАТЬ</button></div>
+<div class="video"><div class="video-name">🔥 <span data-i18n="challenge">ЧЕЛЛЕНДЖ</span></div><div class="video-desc" data-i18n="challengeDesc">Высокий потенциал</div><button onclick="publish('challenge')" data-i18n="publish">ОПУБЛИКОВАТЬ</button></div>
+<div class="video"><div class="video-name">💎 <span data-i18n="premium">ПРЕМИУМ</span></div><div class="video-desc" data-i18n="premiumDesc">Максимальный потенциал</div><button onclick="publish('premium')" data-i18n="publish">ОПУБЛИКОВАТЬ</button></div>
 
 </div>
+<div class="tap" id="tap"><div><div class="play">▶️</div><div class="tap-text" data-i18n="quick">БЫСТРАЯ<br>ПУБЛИКАЦИЯ</div></div></div>
+<div class="message" id="message" data-i18n="chooseVideo">Выбери тип видео</div>
+<div class="result" id="result" data-i18n="result">📊 Результат появится после публикации</div>
 
-<div class="tap" id="tap">
-<div><div class="play">▶️</div><div class="tap-text">БЫСТРАЯ<br>ПУБЛИКАЦИЯ</div></div>
-</div>
+<div class="energy"><div class="energy-head"><span data-i18n="energy">Энергия</span><span id="energyText">100 / 100</span></div><div class="energy-bar"><div class="energy-fill" id="energy"></div></div></div>
 
-<div class="message" id="message">Выбери тип видео</div>
-<div class="result" id="result">📊 Результат появится после публикации</div>
+<div class="upgrade"><div class="upgrade-info"><div class="upgrade-title">🚀 <span data-i18n="studio">СТУДИЯ</span></div><span id="upgradeInfo"></span></div><button class="upgrade-button" id="upgrade"></button></div>
+<div class="buttons"><button class="bonus" id="bonus">🎁 +100 €</button><button id="save">💾 <span data-i18n="save">СОХРАНИТЬ</span></button></div>
+</div></div>
 
-<div class="energy">
-<div class="energy-head"><span>Энергия</span><span id="energyText">100 / 100</span></div>
-<div class="energy-bar"><div class="energy-fill" id="energy"></div></div>
-</div>
-
-<div class="upgrade">
-<div class="upgrade-info"><div class="upgrade-title">🚀 СТУДИЯ</div><span id="upgradeInfo"></span></div>
-<button class="upgrade-button" id="upgrade"></button>
-</div>
-
-<div class="buttons">
-<button class="bonus" id="bonus">🎁 +100 €</button>
-<button id="save">💾 СОХРАНИТЬ</button>
-</div>
-
-</div>
-</div>
-
-<div class="page" id="channel">
-<div class="card">
-
-<div class="channel-head">
-<div class="avatar">▶</div>
-<div>
-<div class="channel-name" id="channelName">TUBE CHANNEL</div>
-<div class="channel-level" id="channelLevel">УРОВЕНЬ 1</div>
-<div class="level-badge" id="channelRank">НОВИЧОК</div>
-</div>
-</div>
-
-<div class="progress">
-<div class="energy-head"><span>Опыт канала</span><span id="xpText">0 / 100 XP</span></div>
-<div class="progress-bar"><div class="progress-fill" id="xp"></div></div>
-</div>
-
+<div class="page" id="channel"><div class="card">
+<div class="channel-head"><div class="avatar">▶</div><div><div class="channel-name" id="channelName">TUBE CHANNEL</div><div class="channel-level" id="channelLevel">УРОВЕНЬ 1</div><div class="level-badge" id="channelRank">НОВИЧОК</div></div></div>
+<div class="progress"><div class="energy-head"><span data-i18n="channelXP">Опыт канала</span><span id="xpText">0 / 100 XP</span></div><div class="progress-bar"><div class="progress-fill" id="xp"></div></div></div>
 <div class="channel-stats">
-<div class="channel-stat"><small>👥 ПОДПИСЧИКИ</small><b id="subs">0</b></div>
-<div class="channel-stat"><small>👀 ПРОСМОТРЫ</small><b id="channelViews">0</b></div>
-<div class="channel-stat"><small>💰 ЗАРАБОТАНО</small><b id="earned">0 €</b></div>
-<div class="channel-stat"><small>🏢 СТУДИЯ</small><b id="studioLevel">1</b></div>
+<div class="channel-stat"><small>👥 <span data-i18n="subs">ПОДПИСЧИКИ</span></small><b id="subs">0</b></div>
+<div class="channel-stat"><small>👀 <span data-i18n="views">ПРОСМОТРЫ</span></small><b id="channelViews">0</b></div>
+<div class="channel-stat"><small>💰 <span data-i18n="earned">ЗАРАБОТАНО</span></small><b id="earned">0 €</b></div>
+<div class="channel-stat"><small>🏢 <span data-i18n="studioLevel">СТУДИЯ</span></small><b id="studioLevel">1</b></div>
 </div>
-
 <div class="income-box">
-<div class="income-row"><span>💰 Доход/сек</span><span class="income-value" id="incomeSec">0 €</span></div>
-<div class="income-row"><span>👥 Подписчики</span><span class="income-value" id="subIncome">0 €</span></div>
-<div class="income-row"><span>🔥 Бонус</span><span class="income-value" id="boostIncome">x1</span></div>
+<div class="income-row"><span>💰 <span data-i18n="incomeSec">Доход/сек</span></span><span class="income-value" id="incomeSec">0 €</span></div>
+<div class="income-row"><span>👥 <span data-i18n="subIncome">Подписчики</span></span><span class="income-value" id="subIncome">0 €</span></div>
+<div class="income-row"><span>🔥 <span data-i18n="bonus">Бонус</span></span><span class="income-value" id="boostIncome">x1</span></div>
 </div>
-
 <div class="boost" id="boostBox">🔥 Бонусов нет</div>
+<div class="history-title">📺 <span data-i18n="history">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</span></div>
+<div class="history-list" id="historyList"><div class="empty" data-i18n="noPosts">Публикаций пока нет</div></div>
+<button class="channel-action" id="channelAction">📺 <span data-i18n="promote">ПРОДВИНУТЬ КАНАЛ</span></button>
+</div></div>
 
-<div class="history-title">📺 ПОСЛЕДНИЕ ПУБЛИКАЦИИ</div>
-<div class="history-list" id="historyList"><div class="empty">Публикаций пока нет</div></div>
+<div class="page" id="shop"><div class="card">
+<div class="title">🛒 <span data-i18n="shop">МАГАЗИН</span></div><div class="subtitle" data-i18n="shopDesc">Оборудование для студии</div>
+<div class="shop-item"><div class="shop-info"><div class="shop-name">💡 <span data-i18n="light">Студийный свет</span></div><div class="shop-desc">+1 € <span data-i18n="perVideo">к видео</span></div></div><button id="light"></button></div>
+<div class="shop-item"><div class="shop-info"><div class="shop-name">🎙️ <span data-i18n="mic">Микрофон Pro</span></div><div class="shop-desc">+2 € <span data-i18n="perVideo">к видео</span></div></div><button id="mic"></button></div>
+<div class="shop-item"><div class="shop-info"><div class="shop-name">📷 <span data-i18n="camera">Камера 4K</span></div><div class="shop-desc">+5 € <span data-i18n="perVideo">к видео</span></div></div><button id="camera"></button></div>
+<div class="shop-item"><div class="shop-info"><div class="shop-name">🖥️ <span data-i18n="pc">Монтажная станция</span></div><div class="shop-desc">+10 € <span data-i18n="perVideo">к видео</span></div></div><button id="pc"></button></div>
+</div></div>
 
-<button class="channel-action" id="channelAction">📺 ПРОДВИНУТЬ КАНАЛ</button>
-
-</div>
-</div>
-
-<div class="page" id="shop">
-<div class="card">
-
-<div class="title">🛒 МАГАЗИН</div>
-<div class="subtitle">Оборудование для студии</div>
-
-<div class="shop-item"><div class="shop-info"><div class="shop-name">💡 Студийный свет</div><div class="shop-desc">+1 € к видео</div></div><button id="light"></button></div>
-<div class="shop-item"><div class="shop-info"><div class="shop-name">🎙️ Микрофон Pro</div><div class="shop-desc">+2 € к видео</div></div><button id="mic"></button></div>
-<div class="shop-item"><div class="shop-info"><div class="shop-name">📷 Камера 4K</div><div class="shop-desc">+5 € к видео</div></div><button id="camera"></button></div>
-<div class="shop-item"><div class="shop-info"><div class="shop-name">🖥️ Монтажная станция</div><div class="shop-desc">+10 € к видео</div></div><button id="pc"></button></div>
-
-</div>
-</div>
-
-<div class="page" id="profile">
-<div class="card">
-
-<div class="profile-head">
-<div class="profile-avatar">👤</div>
-<div>
-<div class="profile-name" id="profileName">TUBE CREATOR</div>
-<div class="profile-level" id="profileLevel">УРОВЕНЬ 1</div>
-<div class="level-badge" id="profileRank">НОВИЧОК</div>
-</div>
-</div>
-
-<div class="progress">
-<div class="energy-head"><span>Опыт игрока</span><span id="profileXpText">0 / 100 XP</span></div>
-<div class="progress-bar"><div class="progress-fill" id="profileXp"></div></div>
-</div>
-
+<div class="page" id="profile"><div class="card">
+<div class="profile-head"><div class="profile-avatar">👤</div><div><div class="profile-name" id="profileName">TUBE CREATOR</div><div class="profile-level" id="profileLevel">УРОВЕНЬ 1</div><div class="level-badge" id="profileRank">НОВИЧОК</div></div></div>
+<div class="progress"><div class="energy-head"><span data-i18n="playerXP">Опыт игрока</span><span id="profileXpText">0 / 100 XP</span></div><div class="progress-bar"><div class="progress-fill" id="profileXp"></div></div></div>
 <div class="profile-stats">
-<div class="profile-stat"><small>💰 ЗАРАБОТАНО</small><b id="pEarned">0 €</b></div>
-<div class="profile-stat"><small>👀 ПРОСМОТРЫ</small><b id="pViews">0</b></div>
-<div class="profile-stat"><small>📺 ПОДПИСЧИКИ</small><b id="pSubs">0</b></div>
-<div class="profile-stat"><small>🏢 СТУДИЯ</small><b id="pStudio">1</b></div>
+<div class="profile-stat"><small>💰 <span data-i18n="earned">ЗАРАБОТАНО</span></small><b id="pEarned">0 €</b></div>
+<div class="profile-stat"><small>👀 <span data-i18n="views">ПРОСМОТРЫ</span></small><b id="pViews">0</b></div>
+<div class="profile-stat"><small>📺 <span data-i18n="subs">ПОДПИСЧИКИ</span></small><b id="pSubs">0</b></div>
+<div class="profile-stat"><small>🏢 <span data-i18n="studioLevel">СТУДИЯ</span></small><b id="pStudio">1</b></div>
 </div>
-
-<div class="history-title">🏆 ДОСТИЖЕНИЯ</div>
-<div id="achievements"></div>
-
-</div>
-</div>
+<div class="history-title">🏆 <span data-i18n="achievements">ДОСТИЖЕНИЯ</span></div><div id="achievements"></div>
+</div></div>
 
 <div class="bottom-nav">
-<button class="nav active" data-page="studio"><i>🎬</i>Студия</button>
-<button class="nav" data-page="channel"><i>📺</i>Канал</button>
-<button class="nav" data-page="shop"><i>🛒</i>Магазин</button>
-<button class="nav" data-page="profile"><i>👤</i>Профиль</button>
+<button class="nav active" data-page="studio"><i>🎬</i><span data-i18n="studio">Студия</span></button>
+<button class="nav" data-page="channel"><i>📺</i><span data-i18n="channel">Канал</span></button>
+<button class="nav" data-page="shop"><i>🛒</i><span data-i18n="shop">Магазин</span></button>
+<button class="nav" data-page="profile"><i>👤</i><span data-i18n="profile">Профиль</span></button>
 </div>
-
 </div>
 
 <script src="js/state.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/economy.js"></script>
-
 <script>
 "use strict";
 
 const $=id=>document.getElementById(id);
+const LANGS=["ru","de","en"];
+
+const T={
+ru:{
+home:"МЕНЮ",balance:"БАЛАНС",views:"ПРОСМОТРЫ",subs:"ПОДПИСЧИКИ",studio:"СТУДИЯ",channel:"Канал",shop:"Магазин",profile:"Профиль",
+studioDesc:"Создай и опубликуй контент",gaming:"GAMING",vlog:"ВЛОГ",challenge:"ЧЕЛЛЕНДЖ",premium:"ПРЕМИУМ",gamingDesc:"Стабильный контент",vlogDesc:"Больше подписчиков",challengeDesc:"Высокий потенциал",premiumDesc:"Максимальный потенциал",publish:"ОПУБЛИКОВАТЬ",quick:"БЫСТРАЯ<br>ПУБЛИКАЦИЯ",chooseVideo:"Выбери тип видео",result:"📊 Результат появится после публикации",energy:"Энергия",save:"СОХРАНИТЬ",channelXP:"Опыт канала",earned:"ЗАРАБОТАНО",studioLevel:"СТУДИЯ",incomeSec:"Доход/сек",subIncome:"Подписчики",bonus:"Бонус",history:"ПОСЛЕДНИЕ ПУБЛИКАЦИИ",noPosts:"Публикаций пока нет",promote:"ПРОДВИНУТЬ КАНАЛ",shopDesc:"Оборудование для студии",light:"Студийный свет",mic:"Микрофон Pro",camera:"Камера 4K",pc:"Монтажная станция",perVideo:"к видео",playerXP:"Опыт игрока",achievements:"ДОСТИЖЕНИЯ",noEnergy:"⚡ Недостаточно энергии",noMoney:"💰 Недостаточно денег",published:"опубликован",none:"🔥 Бонусов нет",viral:"🔥 ВИРУС x2",seconds:"сек.",firstChannel:"Первый канал",firstChannelDesc:"Опубликовать первое видео",firstIncome:"Первый доход",firstIncomeDesc:"Заработать 100 €",views1k:"1K просмотров",views1kDesc:"Набрать 1 000 просмотров",subs100:"100 подписчиков",subs100Desc:"Набрать 100 подписчиков",level5:"Уровень 5",level5Desc:"Достичь 5 уровня",level10:"Уровень 10",level10Desc:"Достичь 10 уровня",viralAuthor:"Вирусный автор",viralAuthorDesc:"Получить вирусное видео",bigStudio:"Большая студия",bigStudioDesc:"Улучшить студию 5 раз"
+},
+de:{
+home:"MENÜ",balance:"KONTOSTAND",views:"AUFRUFE",subs:"ABONNENTEN",studio:"STUDIO",channel:"Kanal",shop:"Shop",profile:"Profil",
+studioDesc:"Erstelle und veröffentliche Inhalte",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stabiler Content",vlogDesc:"Mehr Abonnenten",challengeDesc:"Hohes Potenzial",premiumDesc:"Maximales Potenzial",publish:"VERÖFFENTLICHEN",quick:"SCHNELLE<br>VERÖFFENTLICHUNG",chooseVideo:"Videotyp auswählen",result:"📊 Ergebnis erscheint nach der Veröffentlichung",energy:"Energie",save:"SPEICHERN",channelXP:"Kanal-XP",earned:"VERDIENT",studioLevel:"STUDIO",incomeSec:"Einkommen/Sek.",subIncome:"Abonnenten",bonus:"Bonus",history:"LETZTE VERÖFFENTLICHUNGEN",noPosts:"Noch keine Veröffentlichungen",promote:"KANAL BEWERBEN",shopDesc:"Ausrüstung für dein Studio",light:"Studiolicht",mic:"Pro-Mikrofon",camera:"4K-Kamera",pc:"Schnittstation",perVideo:"pro Video",playerXP:"Spieler-XP",achievements:"ERFOLGE",noEnergy:"⚡ Nicht genug Energie",noMoney:"💰 Nicht genug Geld",published:"veröffentlicht",none:"🔥 Keine Boni",viral:"🔥 VIRAL x2",seconds:"Sek.",firstChannel:"Erster Kanal",firstChannelDesc:"Erstes Video veröffentlichen",firstIncome:"Erstes Einkommen",firstIncomeDesc:"100 € verdienen",views1k:"1K Aufrufe",views1kDesc:"1.000 Aufrufe erreichen",subs100:"100 Abonnenten",subs100Desc:"100 Abonnenten erreichen",level5:"Level 5",level5Desc:"Level 5 erreichen",level10:"Level 10",level10Desc:"Level 10 erreichen",viralAuthor:"Viral-Autor",viralAuthorDesc:"Ein virales Video erhalten",bigStudio:"Großes Studio",bigStudioDesc:"Studio 5-mal verbessern"
+},
+en:{
+home:"MENU",balance:"BALANCE",views:"VIEWS",subs:"SUBSCRIBERS",studio:"STUDIO",channel:"Channel",shop:"Shop",profile:"Profile",
+studioDesc:"Create and publish content",gaming:"GAMING",vlog:"VLOG",challenge:"CHALLENGE",premium:"PREMIUM",gamingDesc:"Stable content",vlogDesc:"More subscribers",challengeDesc:"High potential",premiumDesc:"Maximum potential",publish:"PUBLISH",quick:"QUICK<br>PUBLICATION",chooseVideo:"Choose a video type",result:"📊 Result appears after publishing",energy:"Energy",save:"SAVE",channelXP:"Channel XP",earned:"EARNED",studioLevel:"STUDIO",incomeSec:"Income/sec",subIncome:"Subscribers",bonus:"Bonus",history:"LATEST PUBLICATIONS",noPosts:"No publications yet",promote:"PROMOTE CHANNEL",shopDesc:"Equipment for your studio",light:"Studio Light",mic:"Pro Microphone",camera:"4K Camera",pc:"Editing Station",perVideo:"per video",playerXP:"Player XP",achievements:"ACHIEVEMENTS",noEnergy:"⚡ Not enough energy",noMoney:"💰 Not enough money",published:"published",none:"🔥 No bonuses",viral:"🔥 VIRAL x2",seconds:"sec.",firstChannel:"First Channel",firstChannelDesc:"Publish your first video",firstIncome:"First Income",firstIncomeDesc:"Earn 100 €",views1k:"1K Views",views1kDesc:"Reach 1,000 views",subs100:"100 Subscribers",subs100Desc:"Reach 100 subscribers",level5:"Level 5",level5Desc:"Reach level 5",level10:"Level 10",level10Desc:"Reach level 10",viralAuthor:"Viral Author",viralAuthorDesc:"Get a viral video",bigStudio:"Big Studio",bigStudioDesc:"Upgrade studio 5 times"
+}
+};
+
+let currentLang=localStorage.getItem("tube_empire_lang")||"ru";
+if(!LANGS.includes(currentLang))currentLang="ru";
+
+function tr(key){return T[currentLang][key]??T.ru[key]??key}
+
+function applyLanguage(){
+document.documentElement.lang=currentLang;
+document.querySelectorAll("[data-i18n]").forEach(el=>el.innerHTML=tr(el.dataset.i18n));
+$("langBtn").textContent=currentLang.toUpperCase();
+}
+
+function changeLanguage(){
+let i=LANGS.indexOf(currentLang);
+currentLang=LANGS[(i+1)%LANGS.length];
+localStorage.setItem("tube_empire_lang",currentLang);
+applyLanguage();
+render();
+}
+
+function goHome(){window.location.href="index.html"}
+
 const saved=GameStorage.load();
 if(saved)GameState.replaceState(saved);
 
 const state=()=>GameState.getState();
 const save=()=>GameStorage.save(state());
-
 const money=n=>Number(n).toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
 
 const items={
@@ -257,26 +187,23 @@ pc:{price:10000,power:10}
 
 const videos={
 gaming:{name:"Gaming",icon:"🎮",cost:0,views:20,subs:2,energy:1,money:1},
-vlog:{name:"Влог",icon:"🎬",cost:10,views:35,subs:5,energy:2,money:3},
-challenge:{name:"Челлендж",icon:"🔥",cost:30,views:70,subs:10,energy:4,money:8},
-premium:{name:"Премиум",icon:"💎",cost:100,views:180,subs:30,energy:7,money:25}
+vlog:{name:"Vlog",icon:"🎬",cost:10,views:35,subs:5,energy:2,money:3},
+challenge:{name:"Challenge",icon:"🔥",cost:30,views:70,subs:10,energy:4,money:8},
+premium:{name:"Premium",icon:"💎",cost:100,views:180,subs:30,energy:7,money:25}
 };
 
 const level=()=>Math.max(1,Math.floor(Number(GameState.get("upgrades.studio",1))));
 const views=()=>Number(GameState.get("channel.views",0))||0;
 const subs=()=>Number(GameState.get("channel.subscribers",0))||0;
 const xp=()=>Number(GameState.get("channel.xp",0))||0;
-
-const equip=()=>Object.keys(items).reduce(
-(a,k)=>a+(GameState.get("upgrades.shop_"+k,0)?items[k].power:0),0);
-
+const equip=()=>Object.keys(items).reduce((a,k)=>a+(GameState.get("upgrades.shop_"+k,0)?items[k].power:0),0);
 const viral=()=>Number(GameState.get("channel.viralUntil",0))>Date.now()?2:1;
 const income=()=>subs()/1000*viral();
 
-const rank=l=>l>=20?"👑 ИМПЕРАТОР":
-l>=15?"💎 МЕДИА-БОСС":
-l>=10?"🔥 ПРОФИ":
-l>=5?"🚀 КРЕАТОР":"🌱 НОВИЧОК";
+const rank=l=>l>=20?"👑 "+(currentLang==="de"?"IMPERATOR":currentLang==="en"?"EMPEROR":"ИМПЕРАТОР"):
+l>=15?"💎 "+(currentLang==="de"?"MEDIEN-BOSS":currentLang==="en"?"MEDIA BOSS":"МЕДИА-БОСС"):
+l>=10?"🔥 "+(currentLang==="de"?"PROFI":currentLang==="en"?"PRO":"ПРОФИ"):
+l>=5?"🚀 CREATOR":"🌱 "+(currentLang==="de"?"NEULING":currentLang==="en"?"NEWBIE":"НОВИЧОК");
 
 function addStats(v,s){
 GameState.set("channel.views",views()+v);
@@ -287,17 +214,17 @@ GameState.set("channel.xp",xp()+v);
 function publish(t){
 let s=state(),v=videos[t];
 
-if(s.player.energy<v.energy)
-return $("message").textContent="⚡ Недостаточно энергии";
-
-if(v.cost&&!GameEconomy.spendMoney(v.cost))
-return $("message").textContent="💰 Недостаточно денег";
+if(s.player.energy<v.energy){$("message").textContent=tr("noEnergy");return}
+if(v.cost&&!GameEconomy.spendMoney(v.cost)){$("message").textContent=tr("noMoney");return}
 
 s.player.energy-=v.energy;
 
 let r=Math.random();
 let m=r<.55?1:r<.85?1.5:r<.98?3:6;
-let label=r<.55?"📊 Обычный":r<.85?"🔥 Успех":r<.98?"🚀 ВИРУС":"💎 ЛЕГЕНДА";
+let label=r<.55?"📊 "+(currentLang==="de"?"Normal":currentLang==="en"?"Normal":"Обычный"):
+r<.85?"🔥 "+(currentLang==="de"?"Erfolg":currentLang==="en"?"Success":"Успех"):
+r<.98?"🚀 "+(currentLang==="de"?"VIRAL":currentLang==="en"?"VIRAL":"ВИРУС"):
+"💎 "+(currentLang==="de"?"LEGENDÄR":currentLang==="en"?"LEGENDARY":"ЛЕГЕНДА");
 
 let L=level(),e=equip();
 let V=Math.floor((v.views+L*5+e*2)*m);
@@ -316,7 +243,7 @@ let h=GameState.get("channel.history",[])||[];
 h.unshift({name:v.name,icon:v.icon,label,views:V,subs:S,money:M});
 GameState.set("channel.history",h.slice(0,4));
 
-$("message").textContent="🎬 "+v.name+" опубликован!";
+$("message").textContent="🎬 "+v.name+" "+tr("published")+"!";
 $("result").textContent=label+" • "+V+" 👀 • +"+S+" 👥 • +"+M+" €";
 
 render();
@@ -324,29 +251,22 @@ save();
 }
 
 function achievements(){
-
 let s=state();
-
 let a=[
-["🏆 Первый канал","Опубликовать первое видео",views()>0],
-["💰 Первый доход","Заработать 100 €",s.player.totalEarned>=100],
-["👀 1K просмотров","Набрать 1 000 просмотров",views()>=1000],
-["👥 100 подписчиков","Набрать 100 подписчиков",subs()>=100],
-["🚀 Уровень 5","Достичь 5 уровня",xp()>=400],
-["💎 Уровень 10","Достичь 10 уровня",xp()>=900],
-["🔥 Вирусный автор","Получить вирусное видео",Number(GameState.get("channel.viralUntil",0))>0],
-["🏢 Большая студия","Улучшить студию 5 раз",level()>=5]
+["🏆 "+tr("firstChannel"),tr("firstChannelDesc"),views()>0],
+["💰 "+tr("firstIncome"),tr("firstIncomeDesc"),s.player.totalEarned>=100],
+["👀 "+tr("views1k"),tr("views1kDesc"),views()>=1000],
+["👥 "+tr("subs100"),tr("subs100Desc"),subs()>=100],
+["🚀 "+tr("level5"),tr("level5Desc"),xp()>=400],
+["💎 "+tr("level10"),tr("level10Desc"),xp()>=900],
+["🔥 "+tr("viralAuthor"),tr("viralAuthorDesc"),Number(GameState.get("channel.viralUntil",0))>0],
+["🏢 "+tr("bigStudio"),tr("bigStudioDesc"),level()>=5]
 ];
 
-$("achievements").innerHTML=a.map(x=>
-`<div class="achievement ${x[2]?"done":"locked"}">
-<b>${x[0]}</b><span>${x[1]}</span>
-${x[2]?'<span class="check">✓</span>':''}
-</div>`).join("");
+$("achievements").innerHTML=a.map(x=>`<div class="achievement ${x[2]?"done":"locked"}"><b>${x[0]}</b><span>${x[1]}</span>${x[2]?'<span class="check">✓</span>':''}</div>`).join("");
 }
 
 function render(){
-
 let s=state(),L=level(),X=xp(),V=views(),S=subs();
 let E=Math.max(0,Math.min(100,s.player.energy||0));
 
@@ -358,15 +278,13 @@ $("energy").style.width=E+"%";
 $("energyText").textContent=Math.floor(E)+" / 100";
 
 let c=100*2**(L-1);
-
-$("upgradeInfo").textContent="Ур."+L+" • +"+equip()+" € • Следующий "+money(c);
+$("upgradeInfo").textContent="Lv."+L+" • +"+equip()+" € • "+(currentLang==="de"?"Nächste: ":"Следующий: ")+money(c);
 $("upgrade").textContent="🚀 "+money(c);
 $("upgrade").disabled=s.player.money<c;
 
 let CL=Math.floor(X/100)+1;
-
 $("channelName").textContent=(s.player.name||"TUBE")+" CHANNEL";
-$("channelLevel").textContent="УРОВЕНЬ "+CL;
+$("channelLevel").textContent=(currentLang==="de"?"LEVEL ":"УРОВЕНЬ ")+CL;
 $("channelRank").textContent=rank(CL);
 $("xpText").textContent=X%100+" / 100 XP";
 $("xp").style.width=X%100+"%";
@@ -375,49 +293,31 @@ $("subs").textContent=S;
 $("channelViews").textContent=V;
 $("earned").textContent=money(s.player.totalEarned||0);
 $("studioLevel").textContent=L;
-
 $("incomeSec").textContent=money(income());
 $("subIncome").textContent=money(S/1000);
 $("boostIncome").textContent="x"+viral();
 
 let until=Number(GameState.get("channel.viralUntil",0));
-
-$("boostBox").textContent=
-until>Date.now()
-?"🔥 ВИРУС x2 • "+Math.ceil((until-Date.now())/1000)+" сек."
-:"🔥 Бонусов нет";
+$("boostBox").textContent=until>Date.now()?tr("viral")+" • "+Math.ceil((until-Date.now())/1000)+" "+tr("seconds"):tr("none");
 
 $("profileName").textContent=s.player.name||"TUBE CREATOR";
-$("profileLevel").textContent="УРОВЕНЬ "+CL;
+$("profileLevel").textContent=(currentLang==="de"?"LEVEL ":"УРОВЕНЬ ")+CL;
 $("profileRank").textContent=rank(CL);
 $("profileXpText").textContent=X%100+" / 100 XP";
 $("profileXp").style.width=X%100+"%";
-
 $("pEarned").textContent=money(s.player.totalEarned||0);
 $("pViews").textContent=V;
 $("pSubs").textContent=S;
 $("pStudio").textContent=L;
 
 Object.keys(items).forEach(k=>{
-let b=$(k);
-let yes=GameState.get("upgrades.shop_"+k,0);
+let b=$(k),yes=GameState.get("upgrades.shop_"+k,0);
 b.textContent=yes?"✓":money(items[k].price);
 b.disabled=!!yes||s.player.money<items[k].price;
 });
 
 let h=GameState.get("channel.history",[])||[];
-
-$("historyList").innerHTML=h.length?
-h.map(x=>`
-<div class="history-item">
-<div class="history-icon">${x.icon}</div>
-<div>
-<div class="history-name">${x.label} • ${x.name}</div>
-<div class="history-info">${x.views} 👀 • +${x.subs} 👥</div>
-</div>
-<div class="history-money">+${x.money} €</div>
-</div>`).join("")
-:'<div class="empty">Публикаций пока нет</div>';
+$("historyList").innerHTML=h.length?h.map(x=>`<div class="history-item"><div class="history-icon">${x.icon}</div><div><div class="history-name">${x.label} • ${x.name}</div><div class="history-info">${x.views} 👀 • +${x.subs} 👥</div></div><div class="history-money">+${x.money} €</div></div>`).join(""):`<div class="empty">${tr("noPosts")}</div>`;
 
 achievements();
 }
@@ -434,7 +334,6 @@ $("save").onclick=()=>save();
 
 $("upgrade").onclick=()=>{
 let c=100*2**(level()-1);
-
 if(GameEconomy.spendMoney(c)){
 GameState.set("upgrades.studio",level()+1);
 render();
@@ -444,25 +343,15 @@ save();
 
 $("channelAction").onclick=()=>{
 let s=state();
-
-if(s.player.energy<5)
-return $("message").textContent="⚡ Нужно 5 энергии";
-
+if(s.player.energy<5){$("message").textContent=tr("noEnergy");return}
 s.player.energy-=5;
-
-addStats(
-level()*25,
-Math.max(1,Math.floor(level()*25/8))
-);
-
+addStats(level()*25,Math.max(1,Math.floor(level()*25/8)));
 GameEconomy.addMoney(level()*5);
-
 render();
 save();
 };
 
-Object.keys(items).forEach(k=>
-$(k).onclick=()=>{
+Object.keys(items).forEach(k=>$(k).onclick=()=>{
 if(GameEconomy.spendMoney(items[k].price)){
 GameState.set("upgrades.shop_"+k,1);
 render();
@@ -470,33 +359,24 @@ save();
 }
 });
 
-document.querySelectorAll(".nav").forEach(b=>
-b.onclick=()=>{
+document.querySelectorAll(".nav").forEach(b=>b.onclick=()=>{
 document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));
 b.classList.add("active");
-
 document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
 $(b.dataset.page).classList.add("active");
-
 render();
 });
 
+applyLanguage();
+render();
+
 setInterval(()=>{
-
 let s=state();
-
 if(s.player.energy<100)s.player.energy++;
-
-if(income()>0)
-GameEconomy.addMoney(income());
-
+if(income()>0)GameEconomy.addMoney(income());
 render();
 save();
-
 },1000);
-
-render();
 </script>
-
 </body>
 </html>
